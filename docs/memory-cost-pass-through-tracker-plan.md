@@ -203,3 +203,34 @@
 - 不用 pricehistory deals API 直接代表当前商城 top10。
 - 不把全历史高低价和近期窗口图表混在同一指标组里。
 - 不在没有真实近期价格点时人为画出“当前稳定”的结论。
+
+## 当前 live 候选入口
+
+没有 Flipkart Affiliate API credentials 时，使用半自动 browser collector 作为当前商城候选入口：
+
+```bash
+python3 scripts/collect_store_candidates_browser.py \
+  --store flipkart \
+  --query "mobile phone" \
+  --minPrice 20000 \
+  --maxPrice 50000 \
+  --topN 30 \
+  --outDir 00_Inbox
+```
+
+collector 输出 `current-store-candidates-*.json`，再交给主报告：
+
+```bash
+node scripts/run_memory_cost_pass_through_report.js \
+  --candidateFile 00_Inbox/current-store-candidates-flipkart-YYYY-MM-DD-20000-50000.json \
+  --skipStoreFetch true \
+  --allowLocalFallback false \
+  --minPrice 20000 \
+  --maxPrice 50000 \
+  --topN 10 \
+  --outDir 00_Inbox
+```
+
+报告会把该入口记录为 `candidate_file` provider。若只有部分候选能映射到 pricehistory，`Data Health` 会标记为 `Degraded`，并说明 “Only X of Y live candidates resolved to usable price histories.”。
+
+注意：browser collector 可以打开真实浏览器读取当前候选，但不会也不应该自动处理 CAPTCHA。如果 Flipkart/Amazon 出现 human check，需要人工在浏览器里完成后继续。

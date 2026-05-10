@@ -50,6 +50,12 @@ const COLOR_TOKENS = new Set([
   "ice",
   "aurora",
   "glacier",
+  "zephyr",
+  "slipstream",
+  "silhouette",
+  "arctic",
+  "cyber",
+  "star",
   "cosmic",
   "mocha",
   "pearl",
@@ -962,13 +968,157 @@ function loadLocalFallbackCandidates(outDir, minPrice, maxPrice, errors) {
   return out;
 }
 
-async function collectStoreCandidates(launchModels, opts) {
-  const errors = [];
-  const providerStats = {
+function createProviderStats() {
+  return {
+    candidate_file: { attempted: 0, candidates: 0, errors: 0, used: false },
     flipkart_affiliate_api: { attempted: 0, candidates: 0, skipped: 0, errors: 0 },
     flipkart_page_scrape: { attempted: 0, candidates: 0, errors: 0 },
     local_fallback: { candidates: 0, used: false },
   };
+}
+
+function emptyStoreCollection() {
+  return {
+    candidates: [],
+    errors: [],
+    providerStats: createProviderStats(),
+  };
+}
+
+function parseCsvRows(text) {
+  const rows = [];
+  let row = [];
+  let field = "";
+  let quoted = false;
+  for (let i = 0; i < String(text || "").length; i += 1) {
+    const ch = text[i];
+    const next = text[i + 1];
+    if (quoted) {
+      if (ch === '"' && next === '"') {
+        field += '"';
+        i += 1;
+      } else if (ch === '"') {
+        quoted = false;
+      } else {
+        field += ch;
+      }
+      continue;
+    }
+    if (ch === '"') {
+      quoted = true;
+    } else if (ch === ",") {
+      row.push(field);
+      field = "";
+    } else if (ch === "\n") {
+      row.push(field);
+      rows.push(row);
+      row = [];
+      field = "";
+    } else if (ch !== "\r") {
+      field += ch;
+    }
+  }
+  row.push(field);
+  rows.push(row);
+  const nonEmpty = rows.filter((cells) => cells.some((cell) => normalizeSpace(cell)));
+  if (!nonEmpty.length) return [];
+  const headers = nonEmpty[0].map((header) => normalizeText(header).replace(/\s+/g, "_"));
+  return nonEmpty.slice(1).map((cells) => {
+    const obj = {};
+    headers.forEach((header, idx) => {
+      obj[header] = cells[idx] || "";
+    });
+    return obj;
+  });
+}
+
+function rowValue(row, keys) {
+  for (const key of keys) {
+    if (row[key] !== undefined && row[key] !== null && String(row[key]).trim() !== "") {
+      return row[key];
+    }
+  }
+  return "";
+}
+
+function candidateFromInputRow(row, idx, minPrice, maxPrice, sourceName) {
+  const productUrl = ensureHttpUrl(
+    rowValue(row, ["product_url", "url", "link", "store_link", "product_link", "href"])
+  );
+  const name = normalizeSpace(
+    rowValue(row, ["candidate_name", "title", "name", "product_name", "model", "model_name"])
+  );
+  const rawPrice = rowValue(row, [
+    "current_store_price_inr",
+    "current_price_inr",
+    "price_inr",
+    "price",
+    "current_price",
+  ]);
+  const price = Number(String(rawPrice).replace(/[^0-9.]/g, "")) || parseInrNumber(rawPrice);
+  if (!productUrl || !name || !Number.isFinite(price)) return null;
+  if (price < minPrice || price > maxPrice) return null;
+  if (looksLikeNonPhone(name)) return null;
+  const storeKey = normalizeStoreKey(
+    rowValue(row, ["store_key", "store", "source_store", "marketplace"]) || productUrl
+  );
+  return {
+    source: sourceName || "candidate_file",
+    store_key: storeKey,
+    store_name: rowValue(row, ["store_name", "store", "marketplace"]) || storeKey,
+    candidate_name: name,
+    raw_line: rowValue(row, ["raw_line", "raw_text", "text", "card_text"]) || name,
+    product_url: productUrl,
+    current_store_price_inr: price,
+    rating: Number.isFinite(Number(rowValue(row, ["rating", "stars"])))
+      ? Number(rowValue(row, ["rating", "stars"]))
+      : null,
+    rating_count: Number.isFinite(Number(String(rowValue(row, ["rating_count", "ratings", "review_count"])).replace(/,/g, "")))
+      ? Number(String(rowValue(row, ["rating_count", "ratings", "review_count"])).replace(/,/g, ""))
+      : null,
+    availability: rowValue(row, ["availability", "stock_status"]) || "listed",
+    listing_rank: Number(rowValue(row, ["listing_rank", "rank", "position"])) || idx + 1,
+    launch_model_key: rowValue(row, ["launch_model_key", "model_key"]) || null,
+    launch_model_name: rowValue(row, ["launch_model_name", "model_name"]) || null,
+    launch_date_iso: rowValue(row, ["launch_date_iso", "launch_date"]) || null,
+    launch_sources: [],
+  };
+}
+
+function loadCandidateFileCandidates(filePath, minPrice, maxPrice, errors) {
+  const resolved = path.resolve(filePath);
+  const text = fs.readFileSync(resolved, "utf8");
+  const ext = path.extname(resolved).toLowerCase();
+  let rows = [];
+  let sourceName = "candidate_file";
+  if (ext === ".csv") {
+    rows = parseCsvRows(text);
+    sourceName = "candidate_csv";
+  } else {
+    const parsed = JSON.parse(text);
+    sourceName = parsed.source || parsed.workflow || "candidate_json";
+    rows = Array.isArray(parsed)
+      ? parsed
+      : Array.isArray(parsed.candidates)
+        ? parsed.candidates
+        : Array.isArray(parsed.products)
+          ? parsed.products
+          : [];
+  }
+  const out = [];
+  for (const row of rows) {
+    const candidate = candidateFromInputRow(row, out.length, minPrice, maxPrice, sourceName);
+    if (candidate) out.push(candidate);
+  }
+  if (!out.length) {
+    errors.push(`candidate_file_no_valid_rows: ${resolved}`);
+  }
+  return out;
+}
+
+async function collectStoreCandidates(launchModels, opts) {
+  const errors = [];
+  const providerStats = createProviderStats();
   const candidates = [];
   const broadQueries = splitQueryList(opts.broadQueries).length
     ? splitQueryList(opts.broadQueries)
@@ -1356,7 +1506,10 @@ function mergeCandidateContext(product, candidate) {
   const title = normalizeSpace(
     candidate.candidate_name || product.fallback_title || product.slug
   );
-  const variantLabel = extractVariantSignature(title, `${product.slug} ${product.product_url}`);
+  const variantLabel = extractVariantSignature(
+    `${title} ${candidate.raw_line || ""}`,
+    `${product.slug} ${product.product_url}`
+  );
   const groupKey =
     candidate.launch_model_key ||
     modelGroupKeyFromTitle(candidate.launch_model_name || title) ||
@@ -1604,8 +1757,15 @@ function buildDataHealth(report) {
   const liveCandidates = providerLiveCandidateCount(providerStats);
   const fallbackUsed = Boolean(providerStats.local_fallback && providerStats.local_fallback.used);
   const products = Number(report.stats && report.stats.products) || 0;
+  const storeCandidates = Number(report.stats && report.stats.store_candidates) || 0;
+  const expectedProducts = Math.min(
+    Number(report.input && report.input.top_n) || storeCandidates,
+    storeCandidates || Number(report.input && report.input.top_n) || 0
+  );
   const staleHistories = Number(report.summary && report.summary.stale_history) || 0;
   const allStale = products > 0 && staleHistories === products;
+  const underResolved =
+    liveCandidates > 0 && expectedProducts > 0 && products < expectedProducts;
   const blockers = [];
 
   if (products <= 0) {
@@ -1617,6 +1777,11 @@ function buildDataHealth(report) {
   if (fallbackUsed) {
     blockers.push("Local fallback candidates were used, so ranking is watchlist context rather than current top sellers.");
   }
+  if (underResolved) {
+    blockers.push(
+      `Only ${products} of ${expectedProducts} live candidates resolved to usable price histories.`
+    );
+  }
   if (allStale) {
     blockers.push("All price histories are stale against the configured freshness threshold.");
   }
@@ -1627,7 +1792,7 @@ function buildDataHealth(report) {
   let status = "healthy";
   if (products <= 0) {
     status = "failed";
-  } else if (liveCandidates <= 0 || fallbackUsed || allStale) {
+  } else if (liveCandidates <= 0 || fallbackUsed || allStale || underResolved) {
     status = "degraded";
   }
 
@@ -2020,20 +2185,38 @@ async function main() {
   const launchPool = loadOrBuildLaunchPool(rootDir, outDir, args, tag);
   const launchModels = modelLaunchRows(launchPool.source);
 
-  const store = await collectStoreCandidates(launchModels, {
-    minPrice,
-    maxPrice,
-    maxBroadPages: Number(args.maxBroadPages || 1),
-    maxLaunchSearches: Number(args.maxLaunchSearches || 8),
-    maxPagesPerLaunchModel: Number(args.maxPagesPerLaunchModel || 1),
-    broadQueries: String(args.broadQueries || "mobile phone|5g mobile"),
-    priorityMap,
-    disableAffiliate: args.disableAffiliate === true || args.disableAffiliate === "true",
-  });
+  const skipStoreFetch = args.skipStoreFetch === true || args.skipStoreFetch === "true";
+  const store = skipStoreFetch
+    ? emptyStoreCollection()
+    : await collectStoreCandidates(launchModels, {
+        minPrice,
+        maxPrice,
+        maxBroadPages: Number(args.maxBroadPages || 1),
+        maxLaunchSearches: Number(args.maxLaunchSearches || 8),
+        maxPagesPerLaunchModel: Number(args.maxPagesPerLaunchModel || 1),
+        broadQueries: String(args.broadQueries || "mobile phone|5g mobile"),
+        priorityMap,
+        disableAffiliate: args.disableAffiliate === true || args.disableAffiliate === "true",
+      });
 
   const errors = [...store.errors];
   if (launchPool.error) {
     errors.push(`launch_pool_unavailable: ${launchPool.error}`);
+  }
+  const candidateFile = args.candidateFile || args.candidateJson || args.candidateCsv;
+  if (candidateFile) {
+    store.providerStats.candidate_file.attempted += 1;
+    try {
+      const fileCandidates = loadCandidateFileCandidates(candidateFile, minPrice, maxPrice, errors);
+      if (fileCandidates.length) {
+        store.candidates = dedupeCandidates([...fileCandidates, ...store.candidates], priorityMap);
+        store.providerStats.candidate_file.used = true;
+        store.providerStats.candidate_file.candidates = fileCandidates.length;
+      }
+    } catch (err) {
+      store.providerStats.candidate_file.errors += 1;
+      errors.push(`candidate_file_failed ${candidateFile}: ${String(err.message || err)}`);
+    }
   }
   if (
     store.candidates.length === 0 &&
@@ -2112,6 +2295,8 @@ async function main() {
       impact_start: impactStart,
       high_sensitive_start: HIGH_SENSITIVE_START,
       restock_sensitive_start: RESTOCK_SENSITIVE_START,
+      candidate_file: candidateFile ? path.resolve(String(candidateFile)) : null,
+      skip_store_fetch: skipStoreFetch,
       launch_pool_file: launchPool.file,
       launch_pool_generated: launchPool.generated,
       launch_pool_cached: Boolean(launchPool.cached),
