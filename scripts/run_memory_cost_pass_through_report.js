@@ -10,6 +10,8 @@ const API_BASE = "https://django.prixhistory.com";
 const APP_BASE = "https://pricehistoryapp.com";
 const PRICEHISTORY_APP = "https://pricehistory.app";
 const R_JINA_HTTP = "https://r.jina.ai/http://";
+const FLIPKART_AFFILIATE_SEARCH =
+  "https://affiliate-api.flipkart.net/affiliate/search/json";
 const AUTH_SECRET = "8rRaP?pX7sfh5#%FXS423kG%et5qxVeN";
 
 const DEFAULT_STORES = ["flipkart", "amazon"];
@@ -95,6 +97,22 @@ function parseArgs(argv) {
     i += 1;
   }
   return args;
+}
+
+function loadEnvFile(filePath) {
+  if (!filePath || !fs.existsSync(filePath)) return;
+  const text = fs.readFileSync(filePath, "utf8");
+  for (const rawLine of text.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#") || !line.includes("=")) continue;
+    const idx = line.indexOf("=");
+    const key = line.slice(0, idx).trim();
+    let value = line.slice(idx + 1).trim();
+    value = value.replace(/^['"]|['"]$/g, "");
+    if (key && process.env[key] === undefined) {
+      process.env[key] = value;
+    }
+  }
 }
 
 function normalizeSpace(value) {
@@ -298,6 +316,44 @@ async function fetchText(url) {
   return response.text();
 }
 
+async function fetchJsonPlain(url, options) {
+  const ctrl = new AbortController();
+  const timeoutMs = FETCH_TIMEOUT_MS;
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  let response;
+  try {
+    response = await fetch(url, {
+      method: "GET",
+      cache: "no-cache",
+      ...options,
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "Mozilla/5.0",
+        ...(options && options.headers ? options.headers : {}),
+      },
+      signal: ctrl.signal,
+    });
+  } catch (err) {
+    clearTimeout(timer);
+    if (err && err.name === "AbortError") {
+      throw new Error(`fetch_timeout_${timeoutMs}ms`);
+    }
+    throw err;
+  }
+  clearTimeout(timer);
+  const text = await response.text();
+  let data = null;
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch (err) {
+    throw new Error(`invalid_json_http_${response.status}`);
+  }
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}`);
+  }
+  return data;
+}
+
 function cleanMaybeUrl(value) {
   let text = String(value || "").trim();
   text = text.replace(/[)\],.]+$/g, "");
@@ -466,6 +522,102 @@ function extractFlipkartCandidatesFromMarkdown(markdown, meta) {
     }
   }
   return out;
+}
+
+function flipkartAffiliateCredentials() {
+  const id =
+    process.env.FLIPKART_AFFILIATE_ID ||
+    process.env.FK_AFFILIATE_ID ||
+    process.env.FK_AFFILIATE_TRACKING_ID ||
+    "";
+  const token =
+    process.env.FLIPKART_AFFILIATE_TOKEN ||
+    process.env.FK_AFFILIATE_TOKEN ||
+    process.env.FK_AFFILIATE_API_TOKEN ||
+    "";
+  return {
+    id: normalizeSpace(id),
+    token: normalizeSpace(token),
+  };
+}
+
+function parseAffiliatePrice(priceBlock) {
+  if (Number.isFinite(Number(priceBlock))) return Number(priceBlock);
+  if (!priceBlock || typeof priceBlock !== "object") return null;
+  const value =
+    Number(priceBlock.amount) ||
+    Number(priceBlock.value) ||
+    Number(priceBlock.price) ||
+    null;
+  return Number.isFinite(value) ? value : null;
+}
+
+function affiliateProductToCandidate(item, meta) {
+  const base =
+    (item && item.productBaseInfoV1) ||
+    (item && item.productBaseInfo) ||
+    (item && item.productBaseInfoV2) ||
+    item ||
+    {};
+  const title = normalizeSpace(base.title || base.productTitle || base.name);
+  const productUrl = ensureHttpUrl(base.productUrl || base.url || "");
+  const price =
+    parseAffiliatePrice(base.flipkartSellingPrice) ||
+    parseAffiliatePrice(base.flipkartSpecialPrice) ||
+    parseAffiliatePrice(base.sellingPrice) ||
+    parseAffiliatePrice(base.maximumRetailPrice);
+  if (!title || !productUrl || !Number.isFinite(price)) return null;
+  if (price < meta.minPrice || price > meta.maxPrice) return null;
+  if (looksLikeNonPhone(title)) return null;
+  return {
+    source: "flipkart_affiliate_api",
+    store_key: "flipkart",
+    store_name: "Flipkart",
+    candidate_name: title,
+    raw_line: title,
+    product_url: productUrl,
+    current_store_price_inr: price,
+    rating: null,
+    rating_count: null,
+    availability: base.inStock === false ? "unavailable" : "listed",
+    listing_rank: meta.rank,
+    launch_model_key: meta.launchModelKey || null,
+    launch_model_name: meta.launchModelName || null,
+    launch_date_iso: meta.launchDateIso || null,
+    launch_sources: meta.launchSources || [],
+  };
+}
+
+async function fetchFlipkartAffiliateCandidates(query, opts) {
+  const creds = flipkartAffiliateCredentials();
+  if (!creds.id || !creds.token || opts.disableAffiliate) {
+    return { candidates: [], skipped: true, reason: "missing_flipkart_affiliate_credentials" };
+  }
+  const params = new URLSearchParams({
+    query,
+    resultCount: String(Math.min(10, Math.max(1, opts.resultCount || 10))),
+  });
+  const url = `${FLIPKART_AFFILIATE_SEARCH}?${params.toString()}`;
+  const data = await fetchJsonPlain(url, {
+    headers: {
+      "Fk-Affiliate-Id": creds.id,
+      "Fk-Affiliate-Token": creds.token,
+    },
+  });
+  const rows = Array.isArray(data.productInfoList)
+    ? data.productInfoList
+    : Array.isArray(data.products)
+      ? data.products
+      : [];
+  const candidates = [];
+  for (const item of rows) {
+    const candidate = affiliateProductToCandidate(item, {
+      ...opts,
+      rank: candidates.length + 1,
+    });
+    if (candidate) candidates.push(candidate);
+  }
+  return { candidates, skipped: false, reason: null };
 }
 
 function buildFlipkartSearchUrl(query, minPrice, maxPrice, page, sort) {
@@ -735,12 +887,36 @@ function loadLocalFallbackCandidates(outDir, minPrice, maxPrice, errors) {
 
 async function collectStoreCandidates(launchModels, opts) {
   const errors = [];
+  const providerStats = {
+    flipkart_affiliate_api: { attempted: 0, candidates: 0, skipped: 0, errors: 0 },
+    flipkart_page_scrape: { attempted: 0, candidates: 0, errors: 0 },
+    local_fallback: { candidates: 0, used: false },
+  };
   const candidates = [];
   const broadQueries = splitQueryList(opts.broadQueries).length
     ? splitQueryList(opts.broadQueries)
     : ["mobile phone", "5g mobile"];
 
   for (const query of broadQueries) {
+    providerStats.flipkart_affiliate_api.attempted += 1;
+    try {
+      const affiliate = await fetchFlipkartAffiliateCandidates(query, {
+        ...opts,
+        resultCount: 10,
+      });
+      if (affiliate.skipped) {
+        providerStats.flipkart_affiliate_api.skipped += 1;
+      } else {
+        providerStats.flipkart_affiliate_api.candidates += affiliate.candidates.length;
+        candidates.push(...affiliate.candidates);
+      }
+    } catch (err) {
+      providerStats.flipkart_affiliate_api.errors += 1;
+      errors.push(`flipkart_affiliate ${query}: ${String(err.message || err)}`);
+    }
+    providerStats.flipkart_page_scrape.attempted += 1;
+    const before = candidates.length;
+    const errorBefore = errors.length;
     candidates.push(
       ...(await fetchFlipkartSearchCandidates(query, {
         minPrice: opts.minPrice,
@@ -751,6 +927,8 @@ async function collectStoreCandidates(launchModels, opts) {
         errors,
       }))
     );
+    providerStats.flipkart_page_scrape.candidates += candidates.length - before;
+    providerStats.flipkart_page_scrape.errors += errors.length - errorBefore;
   }
 
   const launchLimit = Math.max(0, opts.maxLaunchSearches);
@@ -764,6 +942,29 @@ async function collectStoreCandidates(launchModels, opts) {
   for (const model of launchRows) {
     const query = normalizeModelSearchQuery(model.model_name);
     if (!query) continue;
+    providerStats.flipkart_affiliate_api.attempted += 1;
+    try {
+      const affiliate = await fetchFlipkartAffiliateCandidates(query, {
+        ...opts,
+        resultCount: 10,
+        launchModelKey: model.model_key || canonicalModelKey(model.model_name),
+        launchModelName: model.model_name,
+        launchDateIso: model.first_launch_date_iso || null,
+        launchSources: model.sources || [],
+      });
+      if (affiliate.skipped) {
+        providerStats.flipkart_affiliate_api.skipped += 1;
+      } else {
+        providerStats.flipkart_affiliate_api.candidates += affiliate.candidates.length;
+        candidates.push(...affiliate.candidates);
+      }
+    } catch (err) {
+      providerStats.flipkart_affiliate_api.errors += 1;
+      errors.push(`flipkart_affiliate ${query}: ${String(err.message || err)}`);
+    }
+    providerStats.flipkart_page_scrape.attempted += 1;
+    const before = candidates.length;
+    const errorBefore = errors.length;
     candidates.push(
       ...(await fetchFlipkartSearchCandidates(query, {
         minPrice: opts.minPrice,
@@ -778,6 +979,8 @@ async function collectStoreCandidates(launchModels, opts) {
         errors,
       }))
     );
+    providerStats.flipkart_page_scrape.candidates += candidates.length - before;
+    providerStats.flipkart_page_scrape.errors += errors.length - errorBefore;
   }
 
   const deduped = dedupeCandidates(candidates, opts.priorityMap)
@@ -791,7 +994,7 @@ async function collectStoreCandidates(launchModels, opts) {
       return (Number(a.listing_rank) || 999) - (Number(b.listing_rank) || 999);
     });
 
-  return { candidates: deduped, errors };
+  return { candidates: deduped, errors, providerStats };
 }
 
 function poolRank(pool) {
@@ -1487,6 +1690,17 @@ ${recentRows ? `<div class="table-wrap"><table><thead><tr><th>Date</th><th>From<
 function renderHtml(report) {
   const products = report.products || [];
   const summary = report.summary || {};
+  const providers = (report.stats && report.stats.provider_stats) || {};
+  const providerRows = Object.entries(providers)
+    .map(([name, stats]) => `<tr>
+<td>${escapeHtml(name)}</td>
+<td>${escapeHtml(String(stats.attempted ?? "-"))}</td>
+<td>${escapeHtml(String(stats.candidates ?? 0))}</td>
+<td>${escapeHtml(String(stats.skipped ?? "-"))}</td>
+<td>${escapeHtml(String(stats.errors ?? "-"))}</td>
+<td>${escapeHtml(String(stats.used ?? "-"))}</td>
+</tr>`)
+    .join("");
   const rows = products
     .map((product) => {
       const a = product.memory_analysis || {};
@@ -1553,6 +1767,10 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
   <h2>Watchlist</h2>
   <div class="table-wrap"><table><thead><tr><th>Model</th><th>Pool</th><th>SKU</th><th>Status</th><th>Current</th><th>Baseline</th><th>Delta</th><th>First increase</th><th>Sustained days</th><th>Stale</th></tr></thead><tbody>${rows}</tbody></table></div>
 </section>
+<section class="card">
+  <h2>Candidate Providers</h2>
+  <div class="table-wrap"><table><thead><tr><th>Provider</th><th>Attempted</th><th>Candidates</th><th>Skipped</th><th>Errors</th><th>Used</th></tr></thead><tbody>${providerRows}</tbody></table></div>
+</section>
 ${products.map((product, idx) => renderProductCard(product, idx, report)).join("\n")}
 </main>
 </body>
@@ -1562,6 +1780,10 @@ ${products.map((product, idx) => renderProductCard(product, idx, report)).join("
 async function main() {
   const args = parseArgs(process.argv);
   const rootDir = path.resolve(__dirname, "..");
+  loadEnvFile(path.join(rootDir, ".env"));
+  if (args.envFile) {
+    loadEnvFile(path.resolve(String(args.envFile)));
+  }
   const outDir = args.outDir ? path.resolve(String(args.outDir)) : path.join(rootDir, "00_Inbox");
   fs.mkdirSync(outDir, { recursive: true });
 
@@ -1604,6 +1826,7 @@ async function main() {
     maxPagesPerLaunchModel: Number(args.maxPagesPerLaunchModel || 1),
     broadQueries: String(args.broadQueries || "mobile phone|5g mobile"),
     priorityMap,
+    disableAffiliate: args.disableAffiliate === true || args.disableAffiliate === "true",
   });
 
   const errors = [...store.errors];
@@ -1618,6 +1841,8 @@ async function main() {
     const fallbackCandidates = loadLocalFallbackCandidates(outDir, minPrice, maxPrice, errors);
     if (fallbackCandidates.length) {
       store.candidates = dedupeCandidates(fallbackCandidates, priorityMap);
+      store.providerStats.local_fallback.used = true;
+      store.providerStats.local_fallback.candidates = store.candidates.length;
       errors.push(
         `store_candidate_fallback_used: current Flipkart fetch returned zero candidates; loaded ${store.candidates.length} local fallback candidates`
       );
@@ -1697,6 +1922,7 @@ async function main() {
       resolved_products_before_sku_merge: products.length,
       products: consolidated.length,
       errors: errors.length,
+      provider_stats: store.providerStats,
     },
     summary: buildSummary(consolidated),
     products: consolidated,
