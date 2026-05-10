@@ -441,9 +441,51 @@ function extractVariantSignature(title, slugOrUrl) {
 
 function skuStatus(variantLabel) {
   const label = String(variantLabel || "");
-  if (label.startsWith("RAM_UNKNOWN+")) return "ram_unknown";
+  if (label.startsWith("RAM_UNKNOWN+")) return "needs_review";
   if (label === "STD") return "unknown";
   return "confirmed";
+}
+
+function skuStatusLabel(status) {
+  const value = String(status || "");
+  if (value === "confirmed") return "Confirmed";
+  if (value === "needs_review") return "Needs review";
+  if (value === "unknown") return "Unknown";
+  return value || "-";
+}
+
+function skuStatusRank(status) {
+  const value = String(status || "");
+  if (value === "confirmed") return 0;
+  if (value === "needs_review") return 1;
+  return 2;
+}
+
+function displaySku(product) {
+  const label = String(product && product.variant_label || "");
+  if (label.startsWith("RAM_UNKNOWN+")) {
+    return `${label.replace(/^RAM_UNKNOWN\+/, "")} (RAM needs review)`;
+  }
+  return label || "-";
+}
+
+function humanizeModelKey(key) {
+  return normalizeSpace(
+    String(key || "")
+      .replace(/[-_]+/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase())
+  );
+}
+
+function displayProductName(product) {
+  const model =
+    normalizeSpace(product && product.source_model_name) ||
+    normalizeSpace(product && product.launch_model_name) ||
+    humanizeModelKey(product && product.variant_group_key) ||
+    normalizeSpace(product && product.candidate_name) ||
+    normalizeSpace(product && product.slug);
+  const sku = displaySku(product);
+  return sku && sku !== "STD" && sku !== "-" ? `${model} - ${sku}` : model;
 }
 
 function productIdentityFromUrl(url) {
@@ -676,6 +718,38 @@ function runNodeScript(scriptPath, args) {
   }
 }
 
+function launchPoolCacheCandidates(outDir, requestedMonths) {
+  if (!fs.existsSync(outDir)) return [];
+  return fs
+    .readdirSync(outDir)
+    .filter((name) => /^memory-launch-pool-.*\.json$/.test(name) || /^new-launch-pool.*\.json$/.test(name))
+    .map((name) => {
+      const file = path.join(outDir, name);
+      let meta = null;
+      try {
+        meta = JSON.parse(fs.readFileSync(file, "utf8"));
+      } catch (err) {
+        meta = null;
+      }
+      const windowMonths = Number(meta && meta.window_months);
+      const isWorkflowCache = /^memory-launch-pool-.*\.json$/.test(name);
+      const monthCompatible =
+        !Number.isFinite(windowMonths) || windowMonths >= requestedMonths;
+      return {
+        file,
+        mtimeMs: fs.statSync(file).mtimeMs,
+        isWorkflowCache,
+        monthCompatible,
+        windowMonths: Number.isFinite(windowMonths) ? windowMonths : null,
+      };
+    })
+    .filter((row) => row.monthCompatible)
+    .sort((a, b) => {
+      if (a.isWorkflowCache !== b.isWorkflowCache) return a.isWorkflowCache ? -1 : 1;
+      return b.mtimeMs - a.mtimeMs;
+    });
+}
+
 function loadOrBuildLaunchPool(rootDir, outDir, args, tag) {
   const launchPoolArg = args.launchPool ? path.resolve(String(args.launchPool)) : "";
   if (launchPoolArg) {
@@ -684,7 +758,9 @@ function loadOrBuildLaunchPool(rootDir, outDir, args, tag) {
     return { source, file: launchPoolArg, generated: false };
   }
 
-  const cached = latestMatchingFile(outDir, /^new-launch-pool.*\.json$/);
+  const months = Number(args.launchMonths || 14);
+  const cacheCandidates = launchPoolCacheCandidates(outDir, months);
+  const cached = cacheCandidates[0] ? cacheCandidates[0].file : null;
   const maxCacheAgeDays = Number(args.launchPoolMaxAgeDays || 7);
   const cachedAgeDays = cached
     ? Math.floor((Date.now() - fs.statSync(cached).mtimeMs) / 86400000)
@@ -702,11 +778,11 @@ function loadOrBuildLaunchPool(rootDir, outDir, args, tag) {
         error: null,
         cached: true,
         cache_age_days: cachedAgeDays,
+        cache_policy: `matched_window_months_at_least_${months}`,
       };
     }
   }
 
-  const months = Number(args.launchMonths || 14);
   const launchFile = path.join(outDir, `memory-launch-pool-${tag}.json`);
   try {
     runNodeScript(path.join(rootDir, "scripts", "fetch_new_launch_pool.js"), [
@@ -733,6 +809,7 @@ function loadOrBuildLaunchPool(rootDir, outDir, args, tag) {
         )}`,
         cached: true,
         cache_age_days: cachedAgeDays,
+        cache_policy: `refresh_failed_matched_window_months_at_least_${months}`,
       };
     }
     return {
@@ -1491,6 +1568,7 @@ function buildSummary(products) {
     current_above_baseline: 0,
     no_increase_detected: 0,
     stale_history: 0,
+    sku_needs_review: 0,
     high_sensitive: 0,
     restock_sensitive: 0,
     control: 0,
@@ -1505,11 +1583,77 @@ function buildSummary(products) {
     if (product.memory_analysis && product.memory_analysis.stale_history) {
       summary.stale_history += 1;
     }
+    if (product.sku_status && product.sku_status !== "confirmed") {
+      summary.sku_needs_review += 1;
+    }
     if (summary[product.sensitivity_pool] !== undefined) {
       summary[product.sensitivity_pool] += 1;
     }
   }
   return summary;
+}
+
+function providerLiveCandidateCount(providerStats) {
+  return Object.entries(providerStats || {})
+    .filter(([name]) => name !== "local_fallback")
+    .reduce((sum, [, stats]) => sum + (Number(stats && stats.candidates) || 0), 0);
+}
+
+function buildDataHealth(report) {
+  const providerStats = (report.stats && report.stats.provider_stats) || {};
+  const liveCandidates = providerLiveCandidateCount(providerStats);
+  const fallbackUsed = Boolean(providerStats.local_fallback && providerStats.local_fallback.used);
+  const products = Number(report.stats && report.stats.products) || 0;
+  const staleHistories = Number(report.summary && report.summary.stale_history) || 0;
+  const allStale = products > 0 && staleHistories === products;
+  const blockers = [];
+
+  if (products <= 0) {
+    blockers.push("No resolved products made it into the report.");
+  }
+  if (liveCandidates <= 0) {
+    blockers.push("No live current-store candidates were collected.");
+  }
+  if (fallbackUsed) {
+    blockers.push("Local fallback candidates were used, so ranking is watchlist context rather than current top sellers.");
+  }
+  if (allStale) {
+    blockers.push("All price histories are stale against the configured freshness threshold.");
+  }
+  if (Number(report.summary && report.summary.sku_needs_review) > 0) {
+    blockers.push("Some SKUs have unknown RAM/storage and need manual review.");
+  }
+
+  let status = "healthy";
+  if (products <= 0) {
+    status = "failed";
+  } else if (liveCandidates <= 0 || fallbackUsed || allStale) {
+    status = "degraded";
+  }
+
+  return {
+    status,
+    label:
+      status === "healthy"
+        ? "Healthy"
+        : status === "degraded"
+          ? "Degraded"
+          : "Failed",
+    official_top10: status === "healthy",
+    live_current_store_candidates: liveCandidates,
+    fallback_used: fallbackUsed,
+    all_histories_stale: allStale,
+    blockers,
+  };
+}
+
+function statusClassName(status, staleHistory) {
+  const value = String(status || "");
+  if (staleHistory) return "stale";
+  if (value.includes("sustained_increase") || value.includes("possible_increase")) return "risk";
+  if (value.includes("current_above_baseline")) return "watch";
+  if (value.includes("insufficient")) return "stale";
+  return "ok";
 }
 
 function statusLabel(status) {
@@ -1558,6 +1702,27 @@ function expandToStepEvents(events) {
   return out;
 }
 
+function observedPriceEvents(product, events) {
+  const valid = (events || [])
+    .filter((e) => Number.isFinite(e.timestamp_sec) && Number.isFinite(e.price_inr))
+    .sort((a, b) => a.timestamp_sec - b.timestamp_sec);
+  if (!valid.length) return valid;
+  const observationSec = lastObservationSec(product);
+  const last = valid[valid.length - 1];
+  if (Number.isFinite(observationSec) && observationSec > last.timestamp_sec) {
+    return [
+      ...valid,
+      {
+        timestamp_sec: observationSec,
+        timestamp_iso: timestampToIso(observationSec),
+        price_inr: last.price_inr,
+        synthetic_observation: true,
+      },
+    ];
+  }
+  return valid;
+}
+
 function chartSvg(events, opts) {
   const w = 960;
   const h = opts.height || 250;
@@ -1574,7 +1739,10 @@ function chartSvg(events, opts) {
   const maxX = Math.max(...xs);
   const minYRaw = Math.min(...ys);
   const maxYRaw = Math.max(...ys);
-  const spanY = Math.max(1, maxYRaw - minYRaw);
+  const flatPrice = minYRaw === maxYRaw;
+  const spanY = flatPrice
+    ? Math.max(1000, Math.round(minYRaw * 0.02))
+    : Math.max(1, maxYRaw - minYRaw);
   const minY = minYRaw - spanY * 0.08;
   const maxY = maxYRaw + spanY * 0.08;
   const xRange = Math.max(1, maxX - minX);
@@ -1597,14 +1765,22 @@ function chartSvg(events, opts) {
     ? `<line x1="${xMap(markerSec).toFixed(2)}" y1="${p.t}" x2="${xMap(markerSec).toFixed(2)}" y2="${h - p.b}" stroke="#dc2626" stroke-dasharray="4 4"/><text x="${xMap(markerSec).toFixed(2)}" y="${p.t + 12}" text-anchor="middle" fill="#dc2626" font-size="10">impact start</text>`
     : "";
   const labels = [valid[0], valid[Math.floor(valid.length / 2)], valid[valid.length - 1]]
+    .filter(Boolean)
+    .filter((event, idx, arr) =>
+      arr.findIndex((candidate) => candidate.timestamp_sec === event.timestamp_sec) === idx
+    )
     .map((e) => `<text x="${xMap(e.timestamp_sec).toFixed(2)}" y="${h - 10}" text-anchor="middle" fill="#64748b" font-size="10">${escapeHtml(fmtDate(e.timestamp_iso))}</text>`)
     .join("");
+  const flatNote = flatPrice
+    ? `<text x="${w - p.r}" y="${p.t + 14}" text-anchor="end" fill="#64748b" font-size="11">flat observed price</text>`
+    : "";
   return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${escapeHtml(opts.label || "Price chart")}">
 <rect x="0" y="0" width="${w}" height="${h}" fill="#fff"/>
 ${ticks.join("")}
 ${marker}
 <line x1="${p.l}" y1="${h - p.b}" x2="${w - p.r}" y2="${h - p.b}" stroke="#cbd5e1"/>
 <polyline fill="none" stroke="${opts.color || "#2563eb"}" stroke-width="2.4" points="${line}"/>
+${flatNote}
 ${labels}
 </svg>`;
 }
@@ -1629,14 +1805,13 @@ function impactEvents(product, impactStart) {
 
 function renderProductCard(product, idx, report) {
   const analysis = product.memory_analysis || {};
-  const impact = impactEvents(product, report.input.impact_start);
-  const full = product.price_change_events || [];
+  const impact = observedPriceEvents(product, impactEvents(product, report.input.impact_start));
+  const full = observedPriceEvents(product, product.price_change_events || []);
   const status = statusLabel(analysis.status);
-  const statusClass = String(analysis.status || "").includes("increase")
-    ? "risk"
-    : analysis.stale_history
-      ? "stale"
-      : "ok";
+  const statusClass = statusClassName(analysis.status, analysis.stale_history);
+  const displayName = displayProductName(product);
+  const sku = displaySku(product);
+  const rawName = normalizeSpace(product.candidate_name || product.slug);
   const recentRows = (analysis.recent_transitions || [])
     .map((t) => `<tr>
 <td>${escapeHtml(fmtDate(t.timestamp_iso))}</td>
@@ -1649,8 +1824,8 @@ function renderProductCard(product, idx, report) {
   return `<section class="card">
 <div class="card-head">
   <div>
-    <h2>${idx + 1}. ${escapeHtml(product.candidate_name || product.slug)}</h2>
-    <p>${escapeHtml(product.sensitivity_pool)} | ${escapeHtml(product.variant_label)} | ${escapeHtml(product.store_name || product.store_key || "-")}</p>
+    <h2 title="${escapeHtml(rawName)}">${idx + 1}. ${escapeHtml(displayName)}</h2>
+    <p>${escapeHtml(product.sensitivity_pool)} | ${escapeHtml(sku)} | SKU ${escapeHtml(skuStatusLabel(product.sku_status))} | ${escapeHtml(product.store_name || product.store_key || "-")}</p>
   </div>
   <span class="status ${statusClass}">${escapeHtml(status)}</span>
 </div>
@@ -1690,6 +1865,7 @@ ${recentRows ? `<div class="table-wrap"><table><thead><tr><th>Date</th><th>From<
 function renderHtml(report) {
   const products = report.products || [];
   const summary = report.summary || {};
+  const dataHealth = report.data_health || buildDataHealth(report);
   const providers = (report.stats && report.stats.provider_stats) || {};
   const providerRows = Object.entries(providers)
     .map(([name, stats]) => `<tr>
@@ -1705,9 +1881,10 @@ function renderHtml(report) {
     .map((product) => {
       const a = product.memory_analysis || {};
       return `<tr>
-<td>${escapeHtml(product.candidate_name || product.slug)}</td>
+<td title="${escapeHtml(product.candidate_name || product.slug)}">${escapeHtml(displayProductName(product))}</td>
 <td>${escapeHtml(product.sensitivity_pool || "-")}</td>
-<td>${escapeHtml(product.variant_label || "-")}</td>
+<td>${escapeHtml(displaySku(product))}</td>
+<td>${escapeHtml(skuStatusLabel(product.sku_status))}</td>
 <td>${escapeHtml(statusLabel(a.status))}</td>
 <td>${escapeHtml(fmtInr(product.current_price_inr))}</td>
 <td>${escapeHtml(fmtInr(a.baseline_price_inr))}</td>
@@ -1717,6 +1894,14 @@ function renderHtml(report) {
 <td>${a.stale_history ? "yes" : "no"}</td>
 </tr>`;
     })
+    .join("");
+  const healthClass = `health-${String(dataHealth.status || "failed")}`;
+  const blockerRows = (dataHealth.blockers || [])
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("");
+  const errorRows = (report.errors || [])
+    .slice(0, 8)
+    .map((err) => `<li>${escapeHtml(err)}</li>`)
     .join("");
   return `<!doctype html>
 <html lang="en">
@@ -1737,7 +1922,11 @@ p{margin:4px 0;color:var(--muted)}
 .summary span,.metrics span{display:block;color:var(--muted);font-size:12px}.summary strong,.metrics strong{display:block;font-size:18px;margin-top:4px}
 .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .status{white-space:nowrap;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:700;background:#eef2ff;color:#3730a3}
-.status.risk{background:#fee2e2;color:#991b1b}.status.ok{background:#dcfce7;color:#166534}.status.stale{background:#fef3c7;color:#92400e}
+.status.risk{background:#fee2e2;color:#991b1b}.status.ok{background:#dcfce7;color:#166534}.status.stale{background:#fef3c7;color:#92400e}.status.watch{background:#ffedd5;color:#9a3412}
+.health{display:grid;grid-template-columns:minmax(190px,260px) 1fr;gap:12px;margin-top:12px;border:1px solid var(--border);border-radius:8px;padding:12px;background:#f8fafc}
+.health strong{display:block;font-size:22px}.health span{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+.health-healthy{border-color:#bbf7d0;background:#f0fdf4}.health-degraded{border-color:#fde68a;background:#fffbeb}.health-failed{border-color:#fecaca;background:#fef2f2}
+.health ul{margin:6px 0 0 18px;padding:0;color:#334155}.health li{margin:3px 0}
 .metrics{display:grid;grid-template-columns:repeat(6,minmax(130px,1fr));gap:8px;margin-top:12px}
 .note{color:#334155;background:#f8fafc;border-left:3px solid var(--blue);padding:8px 10px;margin-top:10px}
 .charts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -1754,6 +1943,18 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
   <h1>Memory Cost Pass-through Report</h1>
   <p>Generated: ${escapeHtml(report.generated_at)} | Impact start: ${escapeHtml(report.input.impact_start)} | Range: INR ${escapeHtml(report.input.min_price)}-${escapeHtml(report.input.max_price)}</p>
   <p>Store source: Flipkart current candidates first; Pricehistory is used only for historical price lookup.</p>
+  <div class="health ${healthClass}">
+    <div>
+      <span>Data Health</span>
+      <strong>${escapeHtml(dataHealth.label)}</strong>
+      <p>${dataHealth.official_top10 ? "Official current top10 view" : "Watchlist context, not an official current top10"}</p>
+    </div>
+    <div>
+      <p>Live current-store candidates: ${escapeHtml(String(dataHealth.live_current_store_candidates || 0))} | Local fallback used: ${dataHealth.fallback_used ? "yes" : "no"}</p>
+      ${blockerRows ? `<ul>${blockerRows}</ul>` : ""}
+      ${errorRows ? `<details><summary>Errors and warnings</summary><ul>${errorRows}</ul></details>` : ""}
+    </div>
+  </div>
   <div class="summary">
     <div><span>Products</span><strong>${summary.products || 0}</strong></div>
     <div><span>Sustained increases</span><strong>${summary.sustained_increase || 0}</strong></div>
@@ -1761,11 +1962,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:8px;borde
     <div><span>Above baseline</span><strong>${summary.current_above_baseline || 0}</strong></div>
     <div><span>No increase</span><strong>${summary.no_increase_detected || 0}</strong></div>
     <div><span>Stale histories</span><strong>${summary.stale_history || 0}</strong></div>
+    <div><span>SKU review</span><strong>${summary.sku_needs_review || 0}</strong></div>
   </div>
 </section>
 <section class="card">
-  <h2>Watchlist</h2>
-  <div class="table-wrap"><table><thead><tr><th>Model</th><th>Pool</th><th>SKU</th><th>Status</th><th>Current</th><th>Baseline</th><th>Delta</th><th>First increase</th><th>Sustained days</th><th>Stale</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <h2>${dataHealth.official_top10 ? "Current Top Watchlist" : "Fallback Watchlist"}</h2>
+  <div class="table-wrap"><table><thead><tr><th>Model</th><th>Pool</th><th>SKU</th><th>SKU Quality</th><th>Status</th><th>Current</th><th>Baseline</th><th>Delta</th><th>First increase</th><th>Sustained days</th><th>Stale</th></tr></thead><tbody>${rows}</tbody></table></div>
 </section>
 <section class="card">
   <h2>Candidate Providers</h2>
@@ -1892,6 +2094,8 @@ async function main() {
       if (statusDiff !== 0) return statusDiff;
       const poolDiff = poolRank(a.sensitivity_pool) - poolRank(b.sensitivity_pool);
       if (poolDiff !== 0) return poolDiff;
+      const skuDiff = skuStatusRank(a.sku_status) - skuStatusRank(b.sku_status);
+      if (skuDiff !== 0) return skuDiff;
       return (Number(b.sellwell_score) || 0) - (Number(a.sellwell_score) || 0);
     })
     .slice(0, topN);
@@ -1914,6 +2118,7 @@ async function main() {
       launch_pool_cache_age_days: Number.isFinite(launchPool.cache_age_days)
         ? launchPool.cache_age_days
         : null,
+      launch_pool_cache_policy: launchPool.cache_policy || null,
     },
     stats: {
       launch_models: launchModels.length,
@@ -1928,6 +2133,7 @@ async function main() {
     products: consolidated,
     errors,
   };
+  report.data_health = buildDataHealth(report);
 
   fs.writeFileSync(jsonOut, JSON.stringify(report, null, 2), "utf8");
   fs.writeFileSync(htmlOut, renderHtml(report), "utf8");
