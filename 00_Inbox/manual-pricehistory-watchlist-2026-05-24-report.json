@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-24T04:12:27.308Z",
+  "generated_at": "2026-05-24T04:33:04.683Z",
   "workflow": "manual_list_store_link_then_pricebefore",
   "constraints": {
     "market": "India",
@@ -49879,13 +49879,13 @@
       {
         "brand_key": "oppo",
         "brand_label": "OPPO",
-        "model_count": 6,
+        "model_count": 5,
         "variant_count": 9,
-        "representative_count": 5,
-        "up_models": 2,
+        "representative_count": 4,
+        "up_models": 1,
         "down_models": 0,
         "flat_models": 3,
-        "net_recent_delta_inr": 4000,
+        "net_recent_delta_inr": 2000,
         "latest_event": {
           "model": "OPPO Reno15 5G (Twilight Blue, 256 GB)",
           "sku": "8GB+256GB",
@@ -49905,7 +49905,7 @@
         "biggest_decrease": null,
         "market_event_touches": 0,
         "unresolved_models": 1,
-        "attention_score": 7.066666666666666,
+        "attention_score": 4.4,
         "attention_level": "中",
         "strategy_tags": [
           "价格回收/成本传导",
@@ -49918,7 +49918,7 @@
             "query": "oppo reno 15",
             "family_key": "oppo-reno-15",
             "status": "store_exact_match",
-            "variant_count": 1,
+            "variant_count": 2,
             "variants": [
               {
                 "sku": "8GB+256GB",
@@ -49948,6 +49948,464 @@
                   {
                     "title": "OPPO Reno15 5G (Glacier White, 256 GB)",
                     "product_url": "https://www.flipkart.com/oppo-reno15-5g-glacier-white-256-gb/p/itm37cc91d1c2807?pid=MOBHGZZ9YK5DRXSW&lid=LSTMOBHGZZ9YK5DRXSWFNAPAE&marketplace=FLIPKART&q=oppo+reno+15+mobile&store=tyy%2F4io&srno=s_1_3&otracker=search&fm=organic&iid=846b27ce-44b9-48bf-bdcb-500ee4353643.MOBHGZZ9YK5DRXSW.SEARCH&ppt=None&ppn=None&ssid=zvle7at0kg0000001779470453700&qH=a83ef3e57d6b22dc&ov_redirect=true",
+                    "store": "Flipkart",
+                    "price": 47999,
+                    "availability": "listed"
+                  }
+                ],
+                "pricehistory_live_status": "not_needed_pricebefore_history_found",
+                "cached_history_status": "pricebefore_history_found",
+                "pricehistory_page_url": "",
+                "pricebefore_page_url": "https://www.pricebefore.com/oppo-reno15-5g-twilight-blue-256-p844836.html",
+                "history_page_url": "https://www.pricebefore.com/oppo-reno15-5g-twilight-blue-256-p844836.html",
+                "history_source_file": "manual-pricebefore-history-cache-2026-05-23.json",
+                "price_source": "pricebefore",
+                "history_source_note": "PriceBefore page daily chart data parsed from product HTML.",
+                "first_seen_price_at": "2026-03-08T00:00:00.000Z",
+                "first_seen_price_inr": 45999,
+                "lowest_price_inr": 45999,
+                "highest_price_inr": 47999,
+                "average_price_inr": 46736,
+                "price_tracking_days": null,
+                "highest_price_at": "",
+                "price_change_events": [
+                  {
+                    "timestamp_sec": 1772928000,
+                    "timestamp_iso": "2026-03-08T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1777075200,
+                    "timestamp_iso": "2026-04-25T00:00:00.000Z",
+                    "price_inr": 47999
+                  }
+                ],
+                "raw_price_points": [
+                  {
+                    "timestamp_sec": 1772928000,
+                    "timestamp_iso": "2026-03-08T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773014400,
+                    "timestamp_iso": "2026-03-09T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773100800,
+                    "timestamp_iso": "2026-03-10T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773187200,
+                    "timestamp_iso": "2026-03-11T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773273600,
+                    "timestamp_iso": "2026-03-12T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773360000,
+                    "timestamp_iso": "2026-03-13T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773446400,
+                    "timestamp_iso": "2026-03-14T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773532800,
+                    "timestamp_iso": "2026-03-15T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773619200,
+                    "timestamp_iso": "2026-03-16T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773705600,
+                    "timestamp_iso": "2026-03-17T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773792000,
+                    "timestamp_iso": "2026-03-18T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773878400,
+                    "timestamp_iso": "2026-03-19T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1773964800,
+                    "timestamp_iso": "2026-03-20T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1774051200,
+                    "timestamp_iso": "2026-03-21T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1774137600,
+                    "timestamp_iso": "2026-03-22T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1774224000,
+                    "timestamp_iso": "2026-03-23T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1774310400,
+                    "timestamp_iso": "2026-03-24T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1774396800,
+                    "timestamp_iso": "2026-03-25T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1774483200,
+                    "timestamp_iso": "2026-03-26T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1774569600,
+                    "timestamp_iso": "2026-03-27T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1774656000,
+                    "timestamp_iso": "2026-03-28T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1774742400,
+                    "timestamp_iso": "2026-03-29T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1774828800,
+                    "timestamp_iso": "2026-03-30T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1774915200,
+                    "timestamp_iso": "2026-03-31T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775001600,
+                    "timestamp_iso": "2026-04-01T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775088000,
+                    "timestamp_iso": "2026-04-02T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775174400,
+                    "timestamp_iso": "2026-04-03T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775260800,
+                    "timestamp_iso": "2026-04-04T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775347200,
+                    "timestamp_iso": "2026-04-05T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775433600,
+                    "timestamp_iso": "2026-04-06T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775520000,
+                    "timestamp_iso": "2026-04-07T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775606400,
+                    "timestamp_iso": "2026-04-08T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775692800,
+                    "timestamp_iso": "2026-04-09T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775779200,
+                    "timestamp_iso": "2026-04-10T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775865600,
+                    "timestamp_iso": "2026-04-11T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1775952000,
+                    "timestamp_iso": "2026-04-12T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776038400,
+                    "timestamp_iso": "2026-04-13T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776124800,
+                    "timestamp_iso": "2026-04-14T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776211200,
+                    "timestamp_iso": "2026-04-15T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776297600,
+                    "timestamp_iso": "2026-04-16T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776384000,
+                    "timestamp_iso": "2026-04-17T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776470400,
+                    "timestamp_iso": "2026-04-18T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776556800,
+                    "timestamp_iso": "2026-04-19T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776643200,
+                    "timestamp_iso": "2026-04-20T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776729600,
+                    "timestamp_iso": "2026-04-21T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776816000,
+                    "timestamp_iso": "2026-04-22T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776902400,
+                    "timestamp_iso": "2026-04-23T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1776988800,
+                    "timestamp_iso": "2026-04-24T00:00:00.000Z",
+                    "price_inr": 45999
+                  },
+                  {
+                    "timestamp_sec": 1777075200,
+                    "timestamp_iso": "2026-04-25T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1777161600,
+                    "timestamp_iso": "2026-04-26T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1777248000,
+                    "timestamp_iso": "2026-04-27T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1777334400,
+                    "timestamp_iso": "2026-04-28T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1777420800,
+                    "timestamp_iso": "2026-04-29T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1777507200,
+                    "timestamp_iso": "2026-04-30T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1777593600,
+                    "timestamp_iso": "2026-05-01T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1777680000,
+                    "timestamp_iso": "2026-05-02T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1777766400,
+                    "timestamp_iso": "2026-05-03T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1777852800,
+                    "timestamp_iso": "2026-05-04T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1777939200,
+                    "timestamp_iso": "2026-05-05T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778025600,
+                    "timestamp_iso": "2026-05-06T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778112000,
+                    "timestamp_iso": "2026-05-07T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778198400,
+                    "timestamp_iso": "2026-05-08T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778284800,
+                    "timestamp_iso": "2026-05-09T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778371200,
+                    "timestamp_iso": "2026-05-10T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778457600,
+                    "timestamp_iso": "2026-05-11T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778544000,
+                    "timestamp_iso": "2026-05-12T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778630400,
+                    "timestamp_iso": "2026-05-13T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778716800,
+                    "timestamp_iso": "2026-05-14T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778803200,
+                    "timestamp_iso": "2026-05-15T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778889600,
+                    "timestamp_iso": "2026-05-16T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1778976000,
+                    "timestamp_iso": "2026-05-17T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1779062400,
+                    "timestamp_iso": "2026-05-18T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1779148800,
+                    "timestamp_iso": "2026-05-19T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1779235200,
+                    "timestamp_iso": "2026-05-20T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1779321600,
+                    "timestamp_iso": "2026-05-21T00:00:00.000Z",
+                    "price_inr": 47999
+                  },
+                  {
+                    "timestamp_sec": 1779408000,
+                    "timestamp_iso": "2026-05-22T00:00:00.000Z",
+                    "price_inr": 47999
+                  }
+                ],
+                "analysis": {
+                  "points_count": 76,
+                  "price_change_count": 1,
+                  "first_price_at": "2026-03-08T00:00:00.000Z",
+                  "latest_price_at": "2026-05-22T00:00:00.000Z",
+                  "latest_history_price_inr": 47999,
+                  "recent_baseline_price_inr": 45999,
+                  "recent_delta_inr": 2000,
+                  "recent_delta_pct": 4.3479206069697165,
+                  "launch_delta_inr": 2000,
+                  "launch_delta_pct": 4.3479206069697165,
+                  "recent_direction": "up",
+                  "recent_events_count": 1,
+                  "last_event": {
+                    "timestamp_sec": 1777075200,
+                    "timestamp_iso": "2026-04-25T00:00:00.000Z",
+                    "price_inr": 47999,
+                    "delta_inr": 2000
+                  },
+                  "max_abs_step_inr": 2000,
+                  "near_market_event": false
+                }
+              },
+              {
+                "sku": "8GB+256GB",
+                "title": "OPPO Reno15 5G (Twilight Blue, 256 GB)",
+                "store": "Flipkart",
+                "store_key": "flipkart",
+                "product_url": "https://www.flipkart.com/oppo-reno15-5g-twilight-blue-256-gb/p/itm37cc91d1c2807?pid=MOBHGZZ9N4M9VGST&lid=LSTMOBHGZZ9N4M9VGSTENSVUV&marketplace=FLIPKART&q=oppo+reno+15+pro+mobile&store=tyy%2F4io&srno=s_1_1",
+                "current_store_price_inr": 47999,
+                "rating_count": 5649,
+                "availability": "listed",
+                "listing_rank": 1,
+                "same_sku_candidates": [
+                  {
+                    "title": "OPPO Reno15 5G (Twilight Blue, 256 GB)",
+                    "product_url": "https://www.flipkart.com/oppo-reno15-5g-twilight-blue-256-gb/p/itm37cc91d1c2807?pid=MOBHGZZ9N4M9VGST&lid=LSTMOBHGZZ9N4M9VGSTENSVUV&marketplace=FLIPKART&q=oppo+reno+15+pro+mobile&store=tyy%2F4io&srno=s_1_1",
+                    "store": "Flipkart",
+                    "price": 47999,
+                    "availability": "listed"
+                  },
+                  {
+                    "title": "OPPO Reno15 5G (Glacier White, 256 GB)",
+                    "product_url": "https://www.flipkart.com/oppo-reno15-5g-glacier-white-256-gb/p/itm37cc91d1c2807?pid=MOBHGZZ9YK5DRXSW&lid=LSTMOBHGZZ9YK5DRXSWFNAPAE&marketplace=FLIPKART&q=oppo+reno+15+pro+mobile&store=tyy%2F4io&srno=s_1_2",
                     "store": "Flipkart",
                     "price": 47999,
                     "availability": "listed"
@@ -50449,948 +50907,6 @@
                 {
                   "title": "OPPO Reno15 5G (Glacier White, 256 GB)",
                   "product_url": "https://www.flipkart.com/oppo-reno15-5g-glacier-white-256-gb/p/itm37cc91d1c2807?pid=MOBHGZZ9YK5DRXSW&lid=LSTMOBHGZZ9YK5DRXSWFNAPAE&marketplace=FLIPKART&q=oppo+reno+15+mobile&store=tyy%2F4io&srno=s_1_3&otracker=search&fm=organic&iid=846b27ce-44b9-48bf-bdcb-500ee4353643.MOBHGZZ9YK5DRXSW.SEARCH&ppt=None&ppn=None&ssid=zvle7at0kg0000001779470453700&qH=a83ef3e57d6b22dc&ov_redirect=true",
-                  "store": "Flipkart",
-                  "price": 47999,
-                  "availability": "listed"
-                }
-              ],
-              "pricehistory_live_status": "not_needed_pricebefore_history_found",
-              "cached_history_status": "pricebefore_history_found",
-              "pricehistory_page_url": "",
-              "pricebefore_page_url": "https://www.pricebefore.com/oppo-reno15-5g-twilight-blue-256-p844836.html",
-              "history_page_url": "https://www.pricebefore.com/oppo-reno15-5g-twilight-blue-256-p844836.html",
-              "history_source_file": "manual-pricebefore-history-cache-2026-05-23.json",
-              "price_source": "pricebefore",
-              "history_source_note": "PriceBefore page daily chart data parsed from product HTML.",
-              "first_seen_price_at": "2026-03-08T00:00:00.000Z",
-              "first_seen_price_inr": 45999,
-              "lowest_price_inr": 45999,
-              "highest_price_inr": 47999,
-              "average_price_inr": 46736,
-              "price_tracking_days": null,
-              "highest_price_at": "",
-              "price_change_events": [
-                {
-                  "timestamp_sec": 1772928000,
-                  "timestamp_iso": "2026-03-08T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1777075200,
-                  "timestamp_iso": "2026-04-25T00:00:00.000Z",
-                  "price_inr": 47999
-                }
-              ],
-              "raw_price_points": [
-                {
-                  "timestamp_sec": 1772928000,
-                  "timestamp_iso": "2026-03-08T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773014400,
-                  "timestamp_iso": "2026-03-09T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773100800,
-                  "timestamp_iso": "2026-03-10T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773187200,
-                  "timestamp_iso": "2026-03-11T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773273600,
-                  "timestamp_iso": "2026-03-12T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773360000,
-                  "timestamp_iso": "2026-03-13T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773446400,
-                  "timestamp_iso": "2026-03-14T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773532800,
-                  "timestamp_iso": "2026-03-15T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773619200,
-                  "timestamp_iso": "2026-03-16T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773705600,
-                  "timestamp_iso": "2026-03-17T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773792000,
-                  "timestamp_iso": "2026-03-18T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773878400,
-                  "timestamp_iso": "2026-03-19T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1773964800,
-                  "timestamp_iso": "2026-03-20T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1774051200,
-                  "timestamp_iso": "2026-03-21T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1774137600,
-                  "timestamp_iso": "2026-03-22T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1774224000,
-                  "timestamp_iso": "2026-03-23T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1774310400,
-                  "timestamp_iso": "2026-03-24T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1774396800,
-                  "timestamp_iso": "2026-03-25T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1774483200,
-                  "timestamp_iso": "2026-03-26T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1774569600,
-                  "timestamp_iso": "2026-03-27T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1774656000,
-                  "timestamp_iso": "2026-03-28T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1774742400,
-                  "timestamp_iso": "2026-03-29T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1774828800,
-                  "timestamp_iso": "2026-03-30T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1774915200,
-                  "timestamp_iso": "2026-03-31T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775001600,
-                  "timestamp_iso": "2026-04-01T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775088000,
-                  "timestamp_iso": "2026-04-02T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775174400,
-                  "timestamp_iso": "2026-04-03T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775260800,
-                  "timestamp_iso": "2026-04-04T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775347200,
-                  "timestamp_iso": "2026-04-05T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775433600,
-                  "timestamp_iso": "2026-04-06T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775520000,
-                  "timestamp_iso": "2026-04-07T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775606400,
-                  "timestamp_iso": "2026-04-08T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775692800,
-                  "timestamp_iso": "2026-04-09T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775779200,
-                  "timestamp_iso": "2026-04-10T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775865600,
-                  "timestamp_iso": "2026-04-11T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1775952000,
-                  "timestamp_iso": "2026-04-12T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776038400,
-                  "timestamp_iso": "2026-04-13T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776124800,
-                  "timestamp_iso": "2026-04-14T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776211200,
-                  "timestamp_iso": "2026-04-15T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776297600,
-                  "timestamp_iso": "2026-04-16T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776384000,
-                  "timestamp_iso": "2026-04-17T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776470400,
-                  "timestamp_iso": "2026-04-18T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776556800,
-                  "timestamp_iso": "2026-04-19T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776643200,
-                  "timestamp_iso": "2026-04-20T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776729600,
-                  "timestamp_iso": "2026-04-21T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776816000,
-                  "timestamp_iso": "2026-04-22T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776902400,
-                  "timestamp_iso": "2026-04-23T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1776988800,
-                  "timestamp_iso": "2026-04-24T00:00:00.000Z",
-                  "price_inr": 45999
-                },
-                {
-                  "timestamp_sec": 1777075200,
-                  "timestamp_iso": "2026-04-25T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1777161600,
-                  "timestamp_iso": "2026-04-26T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1777248000,
-                  "timestamp_iso": "2026-04-27T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1777334400,
-                  "timestamp_iso": "2026-04-28T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1777420800,
-                  "timestamp_iso": "2026-04-29T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1777507200,
-                  "timestamp_iso": "2026-04-30T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1777593600,
-                  "timestamp_iso": "2026-05-01T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1777680000,
-                  "timestamp_iso": "2026-05-02T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1777766400,
-                  "timestamp_iso": "2026-05-03T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1777852800,
-                  "timestamp_iso": "2026-05-04T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1777939200,
-                  "timestamp_iso": "2026-05-05T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778025600,
-                  "timestamp_iso": "2026-05-06T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778112000,
-                  "timestamp_iso": "2026-05-07T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778198400,
-                  "timestamp_iso": "2026-05-08T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778284800,
-                  "timestamp_iso": "2026-05-09T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778371200,
-                  "timestamp_iso": "2026-05-10T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778457600,
-                  "timestamp_iso": "2026-05-11T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778544000,
-                  "timestamp_iso": "2026-05-12T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778630400,
-                  "timestamp_iso": "2026-05-13T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778716800,
-                  "timestamp_iso": "2026-05-14T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778803200,
-                  "timestamp_iso": "2026-05-15T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778889600,
-                  "timestamp_iso": "2026-05-16T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1778976000,
-                  "timestamp_iso": "2026-05-17T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1779062400,
-                  "timestamp_iso": "2026-05-18T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1779148800,
-                  "timestamp_iso": "2026-05-19T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1779235200,
-                  "timestamp_iso": "2026-05-20T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1779321600,
-                  "timestamp_iso": "2026-05-21T00:00:00.000Z",
-                  "price_inr": 47999
-                },
-                {
-                  "timestamp_sec": 1779408000,
-                  "timestamp_iso": "2026-05-22T00:00:00.000Z",
-                  "price_inr": 47999
-                }
-              ],
-              "analysis": {
-                "points_count": 76,
-                "price_change_count": 1,
-                "first_price_at": "2026-03-08T00:00:00.000Z",
-                "latest_price_at": "2026-05-22T00:00:00.000Z",
-                "latest_history_price_inr": 47999,
-                "recent_baseline_price_inr": 45999,
-                "recent_delta_inr": 2000,
-                "recent_delta_pct": 4.3479206069697165,
-                "launch_delta_inr": 2000,
-                "launch_delta_pct": 4.3479206069697165,
-                "recent_direction": "up",
-                "recent_events_count": 1,
-                "last_event": {
-                  "timestamp_sec": 1777075200,
-                  "timestamp_iso": "2026-04-25T00:00:00.000Z",
-                  "price_inr": 47999,
-                  "delta_inr": 2000
-                },
-                "max_abs_step_inr": 2000,
-                "near_market_event": false
-              }
-            },
-            "hidden_variants": []
-          },
-          {
-            "query": "OPPO Reno15 5G selected SKUs",
-            "family_key": "oppo-reno15-selected-skus",
-            "status": "store_exact_match",
-            "variant_count": 1,
-            "variants": [
-              {
-                "sku": "8GB+256GB",
-                "title": "OPPO Reno15 5G (Twilight Blue, 256 GB)",
-                "store": "Flipkart",
-                "store_key": "flipkart",
-                "product_url": "https://www.flipkart.com/oppo-reno15-5g-twilight-blue-256-gb/p/itm37cc91d1c2807?pid=MOBHGZZ9N4M9VGST&lid=LSTMOBHGZZ9N4M9VGSTENSVUV&marketplace=FLIPKART&q=oppo+reno+15+pro+mobile&store=tyy%2F4io&srno=s_1_1",
-                "current_store_price_inr": 47999,
-                "rating_count": 5649,
-                "availability": "listed",
-                "listing_rank": 1,
-                "same_sku_candidates": [
-                  {
-                    "title": "OPPO Reno15 5G (Twilight Blue, 256 GB)",
-                    "product_url": "https://www.flipkart.com/oppo-reno15-5g-twilight-blue-256-gb/p/itm37cc91d1c2807?pid=MOBHGZZ9N4M9VGST&lid=LSTMOBHGZZ9N4M9VGSTENSVUV&marketplace=FLIPKART&q=oppo+reno+15+pro+mobile&store=tyy%2F4io&srno=s_1_1",
-                    "store": "Flipkart",
-                    "price": 47999,
-                    "availability": "listed"
-                  },
-                  {
-                    "title": "OPPO Reno15 5G (Glacier White, 256 GB)",
-                    "product_url": "https://www.flipkart.com/oppo-reno15-5g-glacier-white-256-gb/p/itm37cc91d1c2807?pid=MOBHGZZ9YK5DRXSW&lid=LSTMOBHGZZ9YK5DRXSWFNAPAE&marketplace=FLIPKART&q=oppo+reno+15+pro+mobile&store=tyy%2F4io&srno=s_1_2",
-                    "store": "Flipkart",
-                    "price": 47999,
-                    "availability": "listed"
-                  }
-                ],
-                "pricehistory_live_status": "not_needed_pricebefore_history_found",
-                "cached_history_status": "pricebefore_history_found",
-                "pricehistory_page_url": "",
-                "pricebefore_page_url": "https://www.pricebefore.com/oppo-reno15-5g-twilight-blue-256-p844836.html",
-                "history_page_url": "https://www.pricebefore.com/oppo-reno15-5g-twilight-blue-256-p844836.html",
-                "history_source_file": "manual-pricebefore-history-cache-2026-05-23.json",
-                "price_source": "pricebefore",
-                "history_source_note": "PriceBefore page daily chart data parsed from product HTML.",
-                "first_seen_price_at": "2026-03-08T00:00:00.000Z",
-                "first_seen_price_inr": 45999,
-                "lowest_price_inr": 45999,
-                "highest_price_inr": 47999,
-                "average_price_inr": 46736,
-                "price_tracking_days": null,
-                "highest_price_at": "",
-                "price_change_events": [
-                  {
-                    "timestamp_sec": 1772928000,
-                    "timestamp_iso": "2026-03-08T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1777075200,
-                    "timestamp_iso": "2026-04-25T00:00:00.000Z",
-                    "price_inr": 47999
-                  }
-                ],
-                "raw_price_points": [
-                  {
-                    "timestamp_sec": 1772928000,
-                    "timestamp_iso": "2026-03-08T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773014400,
-                    "timestamp_iso": "2026-03-09T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773100800,
-                    "timestamp_iso": "2026-03-10T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773187200,
-                    "timestamp_iso": "2026-03-11T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773273600,
-                    "timestamp_iso": "2026-03-12T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773360000,
-                    "timestamp_iso": "2026-03-13T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773446400,
-                    "timestamp_iso": "2026-03-14T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773532800,
-                    "timestamp_iso": "2026-03-15T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773619200,
-                    "timestamp_iso": "2026-03-16T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773705600,
-                    "timestamp_iso": "2026-03-17T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773792000,
-                    "timestamp_iso": "2026-03-18T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773878400,
-                    "timestamp_iso": "2026-03-19T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1773964800,
-                    "timestamp_iso": "2026-03-20T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1774051200,
-                    "timestamp_iso": "2026-03-21T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1774137600,
-                    "timestamp_iso": "2026-03-22T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1774224000,
-                    "timestamp_iso": "2026-03-23T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1774310400,
-                    "timestamp_iso": "2026-03-24T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1774396800,
-                    "timestamp_iso": "2026-03-25T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1774483200,
-                    "timestamp_iso": "2026-03-26T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1774569600,
-                    "timestamp_iso": "2026-03-27T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1774656000,
-                    "timestamp_iso": "2026-03-28T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1774742400,
-                    "timestamp_iso": "2026-03-29T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1774828800,
-                    "timestamp_iso": "2026-03-30T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1774915200,
-                    "timestamp_iso": "2026-03-31T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775001600,
-                    "timestamp_iso": "2026-04-01T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775088000,
-                    "timestamp_iso": "2026-04-02T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775174400,
-                    "timestamp_iso": "2026-04-03T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775260800,
-                    "timestamp_iso": "2026-04-04T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775347200,
-                    "timestamp_iso": "2026-04-05T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775433600,
-                    "timestamp_iso": "2026-04-06T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775520000,
-                    "timestamp_iso": "2026-04-07T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775606400,
-                    "timestamp_iso": "2026-04-08T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775692800,
-                    "timestamp_iso": "2026-04-09T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775779200,
-                    "timestamp_iso": "2026-04-10T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775865600,
-                    "timestamp_iso": "2026-04-11T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1775952000,
-                    "timestamp_iso": "2026-04-12T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776038400,
-                    "timestamp_iso": "2026-04-13T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776124800,
-                    "timestamp_iso": "2026-04-14T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776211200,
-                    "timestamp_iso": "2026-04-15T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776297600,
-                    "timestamp_iso": "2026-04-16T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776384000,
-                    "timestamp_iso": "2026-04-17T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776470400,
-                    "timestamp_iso": "2026-04-18T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776556800,
-                    "timestamp_iso": "2026-04-19T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776643200,
-                    "timestamp_iso": "2026-04-20T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776729600,
-                    "timestamp_iso": "2026-04-21T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776816000,
-                    "timestamp_iso": "2026-04-22T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776902400,
-                    "timestamp_iso": "2026-04-23T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1776988800,
-                    "timestamp_iso": "2026-04-24T00:00:00.000Z",
-                    "price_inr": 45999
-                  },
-                  {
-                    "timestamp_sec": 1777075200,
-                    "timestamp_iso": "2026-04-25T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1777161600,
-                    "timestamp_iso": "2026-04-26T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1777248000,
-                    "timestamp_iso": "2026-04-27T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1777334400,
-                    "timestamp_iso": "2026-04-28T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1777420800,
-                    "timestamp_iso": "2026-04-29T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1777507200,
-                    "timestamp_iso": "2026-04-30T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1777593600,
-                    "timestamp_iso": "2026-05-01T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1777680000,
-                    "timestamp_iso": "2026-05-02T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1777766400,
-                    "timestamp_iso": "2026-05-03T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1777852800,
-                    "timestamp_iso": "2026-05-04T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1777939200,
-                    "timestamp_iso": "2026-05-05T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778025600,
-                    "timestamp_iso": "2026-05-06T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778112000,
-                    "timestamp_iso": "2026-05-07T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778198400,
-                    "timestamp_iso": "2026-05-08T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778284800,
-                    "timestamp_iso": "2026-05-09T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778371200,
-                    "timestamp_iso": "2026-05-10T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778457600,
-                    "timestamp_iso": "2026-05-11T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778544000,
-                    "timestamp_iso": "2026-05-12T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778630400,
-                    "timestamp_iso": "2026-05-13T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778716800,
-                    "timestamp_iso": "2026-05-14T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778803200,
-                    "timestamp_iso": "2026-05-15T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778889600,
-                    "timestamp_iso": "2026-05-16T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1778976000,
-                    "timestamp_iso": "2026-05-17T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1779062400,
-                    "timestamp_iso": "2026-05-18T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1779148800,
-                    "timestamp_iso": "2026-05-19T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1779235200,
-                    "timestamp_iso": "2026-05-20T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1779321600,
-                    "timestamp_iso": "2026-05-21T00:00:00.000Z",
-                    "price_inr": 47999
-                  },
-                  {
-                    "timestamp_sec": 1779408000,
-                    "timestamp_iso": "2026-05-22T00:00:00.000Z",
-                    "price_inr": 47999
-                  }
-                ],
-                "analysis": {
-                  "points_count": 76,
-                  "price_change_count": 1,
-                  "first_price_at": "2026-03-08T00:00:00.000Z",
-                  "latest_price_at": "2026-05-22T00:00:00.000Z",
-                  "latest_history_price_inr": 47999,
-                  "recent_baseline_price_inr": 45999,
-                  "recent_delta_inr": 2000,
-                  "recent_delta_pct": 4.3479206069697165,
-                  "launch_delta_inr": 2000,
-                  "launch_delta_pct": 4.3479206069697165,
-                  "recent_direction": "up",
-                  "recent_events_count": 1,
-                  "last_event": {
-                    "timestamp_sec": 1777075200,
-                    "timestamp_iso": "2026-04-25T00:00:00.000Z",
-                    "price_inr": 47999,
-                    "delta_inr": 2000
-                  },
-                  "max_abs_step_inr": 2000,
-                  "near_market_event": false
-                }
-              }
-            ],
-            "top_unmatched_candidates": [
-              {
-                "title": "OPPO Reno15 5G (Twilight Blue, 256 GB)",
-                "price": 47999,
-                "rank": 1,
-                "reason": "visible_but_not_exact_model_match"
-              },
-              {
-                "title": "OPPO Reno15 5G (Glacier White, 256 GB)",
-                "price": 47999,
-                "rank": 2,
-                "reason": "visible_but_not_exact_model_match"
-              }
-            ],
-            "id": "model-oppo-reno15-selected-skus",
-            "brand_key": "oppo",
-            "brand_label": "OPPO",
-            "representative_variant": {
-              "sku": "8GB+256GB",
-              "title": "OPPO Reno15 5G (Twilight Blue, 256 GB)",
-              "store": "Flipkart",
-              "store_key": "flipkart",
-              "product_url": "https://www.flipkart.com/oppo-reno15-5g-twilight-blue-256-gb/p/itm37cc91d1c2807?pid=MOBHGZZ9N4M9VGST&lid=LSTMOBHGZZ9N4M9VGSTENSVUV&marketplace=FLIPKART&q=oppo+reno+15+pro+mobile&store=tyy%2F4io&srno=s_1_1",
-              "current_store_price_inr": 47999,
-              "rating_count": 5649,
-              "availability": "listed",
-              "listing_rank": 1,
-              "same_sku_candidates": [
-                {
-                  "title": "OPPO Reno15 5G (Twilight Blue, 256 GB)",
-                  "product_url": "https://www.flipkart.com/oppo-reno15-5g-twilight-blue-256-gb/p/itm37cc91d1c2807?pid=MOBHGZZ9N4M9VGST&lid=LSTMOBHGZZ9N4M9VGSTENSVUV&marketplace=FLIPKART&q=oppo+reno+15+pro+mobile&store=tyy%2F4io&srno=s_1_1",
-                  "store": "Flipkart",
-                  "price": 47999,
-                  "availability": "listed"
-                },
-                {
-                  "title": "OPPO Reno15 5G (Glacier White, 256 GB)",
-                  "product_url": "https://www.flipkart.com/oppo-reno15-5g-glacier-white-256-gb/p/itm37cc91d1c2807?pid=MOBHGZZ9YK5DRXSW&lid=LSTMOBHGZZ9YK5DRXSWFNAPAE&marketplace=FLIPKART&q=oppo+reno+15+pro+mobile&store=tyy%2F4io&srno=s_1_2",
                   "store": "Flipkart",
                   "price": 47999,
                   "availability": "listed"
@@ -94273,7 +93789,7 @@
       "coverage_pct": 93.10344827586206,
       "matched_models": 27,
       "unmatched_models": 2,
-      "significant_event_count": 77,
+      "significant_event_count": 76,
       "biggest_increase": {
         "brand_key": "realme",
         "brand_label": "realme",
@@ -95213,17 +94729,6 @@
         "model_title": "OPPO Reno15 5G (Twilight Blue, 256 GB)",
         "model_query": "oppo reno 15",
         "model_id": "model-oppo-reno-15",
-        "sku": "8GB+256GB",
-        "timestamp_iso": "2026-04-25T00:00:00.000Z",
-        "price_inr": 47999,
-        "delta_inr": 2000
-      },
-      {
-        "brand_key": "oppo",
-        "brand_label": "OPPO",
-        "model_title": "OPPO Reno15 5G (Twilight Blue, 256 GB)",
-        "model_query": "OPPO Reno15 5G selected SKUs",
-        "model_id": "model-oppo-reno15-selected-skus",
         "sku": "8GB+256GB",
         "timestamp_iso": "2026-04-25T00:00:00.000Z",
         "price_inr": 47999,

@@ -390,18 +390,54 @@ function chartSvg(points, width = 720, height = 210) {
   const pad = 34;
   const x = (t) => pad + ((t - minT) / Math.max(1, maxT - minT)) * (width - pad * 2);
   const y = (v) => height - pad - ((v - minY) / Math.max(1, maxY - minY)) * (height - pad * 2);
+  const stepPoints = parsed.filter((point, idx, arr) => idx === 0 || idx === arr.length - 1 || point.y !== arr[idx - 1].y);
   const d =
-    parsed.length === 1
-      ? `M ${pad} ${y(parsed[0].y).toFixed(1)} L ${width - pad} ${y(parsed[0].y).toFixed(1)}`
-      : parsed.map((p, i) => `${i ? "L" : "M"} ${x(p.t).toFixed(1)} ${y(p.y).toFixed(1)}`).join(" ");
+    stepPoints.length === 1
+      ? `M ${pad} ${y(stepPoints[0].y).toFixed(1)} L ${width - pad} ${y(stepPoints[0].y).toFixed(1)}`
+      : stepPoints
+          .map((p, i, arr) => {
+            const px = x(p.t).toFixed(1);
+            const py = y(p.y).toFixed(1);
+            if (i === 0) return `M ${px} ${py}`;
+            return `H ${px} V ${py}`;
+          })
+          .join(" ");
+  const marketRanges = MARKET_CONTEXT.map((event) => ({
+    start: Math.max(minT, Date.parse(`${event.start}T00:00:00.000Z`)),
+    end: Math.min(maxT, Date.parse(`${event.end}T23:59:59.000Z`) + 7 * 24 * 60 * 60 * 1000),
+  }))
+    .filter((range) => Number.isFinite(range.start) && Number.isFinite(range.end) && range.end > minT && range.start < maxT)
+    .sort((a, b) => a.start - b.start);
+  const mergedMarketRanges = marketRanges.reduce((merged, range) => {
+    const last = merged[merged.length - 1];
+    if (last && range.start <= last.end) {
+      last.end = Math.max(last.end, range.end);
+    } else {
+      merged.push({ ...range });
+    }
+    return merged;
+  }, []);
+  const marketWindows = mergedMarketRanges
+    .map((range) => {
+      const left = x(range.start);
+      const right = x(range.end);
+      return `<rect class="chart-event-window" x="${left.toFixed(1)}" y="${pad}" width="${Math.max(2, right - left).toFixed(
+        1
+      )}" height="${height - pad * 2}" />`;
+    })
+    .join("");
   const dot =
-    parsed.length === 1
-      ? `<circle cx="${width / 2}" cy="${y(parsed[0].y).toFixed(1)}" r="5" />`
-      : parsed
-          .filter((point, idx, arr) => idx === 0 || idx === arr.length - 1 || point.y !== arr[idx - 1].y)
-          .map((point) => `<circle cx="${x(point.t).toFixed(1)}" cy="${y(point.y).toFixed(1)}" r="3" />`)
+    stepPoints.length === 1
+      ? `<circle cx="${width / 2}" cy="${y(stepPoints[0].y).toFixed(1)}" r="5" />`
+      : stepPoints
+          .map((point, idx, arr) => {
+            const previous = idx > 0 ? arr[idx - 1] : null;
+            const direction = previous ? classifyDelta(point.y - previous.y) : "flat";
+            return `<circle class="chart-point ${direction}" cx="${x(point.t).toFixed(1)}" cy="${y(point.y).toFixed(1)}" r="3" />`;
+          })
           .join("");
   return `<svg viewBox="0 0 ${width} ${height}" class="chart" role="img">
+    ${marketWindows}
     <line x1="${pad}" y1="${pad}" x2="${pad}" y2="${height - pad}" />
     <line x1="${pad}" y1="${height - pad}" x2="${width - pad}" y2="${height - pad}" />
     <text x="${pad}" y="22">${formatInr(maxY)}</text>
@@ -542,6 +578,57 @@ function summarizeModel(item) {
   };
 }
 
+function modelMergeKey(model) {
+  const label = model.representative_variant ? modelLabelFromTitle(model.representative_variant.title, model.query) : model.query;
+  return `${model.brand_key}:${normalizeText(label)}`;
+}
+
+function variantMergeKey(variant) {
+  return `${variant.store_key || variant.store || "store"}:${variant.product_url || variant.title}:${variant.sku}`;
+}
+
+function refreshModelRepresentative(model) {
+  const representative = chooseRepresentativeVariant(model.variants);
+  return {
+    ...model,
+    status: representative ? "store_exact_match" : model.status,
+    variant_count: model.variants.length,
+    representative_variant: representative,
+    hidden_variants: representative ? model.variants.filter((variant) => variant.sku !== representative.sku) : model.variants,
+  };
+}
+
+function mergeDuplicateModelSummaries(models) {
+  const byModel = new Map();
+  for (const model of models) {
+    const key = modelMergeKey(model);
+    const existing = byModel.get(key);
+    if (!existing) {
+      byModel.set(key, {
+        ...model,
+        variants: [...model.variants],
+        hidden_variants: [...model.hidden_variants],
+        top_unmatched_candidates: [...(model.top_unmatched_candidates || [])],
+      });
+      continue;
+    }
+    const variants = new Map(existing.variants.map((variant) => [variantMergeKey(variant), variant]));
+    for (const variant of model.variants) variants.set(variantMergeKey(variant), variant);
+    existing.variants = [...variants.values()];
+    if (/selected skus/i.test(existing.query) && !/selected skus/i.test(model.query)) {
+      existing.query = model.query;
+      existing.id = `model-${slug(model.query)}`;
+      existing.family_key = model.family_key;
+    }
+    existing.top_unmatched_candidates = [
+      ...(existing.top_unmatched_candidates || []),
+      ...(model.top_unmatched_candidates || []),
+    ].slice(0, 5);
+    byModel.set(key, refreshModelRepresentative(existing));
+  }
+  return [...byModel.values()].map(refreshModelRepresentative);
+}
+
 function summarizeBrand(brandKey, models) {
   const reps = models.map((model) => model.representative_variant).filter(Boolean);
   const counts = { up: 0, down: 0, flat: 0 };
@@ -669,7 +756,7 @@ function summarizeExecutive(brandGroups, items, timeline) {
 }
 
 function buildAnalysis(items) {
-  const modelSummaries = items.map(summarizeModel);
+  const modelSummaries = mergeDuplicateModelSummaries(items.map(summarizeModel));
   const byBrand = new Map();
   for (const model of modelSummaries) {
     if (!byBrand.has(model.brand_key)) byBrand.set(model.brand_key, []);
@@ -779,6 +866,143 @@ function renderExecutivePanel(executive) {
       <div><span>显著调价点</span><b>${executive.significant_event_count}</b></div>
     </div>
     <div class="priority-list">${priorityBrands}</div>
+  </section>`;
+}
+
+function renderActionMatrix(analysis) {
+  const brands = analysis.brand_groups.map((brand) => ({
+    key: brand.brand_key,
+    label: brand.brand_label,
+  }));
+  const storeOptions = new Map();
+  const rawRows = analysis.brand_groups.flatMap((brand) =>
+    brand.models.map((model) => {
+      const rep = model.representative_variant;
+      if (!rep) {
+        return {
+          brand_key: brand.brand_key,
+          brand_label: brand.brand_label,
+          model_id: model.id,
+          model_label: model.query,
+          sku: "-",
+          store_key: "unresolved",
+          store_label: "待补",
+          current_price: null,
+          recent_delta: null,
+          launch_delta: null,
+          last_move: "待补链接",
+          direction: "unresolved",
+          significant: false,
+          read: "未严格命中商城链接，暂不进入价格动作判断。",
+        };
+      }
+      const analysis = rep.analysis || analyzeVariant(rep);
+      const lastEvent = analysis.last_event;
+      const storeKey = normalizeText(rep.store_key || rep.store || "flipkart").replace(/\s+/g, "-") || "unknown";
+      const storeLabel = rep.store || "Flipkart";
+      storeOptions.set(storeKey, storeLabel);
+      const significant =
+        Math.abs(Number(analysis.recent_delta_inr) || 0) >= SIGNIFICANT_DELTA_INR ||
+        Math.abs(Number(lastEvent?.delta_inr) || 0) >= SIGNIFICANT_DELTA_INR;
+      const marketNear = lastEvent?.timestamp_iso && isNearMarketEvent(lastEvent.timestamp_iso);
+      return {
+        brand_key: brand.brand_key,
+        brand_label: brand.brand_label,
+        model_id: model.id,
+        model_label: modelLabelFromTitle(rep.title, model.query),
+        sku: rep.sku,
+        store_key: storeKey,
+        store_label: storeLabel,
+        current_price: rep.current_store_price_inr,
+        recent_delta: analysis.recent_delta_inr,
+        launch_delta: analysis.launch_delta_inr,
+        last_move: lastEvent
+          ? `${formatShortDate(lastEvent.timestamp_iso)} ${formatSignedInr(lastEvent.delta_inr)}${marketNear ? " · 大促附近" : ""}`
+          : "暂无调价点",
+        direction: analysis.recent_direction,
+        significant,
+        read: `${brand.headline}${marketNear ? "；最近动作靠近大促窗口" : ""}`,
+      };
+    })
+  );
+  const rows = [
+    ...rawRows
+      .reduce((deduped, row) => {
+        const key = `${row.brand_key}:${normalizeText(row.model_label || row.model_id)}`;
+        const existing = deduped.get(key);
+        const score = (candidate) =>
+          (candidate.direction === "unresolved" ? -1_000_000 : 0) +
+          Math.abs(Number(candidate.recent_delta) || 0) +
+          Math.abs(Number(candidate.launch_delta) || 0) / 10;
+        if (!existing || score(row) > score(existing)) deduped.set(key, row);
+        return deduped;
+      }, new Map())
+      .values(),
+  ];
+  const brandOptions = brands
+    .map((brand) => `<option value="${escapeHtml(brand.key)}">${escapeHtml(brand.label)}</option>`)
+    .join("");
+  const storeOptionHtml = [...storeOptions.entries()]
+    .sort((a, b) => a[1].localeCompare(b[1]))
+    .map(([key, label]) => `<option value="${escapeHtml(key)}">${escapeHtml(label)}</option>`)
+    .join("");
+  const rowHtml = rows
+    .map(
+      (row) => `<tr data-matrix-row data-brand="${escapeHtml(row.brand_key)}" data-direction="${escapeHtml(
+        row.direction
+      )}" data-store="${escapeHtml(row.store_key)}" data-significant="${row.significant ? "true" : "false"}" data-unresolved="${
+        row.direction === "unresolved" ? "true" : "false"
+      }">
+        <td><strong>${escapeHtml(row.brand_label)}</strong></td>
+        <td><a href="#${escapeHtml(row.model_id)}">${escapeHtml(row.model_label)}</a></td>
+        <td>${escapeHtml(row.sku)}</td>
+        <td>${escapeHtml(row.store_label)}</td>
+        <td class="num">${formatInr(row.current_price)}</td>
+        <td class="num delta ${escapeHtml(row.direction)}">${formatSignedInr(row.recent_delta)}</td>
+        <td class="num delta ${escapeHtml(classifyDelta(row.launch_delta))}">${formatSignedInr(row.launch_delta)}</td>
+        <td>${escapeHtml(row.last_move)}</td>
+        <td><span class="matrix-read ${escapeHtml(row.direction)}">${escapeHtml(row.read)}</span></td>
+      </tr>`
+    )
+    .join("");
+  return `<section class="matrix-panel" id="price-action-matrix">
+    <div class="matrix-head">
+      <div>
+        <span class="eyebrow">价格动作矩阵</span>
+        <h2>按机型看当前最值得盯的价格动作</h2>
+      </div>
+      <strong class="matrix-count" data-matrix-count>${rows.length}/${rows.length}</strong>
+    </div>
+    <div class="matrix-controls" aria-label="价格动作筛选">
+      <div class="segmented" data-direction-group>
+        <button type="button" class="active" data-filter-direction="all">全部</button>
+        <button type="button" data-filter-direction="up">上调</button>
+        <button type="button" data-filter-direction="down">下调</button>
+        <button type="button" data-filter-direction="flat">稳定</button>
+        <button type="button" data-filter-direction="unresolved">待补</button>
+      </div>
+      <label>品牌<select data-filter-brand><option value="all">全部品牌</option>${brandOptions}</select></label>
+      <label>商城<select data-filter-store><option value="all">全部商城</option>${storeOptionHtml}</select></label>
+      <label class="toggle"><input type="checkbox" data-filter-significant />只看显著动作</label>
+    </div>
+    <div class="matrix-scroll">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>品牌</th>
+            <th>机型</th>
+            <th>SKU</th>
+            <th>商城</th>
+            <th>当前价</th>
+            <th>近30天</th>
+            <th>首见以来</th>
+            <th>最近动作</th>
+            <th>判断</th>
+          </tr>
+        </thead>
+        <tbody>${rowHtml}</tbody>
+      </table>
+    </div>
   </section>`;
 }
 
@@ -1097,6 +1321,7 @@ function renderHtml(payload) {
     h1,h2,h3,p{letter-spacing:0}
     a{color:var(--blue);text-decoration:none}
     a:hover{text-decoration:underline}
+    html{scroll-behavior:smooth}
     header{
       padding:28px 34px 26px;
       background:var(--paper);
@@ -1404,9 +1629,13 @@ function renderHtml(payload) {
       border-radius:8px;
     }
     .chart line{stroke:#d0d7e2}
+    .chart-event-window{fill:var(--amber);opacity:.14}
     .chart path{fill:none;stroke:var(--blue);stroke-width:3}
     .chart text{font-size:12px;fill:var(--muted)}
     .chart circle{fill:var(--blue)}
+    .chart-point.up{fill:var(--red)}
+    .chart-point.down{fill:var(--blue)}
+    .chart-point.flat{fill:#98a2b3}
     table{
       width:100%;
       border-collapse:separate;
@@ -1433,6 +1662,134 @@ function renderHtml(payload) {
     .context h2{font-size:18px;margin:0 0 8px}
     .context ul{margin:0;padding-left:18px;color:#475467}
     .context li{margin:5px 0}
+    .matrix-panel{
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:8px;
+      margin:0 0 18px;
+      overflow:hidden;
+      box-shadow:0 8px 22px rgba(16,24,40,.045);
+    }
+    .matrix-head{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:flex-start;
+      padding:16px 18px 12px;
+    }
+    .matrix-head h2{margin:4px 0 0;font-size:22px;line-height:1.2}
+    .matrix-count{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:72px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:5px 11px;
+      background:var(--paper-soft);
+      font-size:13px;
+    }
+    .matrix-controls{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+      padding:0 18px 14px;
+    }
+    .segmented{
+      display:inline-flex;
+      min-height:34px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      overflow:hidden;
+      background:var(--paper-soft);
+    }
+    .segmented button{
+      min-width:56px;
+      border:0;
+      border-right:1px solid var(--line);
+      padding:7px 10px;
+      background:transparent;
+      color:var(--ink);
+      font:inherit;
+      font-size:13px;
+      cursor:pointer;
+    }
+    .segmented button:last-child{border-right:0}
+    .segmented button.active{background:var(--ink);color:#fff}
+    .matrix-controls label{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      min-height:34px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .matrix-controls select{
+      min-height:34px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      padding:0 28px 0 10px;
+      background:var(--paper);
+      color:var(--ink);
+      font:inherit;
+      font-size:13px;
+    }
+    .toggle{
+      border:1px solid var(--line);
+      border-radius:8px;
+      padding:0 10px;
+      background:var(--paper-soft);
+    }
+    .toggle input{margin:0}
+    .matrix-scroll{
+      overflow:auto;
+      border-top:1px solid var(--line-soft);
+    }
+    .matrix-table{
+      min-width:1020px;
+      margin:0;
+      border:0;
+      border-radius:0;
+      background:var(--paper);
+    }
+    .matrix-table th{
+      position:sticky;
+      top:0;
+      z-index:1;
+      background:#f1f5f9;
+      white-space:nowrap;
+    }
+    .matrix-table td{vertical-align:top}
+    .matrix-table .num{
+      text-align:right;
+      font-variant-numeric:tabular-nums;
+      white-space:nowrap;
+    }
+    .matrix-table tr:hover td{background:var(--blue-soft)}
+    .delta.up{color:var(--red);font-weight:800}
+    .delta.down{color:var(--blue);font-weight:800}
+    .delta.flat{color:var(--muted)}
+    .delta.unresolved{color:var(--amber)}
+    .matrix-read{
+      display:inline-block;
+      max-width:240px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:3px 8px;
+      background:var(--paper-soft);
+      color:#475467;
+      font-size:12px;
+      line-height:1.35;
+    }
+    .matrix-read.up{color:var(--red);background:var(--red-soft);border-color:#fecdca}
+    .matrix-read.down{color:var(--blue);background:var(--blue-soft);border-color:#b2ccff}
+    .matrix-read.unresolved{color:var(--amber);background:var(--amber-soft);border-color:#fedf89}
+    .model-card.is-focus{
+      outline:3px solid rgba(33,86,217,.22);
+      outline-offset:6px;
+      border-radius:8px;
+    }
     .fold{margin-top:10px}
     .fold summary{
       cursor:pointer;
@@ -1452,6 +1809,7 @@ function renderHtml(payload) {
       header{padding:22px 18px}
       .layout{padding:18px}
       .summary,.metrics,.brand-brief{grid-template-columns:1fr}
+      .matrix-head{display:block}
       .variant-head,.model-head,.brand-section>summary{display:block}
       .chip{margin-top:10px}
       .brand-strip{grid-template-columns:1fr}
@@ -1473,6 +1831,7 @@ function renderHtml(payload) {
   </header>
   <div class="layout">
     <main>
+      ${renderActionMatrix(analysis)}
       <section class="context">
         <h2>市场背景信号</h2>
         <ul>${marketContext}</ul>
@@ -1484,6 +1843,68 @@ function renderHtml(payload) {
       ${renderTimeline(analysis.timeline)}
     </aside>
   </div>
+  <script>
+    (() => {
+      const rows = [...document.querySelectorAll("[data-matrix-row]")];
+      const count = document.querySelector("[data-matrix-count]");
+      const state = { direction: "all", brand: "all", store: "all", significant: false };
+
+      function applyFilters() {
+        let visible = 0;
+        for (const row of rows) {
+          const directionMatch =
+            state.direction === "all" ||
+            row.dataset.direction === state.direction ||
+            (state.direction === "unresolved" && row.dataset.unresolved === "true");
+          const brandMatch = state.brand === "all" || row.dataset.brand === state.brand;
+          const storeMatch = state.store === "all" || row.dataset.store === state.store;
+          const significantMatch = !state.significant || row.dataset.significant === "true";
+          const show = directionMatch && brandMatch && storeMatch && significantMatch;
+          row.hidden = !show;
+          if (show) visible += 1;
+        }
+        if (count) count.textContent = visible + "/" + rows.length;
+      }
+
+      document.querySelectorAll("[data-filter-direction]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.direction = button.dataset.filterDirection || "all";
+          document.querySelectorAll("[data-filter-direction]").forEach((item) => item.classList.toggle("active", item === button));
+          applyFilters();
+        });
+      });
+
+      document.querySelector("[data-filter-brand]")?.addEventListener("change", (event) => {
+        state.brand = event.target.value;
+        applyFilters();
+      });
+
+      document.querySelector("[data-filter-store]")?.addEventListener("change", (event) => {
+        state.store = event.target.value;
+        applyFilters();
+      });
+
+      document.querySelector("[data-filter-significant]")?.addEventListener("change", (event) => {
+        state.significant = event.target.checked;
+        applyFilters();
+      });
+
+      function focusModelFromHash() {
+        const id = decodeURIComponent(location.hash || "").slice(1);
+        document.querySelectorAll(".model-card.is-focus").forEach((node) => node.classList.remove("is-focus"));
+        if (!id) return;
+        const target = document.getElementById(id);
+        if (target?.classList.contains("model-card")) {
+          target.classList.add("is-focus");
+          window.setTimeout(() => target.classList.remove("is-focus"), 2600);
+        }
+      }
+
+      window.addEventListener("hashchange", focusModelFromHash);
+      applyFilters();
+      focusModelFromHash();
+    })();
+  </script>
 </body>
 </html>`;
 }
