@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-05-22T17:19:57.816075+00:00",
+  "source": "browser_flipkart_search",
+  "store": "flipkart",
+  "query": "vivo v60e mobile",
+  "min_price": 20000,
+  "max_price": 50000,
+  "url": "https://www.flipkart.com/search?q=vivo+v60e+mobile&sid=tyy%2C4io&sort=popularity&p%5B%5D=facets.price_range.from%3D20000&p%5B%5D=facets.price_range.to%3D50000",
+  "candidates": [
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "vivo V60e (Elite Purple, 256 GB)",
+      "raw_line": "Add to Compare vivo V60e (Elite Purple, 256 GB) 4.43,490 Ratings & 223 Reviews 8 GB RAM | 256 GB ROM 17.2 cm (6.77 inch) Full HD+ Display 200MP + 8MP | 50MP Front Camera 6500 mAh Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹33,999 ₹36,9998% off Only few left Upto ₹24,200 Off on Exchange",
+      "product_url": "https://www.flipkart.com/vivo-v60e-elite-purple-256-gb/p/itmf871852657b21?pid=MOBHGY7ZAS52JF7C&lid=LSTMOBHGY7ZAS52JF7CQUQ2E3&marketplace=FLIPKART&q=vivo+v60e+mobile&store=tyy%2F4io&srno=s_1_1&otracker=search&fm=organic&iid=dc8cc936-7234-4409-ac36-ab9a162f3fb4.MOBHGY7ZAS52JF7C.SEARCH&ppt=None&ppn=None&ssid=dh3swrwaps0000001779470395905&qH=f56eadc42d8df648&ov_redirect=true",
+      "current_store_price_inr": 33999,
+      "rating": null,
+      "rating_count": 43490,
+      "availability": "listed",
+      "listing_rank": 1
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "vivo V60e (Noble Gold, 256 GB)",
+      "raw_line": "Add to Compare vivo V60e (Noble Gold, 256 GB) 4.43,490 Ratings & 223 Reviews 8 GB RAM | 256 GB ROM 17.2 cm (6.77 inch) Full HD+ Display 200MP + 8MP | 50MP Front Camera 6500 mAh Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹33,999 ₹36,9998% off Upto ₹24,200 Off on Exchange Bank Offer",
+      "product_url": "https://www.flipkart.com/vivo-v60e-noble-gold-256-gb/p/itmf871852657b21?pid=MOBHGY7ZXHEBMYQG&lid=LSTMOBHGY7ZXHEBMYQGFFWUUJ&marketplace=FLIPKART&q=vivo+v60e+mobile&store=tyy%2F4io&srno=s_1_2&otracker=search&fm=organic&iid=dc8cc936-7234-4409-ac36-ab9a162f3fb4.MOBHGY7ZXHEBMYQG.SEARCH&ppt=None&ppn=None&ssid=dh3swrwaps0000001779470395905&qH=f56eadc42d8df648&ov_redirect=true",
+      "current_store_price_inr": 33999,
+      "rating": null,
+      "rating_count": 43490,
+      "availability": "listed",
+      "listing_rank": 2
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "Currently unavailable",
+      "raw_line": "Currently unavailable Add to Compare vivo V60e (Elite Purple, 256 GB) 4.51,237 Ratings & 77 Reviews 12 GB RAM | 256 GB ROM 17.2 cm (6.77 inch) Full HD+ Display 200MP + 8MP | 50MP Front Camera 6500 mAh Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹35,999 ₹38,9997% off Upto ₹25,800 Off on Exchange Bank Offer",
+      "product_url": "https://www.flipkart.com/vivo-v60e-elite-purple-256-gb/p/itmf871852657b21?pid=MOBHGY7ZPHXQAHYP&lid=LSTMOBHGY7ZPHXQAHYPSFALRS&marketplace=FLIPKART&q=vivo+v60e+mobile&store=tyy%2F4io&srno=s_1_3&otracker=search&fm=organic&iid=dc8cc936-7234-4409-ac36-ab9a162f3fb4.MOBHGY7ZPHXQAHYP.SEARCH&ppt=None&ppn=None&ssid=dh3swrwaps0000001779470395905&qH=f56eadc42d8df648&ov_redirect=true",
+      "current_store_price_inr": 35999,
+      "rating": null,
+      "rating_count": 51237,
+      "availability": "unavailable",
+      "listing_rank": 3
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "vivo V60e (Elite Purple, 128 GB)",
+      "raw_line": "Add to Compare vivo V60e (Elite Purple, 128 GB) 4.43,490 Ratings & 223 Reviews 8 GB RAM | 128 GB ROM 17.2 cm (6.77 inch) Full HD+ Display 200MP + 8MP | 50MP Front Camera 6500 mAh Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹31,999 ₹34,9998% off Only few left Upto ₹22,550 Off on Exchange",
+      "product_url": "https://www.flipkart.com/vivo-v60e-elite-purple-128-gb/p/itmf871852657b21?pid=MOBHGY7Z9RCDDDGS&lid=LSTMOBHGY7Z9RCDDDGSOQYGKJ&marketplace=FLIPKART&q=vivo+v60e+mobile&store=tyy%2F4io&srno=s_1_4&otracker=search&fm=organic&iid=dc8cc936-7234-4409-ac36-ab9a162f3fb4.MOBHGY7Z9RCDDDGS.SEARCH&ppt=None&ppn=None&ssid=dh3swrwaps0000001779470395905&qH=f56eadc42d8df648&ov_redirect=true",
+      "current_store_price_inr": 31999,
+      "rating": null,
+      "rating_count": 43490,
+      "availability": "listed",
+      "listing_rank": 4
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "vivo V60e (Noble Gold, 256 GB)",
+      "raw_line": "Add to Compare vivo V60e (Noble Gold, 256 GB) 4.51,237 Ratings & 77 Reviews 12 GB RAM | 256 GB ROM 17.2 cm (6.77 inch) Full HD+ Display 200MP + 8MP | 50MP Front Camera 6500 mAh Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹35,999 ₹38,9997% off Only few left Upto ₹25,800 Off on Exchange",
+      "product_url": "https://www.flipkart.com/vivo-v60e-noble-gold-256-gb/p/itmf871852657b21?pid=MOBHGY7ZHJHYP3DU&lid=LSTMOBHGY7ZHJHYP3DUBAG3GX&marketplace=FLIPKART&q=vivo+v60e+mobile&store=tyy%2F4io&srno=s_1_5&otracker=search&fm=organic&iid=dc8cc936-7234-4409-ac36-ab9a162f3fb4.MOBHGY7ZHJHYP3DU.SEARCH&ppt=None&ppn=None&ssid=dh3swrwaps0000001779470395905&qH=f56eadc42d8df648&ov_redirect=true",
+      "current_store_price_inr": 35999,
+      "rating": null,
+      "rating_count": 51237,
+      "availability": "listed",
+      "listing_rank": 5
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "vivo V60e (Noble Gold, 128 GB)",
+      "raw_line": "Add to Compare vivo V60e (Noble Gold, 128 GB) 4.43,490 Ratings & 223 Reviews 8 GB RAM | 128 GB ROM 17.2 cm (6.77 inch) Full HD+ Display 200MP + 8MP | 50MP Front Camera 6500 mAh Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹31,999 ₹34,9998% off Only few left Upto ₹22,550 Off on Exchange",
+      "product_url": "https://www.flipkart.com/vivo-v60e-noble-gold-128-gb/p/itmf871852657b21?pid=MOBHGY7ZVAQCHRF6&lid=LSTMOBHGY7ZVAQCHRF6H8UW6V&marketplace=FLIPKART&q=vivo+v60e+mobile&store=tyy%2F4io&srno=s_1_6&otracker=search&fm=organic&iid=dc8cc936-7234-4409-ac36-ab9a162f3fb4.MOBHGY7ZVAQCHRF6.SEARCH&ppt=None&ppn=None&ssid=dh3swrwaps0000001779470395905&qH=f56eadc42d8df648&ov_redirect=true",
+      "current_store_price_inr": 31999,
+      "rating": null,
+      "rating_count": 43490,
+      "availability": "listed",
+      "listing_rank": 6
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "Currently unavailable",
+      "raw_line": "Currently unavailable Add to Compare vivo V60 e (Elite Purple, 256 GB) 4.810 Ratings & 1 Reviews 8 GB RAM | 256 GB ROM 17.2 cm (6.77 inch) Display 200MP Rear Camera 6500 mAh Battery 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹36,999 Bank Offer",
+      "product_url": "https://www.flipkart.com/vivo-v60-e-elite-purple-256-gb/p/itmcb236b5ed4837?pid=MOBHJ5S6JHQXBPRH&lid=LSTMOBHJ5S6JHQXBPRH2SRYBK&marketplace=FLIPKART&q=vivo+v60e+mobile&store=tyy%2F4io&srno=s_1_7&otracker=search&fm=organic&iid=dc8cc936-7234-4409-ac36-ab9a162f3fb4.MOBHJ5S6JHQXBPRH.SEARCH&ppt=None&ppn=None&ssid=dh3swrwaps0000001779470395905&qH=f56eadc42d8df648&ov_redirect=true",
+      "current_store_price_inr": 36999,
+      "rating": null,
+      "rating_count": 810,
+      "availability": "unavailable",
+      "listing_rank": 7
+    }
+  ],
+  "stats": {
+    "candidates": 7
+  }
+}

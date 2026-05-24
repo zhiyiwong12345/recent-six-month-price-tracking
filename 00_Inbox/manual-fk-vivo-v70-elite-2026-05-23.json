@@ -1,0 +1,92 @@
+{
+  "generated_at": "2026-05-22T17:19:57.854211+00:00",
+  "source": "browser_flipkart_search",
+  "store": "flipkart",
+  "query": "vivo v70 Elite mobile",
+  "min_price": 20000,
+  "max_price": 50000,
+  "url": "https://www.flipkart.com/search?q=vivo+v70+Elite+mobile&sid=tyy%2C4io&sort=popularity&p%5B%5D=facets.price_range.from%3D20000&p%5B%5D=facets.price_range.to%3D50000",
+  "candidates": [
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "vivo V70 FE (Monsoon Blue, 256 GB)",
+      "raw_line": "Add to Compare vivo V70 FE (Monsoon Blue, 256 GB) 4.3264 Ratings & 33 Reviews 8 GB RAM | 256 GB ROM 17.35 cm (6.83 inch) Full HD+ AMOLED Display 200MP + 8MP | 50MP Front Camera 7000 mAh Li-ion Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹40,999 ₹44,9998% off Lowest price since launch Upto ₹29,350 Off on Exchange",
+      "product_url": "https://www.flipkart.com/vivo-v70-fe-monsoon-blue-256-gb/p/itmda852a903ef97?pid=MOBHHPSHWDF2PWHM&lid=LSTMOBHHPSHWDF2PWHMFUGVEU&marketplace=FLIPKART&q=vivo+v70+Elite+mobile&store=tyy%2F4io&srno=s_1_1&otracker=search&iid=8b984f4e-bdbe-4326-8271-58ee111e0225.MOBHHPSHWDF2PWHM.SEARCH&ssid=qkvdax1i9s0000001779470395595&qH=762a2c7f992c933a&ov_redirect=true",
+      "current_store_price_inr": 40999,
+      "rating": null,
+      "rating_count": 3264,
+      "availability": "listed",
+      "listing_rank": 1
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "vivo V70 FE (Northern Lights Purple, 256 GB)",
+      "raw_line": "Add to Compare vivo V70 FE (Northern Lights Purple, 256 GB) 4.3264 Ratings & 33 Reviews 8 GB RAM | 256 GB ROM 17.35 cm (6.83 inch) Full HD+ AMOLED Display 200MP + 8MP | 50MP Front Camera 7000 mAh Li-ion Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹40,999 ₹44,9998% off Lowest price since launch Upto ₹29,350 Off on Exchange",
+      "product_url": "https://www.flipkart.com/vivo-v70-fe-northern-lights-purple-256-gb/p/itmda852a903ef97?pid=MOBHHPSHXXTNT7YP&lid=LSTMOBHHPSHXXTNT7YP89QBRB&marketplace=FLIPKART&q=vivo+v70+Elite+mobile&store=tyy%2F4io&srno=s_1_2&otracker=search&iid=8b984f4e-bdbe-4326-8271-58ee111e0225.MOBHHPSHXXTNT7YP.SEARCH&ssid=qkvdax1i9s0000001779470395595&qH=762a2c7f992c933a&ov_redirect=true",
+      "current_store_price_inr": 40999,
+      "rating": null,
+      "rating_count": 3264,
+      "availability": "listed",
+      "listing_rank": 2
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "vivo V70 FE (Monsoon Blue, 256 GB)",
+      "raw_line": "Add to Compare vivo V70 FE (Monsoon Blue, 256 GB) 4.383 Ratings & 10 Reviews 12 GB RAM | 256 GB ROM 17.35 cm (6.83 inch) Full HD+ AMOLED Display 200MP + 8MP | 50MP Front Camera 7000 mAh Li-ion Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹44,999 ₹47,9996% off Lowest price since launch Upto ₹32,700 Off on Exchange",
+      "product_url": "https://www.flipkart.com/vivo-v70-fe-monsoon-blue-256-gb/p/itmda852a903ef97?pid=MOBHHPSHQGXKZGXZ&lid=LSTMOBHHPSHQGXKZGXZVCINJV&marketplace=FLIPKART&q=vivo+v70+Elite+mobile&store=tyy%2F4io&srno=s_1_3&otracker=search&iid=8b984f4e-bdbe-4326-8271-58ee111e0225.MOBHHPSHQGXKZGXZ.SEARCH&ssid=qkvdax1i9s0000001779470395595&qH=762a2c7f992c933a&ov_redirect=true",
+      "current_store_price_inr": 44999,
+      "rating": null,
+      "rating_count": 383,
+      "availability": "listed",
+      "listing_rank": 3
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "vivo V70 FE (Monsoon Blue, 128 GB)",
+      "raw_line": "Add to Compare vivo V70 FE (Monsoon Blue, 128 GB) 4.3264 Ratings & 33 Reviews 8 GB RAM | 128 GB ROM 17.35 cm (6.83 inch) Full HD+ AMOLED Display 200MP + 8MP | 50MP Front Camera 7000 mAh Li-ion Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹37,999 ₹41,9999% off Lowest price since launch Upto ₹27,450 Off on Exchange",
+      "product_url": "https://www.flipkart.com/vivo-v70-fe-monsoon-blue-128-gb/p/itmda852a903ef97?pid=MOBHHPSHDZWCGN43&lid=LSTMOBHHPSHDZWCGN43MXKLEM&marketplace=FLIPKART&q=vivo+v70+Elite+mobile&store=tyy%2F4io&srno=s_1_4&otracker=search&iid=8b984f4e-bdbe-4326-8271-58ee111e0225.MOBHHPSHDZWCGN43.SEARCH&ssid=qkvdax1i9s0000001779470395595&qH=762a2c7f992c933a&ov_redirect=true",
+      "current_store_price_inr": 37999,
+      "rating": null,
+      "rating_count": 3264,
+      "availability": "listed",
+      "listing_rank": 4
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "vivo V70 FE (Northern Lights Purple, 128 GB)",
+      "raw_line": "Add to Compare vivo V70 FE (Northern Lights Purple, 128 GB) 4.3264 Ratings & 33 Reviews 8 GB RAM | 128 GB ROM 17.35 cm (6.83 inch) Full HD+ AMOLED Display 200MP + 8MP | 50MP Front Camera 7000 mAh Li-ion Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹37,999 ₹41,9999% off Lowest price since launch Upto ₹27,450 Off on Exchange",
+      "product_url": "https://www.flipkart.com/vivo-v70-fe-northern-lights-purple-128-gb/p/itmda852a903ef97?pid=MOBHHPSHVGYMKB6E&lid=LSTMOBHHPSHVGYMKB6EQHKI3G&marketplace=FLIPKART&q=vivo+v70+Elite+mobile&store=tyy%2F4io&srno=s_1_5&otracker=search&iid=8b984f4e-bdbe-4326-8271-58ee111e0225.MOBHHPSHVGYMKB6E.SEARCH&ssid=qkvdax1i9s0000001779470395595&qH=762a2c7f992c933a&ov_redirect=true",
+      "current_store_price_inr": 37999,
+      "rating": null,
+      "rating_count": 3264,
+      "availability": "listed",
+      "listing_rank": 5
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "vivo V70 FE (Northern Lights Purple, 256 GB)",
+      "raw_line": "Add to Compare vivo V70 FE (Northern Lights Purple, 256 GB) 4.383 Ratings & 10 Reviews 12 GB RAM | 256 GB ROM 17.35 cm (6.83 inch) Full HD+ AMOLED Display 200MP + 8MP | 50MP Front Camera 7000 mAh Li-ion Battery Dimensity 7360-Turbo Processor 1 Year Manufacturer Warranty for Device and 6 Months Manufacturer Warranty for Inbox Accessories ₹44,999 ₹47,9996% off Lowest price since launch Upto ₹32,700 Off on Exchange",
+      "product_url": "https://www.flipkart.com/vivo-v70-fe-northern-lights-purple-256-gb/p/itmda852a903ef97?pid=MOBHHPSHHZ6JH6VN&lid=LSTMOBHHPSHHZ6JH6VNEZOIDD&marketplace=FLIPKART&q=vivo+v70+Elite+mobile&store=tyy%2F4io&srno=s_1_6&otracker=search&iid=8b984f4e-bdbe-4326-8271-58ee111e0225.MOBHHPSHHZ6JH6VN.SEARCH&ssid=qkvdax1i9s0000001779470395595&qH=762a2c7f992c933a&ov_redirect=true",
+      "current_store_price_inr": 44999,
+      "rating": null,
+      "rating_count": 383,
+      "availability": "listed",
+      "listing_rank": 6
+    }
+  ],
+  "stats": {
+    "candidates": 6
+  }
+}

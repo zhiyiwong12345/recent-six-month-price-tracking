@@ -1,0 +1,118 @@
+{
+  "generated_at": "2026-05-22T17:21:58.237896+00:00",
+  "source": "browser_flipkart_search",
+  "store": "flipkart",
+  "query": "samsung A37 mobile",
+  "min_price": 20000,
+  "max_price": 50000,
+  "url": "https://www.flipkart.com/search?q=samsung+A37+mobile&sid=tyy%2C4io&sort=popularity&p%5B%5D=facets.price_range.from%3D20000&p%5B%5D=facets.price_range.to%3D50000",
+  "candidates": [
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "Samsung Galaxy A37 5G (Awesome Charcoal, 128 GB)",
+      "raw_line": "Add to Compare Samsung Galaxy A37 5G (Awesome Charcoal, 128 GB) 4.231 Ratings & 4 Reviews 8 GB RAM | 128 GB ROM 17.02 cm (6.7 inch) Full HD+ Super AMOLED Display 50MP + 8MP | 12MP Front Camera 5000 mAh Li-ion Battery Exynos 1480 Processor 1 Year Manufacturer Warranty for Device and 6 Months for In-Box Accessories ₹32,799 ₹45,99928% off Lowest price since launch Upto ₹23,700 Off on Exchange",
+      "product_url": "https://www.flipkart.com/samsung-galaxy-a37-5g-awesome-charcoal-128-gb/p/itm793d1b5fe9bc5?pid=MOBHHENSZADTY7KP&lid=LSTMOBHHENSZADTY7KPWWQ2MJ&marketplace=FLIPKART&q=samsung+A37+mobile&store=tyy%2F4io&srno=s_1_1&otracker=search&fm=organic&iid=916f46cf-025b-4a6c-849d-b747edec6311.MOBHHENSZADTY7KP.SEARCH&ppt=None&ppn=None&ssid=lt0qvwmt400000001779470516442&qH=08aa6bfc8a9167b5&ov_redirect=true",
+      "current_store_price_inr": 32799,
+      "rating": null,
+      "rating_count": 231,
+      "availability": "listed",
+      "listing_rank": 1
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "Samsung Galaxy A37 5G (Awesome Lavender, 128 GB)",
+      "raw_line": "Add to Compare Samsung Galaxy A37 5G (Awesome Lavender, 128 GB) 4.231 Ratings & 4 Reviews 8 GB RAM | 128 GB ROM 17.02 cm (6.7 inch) Full HD+ Super AMOLED Display 50MP + 8MP | 12MP Front Camera 5000 mAh Li-ion Battery Exynos 1480 Processor 1 Year Manufacturer Warranty for Device and 6 Months for In-Box Accessories ₹32,799 ₹45,99928% off Lowest price since launch Upto ₹23,700 Off on Exchange",
+      "product_url": "https://www.flipkart.com/samsung-galaxy-a37-5g-awesome-lavender-128-gb/p/itm793d1b5fe9bc5?pid=MOBHHENS6WEYKSVD&lid=LSTMOBHHENS6WEYKSVDWKDNKN&marketplace=FLIPKART&q=samsung+A37+mobile&store=tyy%2F4io&srno=s_1_2&otracker=search&fm=organic&iid=916f46cf-025b-4a6c-849d-b747edec6311.MOBHHENS6WEYKSVD.SEARCH&ppt=None&ppn=None&ssid=lt0qvwmt400000001779470516442&qH=08aa6bfc8a9167b5&ov_redirect=true",
+      "current_store_price_inr": 32799,
+      "rating": null,
+      "rating_count": 231,
+      "availability": "listed",
+      "listing_rank": 2
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "Samsung Galaxy A37 5G (Awesome Graygreen, 128 GB)",
+      "raw_line": "Add to Compare Samsung Galaxy A37 5G (Awesome Graygreen, 128 GB) 4.231 Ratings & 4 Reviews 8 GB RAM | 128 GB ROM 17.02 cm (6.7 inch) Full HD+ Super AMOLED Display 50MP + 8MP | 12MP Front Camera 5000 mAh Li-ion Battery Exynos 1480 Processor 1 Year Manufacturer Warranty for Device and 6 Months for In-Box Accessories ₹32,799 ₹45,99928% off Lowest price since launch Upto ₹23,700 Off on Exchange",
+      "product_url": "https://www.flipkart.com/samsung-galaxy-a37-5g-awesome-graygreen-128-gb/p/itm793d1b5fe9bc5?pid=MOBHHENSWEXBWPFT&lid=LSTMOBHHENSWEXBWPFTYQB1LN&marketplace=FLIPKART&q=samsung+A37+mobile&store=tyy%2F4io&srno=s_1_3&otracker=search&fm=organic&iid=916f46cf-025b-4a6c-849d-b747edec6311.MOBHHENSWEXBWPFT.SEARCH&ppt=None&ppn=None&ssid=lt0qvwmt400000001779470516442&qH=08aa6bfc8a9167b5&ov_redirect=true",
+      "current_store_price_inr": 32799,
+      "rating": null,
+      "rating_count": 231,
+      "availability": "listed",
+      "listing_rank": 3
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "Samsung Galaxy A37 5G (Awesome Lavender, 256 GB)",
+      "raw_line": "Add to Compare Samsung Galaxy A37 5G (Awesome Lavender, 256 GB) 4.231 Ratings & 4 Reviews 8 GB RAM | 256 GB ROM 17.02 cm (6.7 inch) Full HD+ Super AMOLED Display 50MP + 8MP | 12MP Front Camera 5000 mAh Li-ion Battery Exynos 1480 Processor 1 Year Manufacturer Warranty for Device and 6 Months for In-Box Accessories ₹37,749 ₹49,99924% off Super Deals Upto ₹27,250 Off on Exchange",
+      "product_url": "https://www.flipkart.com/samsung-galaxy-a37-5g-awesome-lavender-256-gb/p/itm793d1b5fe9bc5?pid=MOBHHENSEEHFJGKC&lid=LSTMOBHHENSEEHFJGKCATD3GL&marketplace=FLIPKART&q=samsung+A37+mobile&store=tyy%2F4io&srno=s_1_4&otracker=search&fm=organic&iid=916f46cf-025b-4a6c-849d-b747edec6311.MOBHHENSEEHFJGKC.SEARCH&ppt=None&ppn=None&ssid=lt0qvwmt400000001779470516442&qH=08aa6bfc8a9167b5&ov_redirect=true",
+      "current_store_price_inr": 37749,
+      "rating": null,
+      "rating_count": 231,
+      "availability": "listed",
+      "listing_rank": 4
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "Samsung Galaxy A37 5G (Awesome Lavender, 256 GB)",
+      "raw_line": "Add to Compare Samsung Galaxy A37 5G (Awesome Lavender, 256 GB) 4.73 Ratings & 0 Reviews 12 GB RAM | 256 GB ROM 17.02 cm (6.7 inch) Full HD+ Super AMOLED Display 50MP + 8MP | 12MP Front Camera 5000 mAh Li-ion Battery Exynos 1480 Processor 1 Year Manufacturer Warranty for Device and 6 Months for In-Box Accessories ₹42,699 ₹53,99920% off Upto ₹30,650 Off on Exchange Bank Offer",
+      "product_url": "https://www.flipkart.com/samsung-galaxy-a37-5g-awesome-lavender-256-gb/p/itm793d1b5fe9bc5?pid=MOBHHENSQVHCHGUG&lid=LSTMOBHHENSQVHCHGUGSXSGPS&marketplace=FLIPKART&q=samsung+A37+mobile&store=tyy%2F4io&srno=s_1_5&otracker=search&fm=organic&iid=916f46cf-025b-4a6c-849d-b747edec6311.MOBHHENSQVHCHGUG.SEARCH&ppt=None&ppn=None&ssid=lt0qvwmt400000001779470516442&qH=08aa6bfc8a9167b5&ov_redirect=true",
+      "current_store_price_inr": 42699,
+      "rating": null,
+      "rating_count": 73,
+      "availability": "listed",
+      "listing_rank": 5
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "Samsung Galaxy A37 5G (Awesome Charcoal, 256 GB)",
+      "raw_line": "Add to Compare Samsung Galaxy A37 5G (Awesome Charcoal, 256 GB) 4.231 Ratings & 4 Reviews 8 GB RAM | 256 GB ROM 17.02 cm (6.7 inch) Full HD+ Super AMOLED Display 50MP + 8MP | 12MP Front Camera 5000 mAh Li-ion Battery Exynos 1480 Processor 1 Year Manufacturer Warranty for Device and 6 Months for In-Box Accessories ₹37,749 ₹49,99924% off Lowest price since launch Upto ₹27,250 Off on Exchange",
+      "product_url": "https://www.flipkart.com/samsung-galaxy-a37-5g-awesome-charcoal-256-gb/p/itm793d1b5fe9bc5?pid=MOBHHENSAGYPYZVU&lid=LSTMOBHHENSAGYPYZVULHNR8L&marketplace=FLIPKART&q=samsung+A37+mobile&store=tyy%2F4io&srno=s_1_6&otracker=search&fm=organic&iid=916f46cf-025b-4a6c-849d-b747edec6311.MOBHHENSAGYPYZVU.SEARCH&ppt=None&ppn=None&ssid=lt0qvwmt400000001779470516442&qH=08aa6bfc8a9167b5&ov_redirect=true",
+      "current_store_price_inr": 37749,
+      "rating": null,
+      "rating_count": 231,
+      "availability": "listed",
+      "listing_rank": 6
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "Samsung Galaxy A37 5G (Awesome Graygreen, 256 GB)",
+      "raw_line": "Add to Compare Samsung Galaxy A37 5G (Awesome Graygreen, 256 GB) 4.231 Ratings & 4 Reviews 8 GB RAM | 256 GB ROM 17.02 cm (6.7 inch) Full HD+ Super AMOLED Display 50MP + 8MP | 12MP Front Camera 5000 mAh Li-ion Battery Exynos 1480 Processor 1 Year Manufacturer Warranty for Device and 6 Months for In-Box Accessories ₹37,749 ₹49,99924% off Upto ₹27,250 Off on Exchange Bank Offer",
+      "product_url": "https://www.flipkart.com/samsung-galaxy-a37-5g-awesome-graygreen-256-gb/p/itm793d1b5fe9bc5?pid=MOBHHENSRG4KNRXW&lid=LSTMOBHHENSRG4KNRXWVTFP2T&marketplace=FLIPKART&q=samsung+A37+mobile&store=tyy%2F4io&srno=s_1_7&otracker=search&fm=organic&iid=916f46cf-025b-4a6c-849d-b747edec6311.MOBHHENSRG4KNRXW.SEARCH&ppt=None&ppn=None&ssid=lt0qvwmt400000001779470516442&qH=08aa6bfc8a9167b5&ov_redirect=true",
+      "current_store_price_inr": 37749,
+      "rating": null,
+      "rating_count": 231,
+      "availability": "listed",
+      "listing_rank": 7
+    },
+    {
+      "source": "browser_flipkart_search",
+      "store_key": "flipkart",
+      "store_name": "Flipkart",
+      "candidate_name": "Samsung Galaxy A37 5G (Awesome Charcoal, 256 GB)",
+      "raw_line": "Add to Compare Samsung Galaxy A37 5G (Awesome Charcoal, 256 GB) 4.73 Ratings & 0 Reviews 12 GB RAM | 256 GB ROM 17.02 cm (6.7 inch) Full HD+ Super AMOLED Display 50MP + 8MP | 12MP Front Camera 5000 mAh Li-ion Battery Exynos 1480 Processor 1 Year Manufacturer Warranty for Device and 6 Months for In-Box Accessories ₹42,699 ₹53,99920% off Lowest price since launch Upto ₹30,650 Off on Exchange",
+      "product_url": "https://www.flipkart.com/samsung-galaxy-a37-5g-awesome-charcoal-256-gb/p/itm793d1b5fe9bc5?pid=MOBHHENSQZFDSCDY&lid=LSTMOBHHENSQZFDSCDYLSQHBK&marketplace=FLIPKART&q=samsung+A37+mobile&store=tyy%2F4io&srno=s_1_8&otracker=search&fm=organic&iid=916f46cf-025b-4a6c-849d-b747edec6311.MOBHHENSQZFDSCDY.SEARCH&ppt=None&ppn=None&ssid=lt0qvwmt400000001779470516442&qH=08aa6bfc8a9167b5&ov_redirect=true",
+      "current_store_price_inr": 42699,
+      "rating": null,
+      "rating_count": 73,
+      "availability": "listed",
+      "listing_rank": 8
+    }
+  ],
+  "stats": {
+    "candidates": 8
+  }
+}

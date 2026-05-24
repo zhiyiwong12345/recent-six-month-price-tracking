@@ -1,5 +1,48 @@
 # Memory Cost Pass-through Tracker
 
+This file captures the business framing and architecture direction.
+
+For the active beta operating surface and continuation artifacts, start with:
+
+- [memory-cost-pass-through-system-v1-beta.md](/Users/nothing/Documents/New%20project/docs/memory-cost-pass-through-system-v1-beta.md)
+- [memory-cost-pass-through-backbone-fit-gap.md](/Users/nothing/Documents/New%20project/docs/memory-cost-pass-through-backbone-fit-gap.md)
+- [memory-cost-pass-through-forward-monitoring-proof.md](/Users/nothing/Documents/New%20project/docs/memory-cost-pass-through-forward-monitoring-proof.md)
+- [memory-cost-pass-through-issue-index.md](/Users/nothing/Documents/New%20project/docs/memory-cost-pass-through-issue-index.md)
+- [memory-cost-pass-through-context-handoff.md](/Users/nothing/Documents/New%20project/docs/memory-cost-pass-through-context-handoff.md)
+
+## 当前正式运行入口
+
+当前正式 V1 口径已经固定为 `candidate-file + forward observations + recovery seed + --skipStoreFetch true`。
+
+推荐直接使用这个官方入口，而不是手写长命令：
+
+```bash
+node scripts/run_memory_cost_pass_through_official.js \
+  --minPrice 20000 \
+  --maxPrice 50000 \
+  --topN 10 \
+  --outDir 00_Inbox
+```
+
+这个入口会自动完成两件事：
+
+1. 运行正式报告生成脚本
+2. 运行质量门脚本，确认：
+   - `official_top10 = true`
+   - `data_health.status = healthy`
+   - `unresolved_candidates = 0`
+   - `insufficient_history = 0`
+   - `history_backfill_pending = 0`
+
+质量门脚本也可以单独运行：
+
+```bash
+node scripts/check_memory_cost_report_quality.js \
+  --minPrice 20000 \
+  --maxPrice 50000 \
+  --outDir 00_Inbox
+```
+
 ## 背景与目标
 
 从 `2025 Q3` 开始，内存价格快速上涨。手机厂商已经在售、即将发售、以及仍在补货生产的机型，都可能通过官方调价、促销回撤、渠道价上移、SKU 结构调整等方式把成本压力传导到终端售价。
@@ -207,6 +250,18 @@
 ## 当前 live 候选入口
 
 没有 Flipkart Affiliate API credentials 时，使用半自动 browser collector 作为当前商城候选入口：
+
+## Scrapling-style 小改造口径
+
+本 workflow 先不整体迁移到 Scrapling，但采用它的 `Fetcher -> Response -> Health` 心智模型来约束现有脚本：
+
+- `candidate_file` / `flipkart_affiliate_api` / `flipkart_page_scrape` / `local_fallback` 都视为候选 Fetcher，各自只拥有候选来源状态，不拥有最终价格历史结论。
+- `pricehistory_registry` 是 resolution cache，只负责把 store URL / model identity 对到稳定的 PriceHistory 入口。
+- `pricehistory_live_resolution` 是 history Fetcher，只负责 link-first 历史价格 payload 和失败原因。
+- 最终 JSON 新增 `scrapling_style_contract`，HTML 新增 `Fetcher Contract` 区块，用来显示 provider role、status、count、ownership。
+- `data_health` 仍然是最终可信门槛：`failed` 必须视为失败，`degraded` 必须说明不是 official current top10。
+
+这个改造的目标是让报告不再只是“脚本输出”，而是带有可审计的抓取路径、解析路径、fallback 路径和健康门槛。
 
 ```bash
 python3 scripts/collect_store_candidates_browser.py \
