@@ -217,7 +217,10 @@ function loadJson(file) {
 
 function modelLabelFromTitle(title, fallback) {
   const clean = String(title || "")
-    .replace(/\s*\([^)]*\)\s*/g, " ")
+    .replace(/\s*\(([^)]*)\)\s*/g, (_, value) => {
+      const token = String(value || "").trim();
+      return /^\d+[a-z]?$/i.test(token) && token.length <= 3 ? ` (${token}) ` : " ";
+    })
     .replace(/\b\d+\s*GB\s*(RAM|ROM)?\b/gi, " ")
     .replace(/\s+/g, " ")
     .trim();
