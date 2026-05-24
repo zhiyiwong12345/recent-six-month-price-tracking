@@ -7,13 +7,13 @@ const INBOX = path.join(ROOT, "00_Inbox");
 const DATE_TAG = "2026-05-23";
 
 const WATCHLIST = [
-  { query: "nothing phone 3a lite", file: "manual-fk-nothing-phone-3a-lite-2026-05-23.json", tokens: ["nothing", "phone", "3a", "lite"] },
+  { query: "nothing phone 3a lite", file: "manual-amazon-nothing-phone-3a-lite-2026-05-24.json", tokens: ["nothing", "phone", "3a", "lite"] },
   { query: "nothing phone 4a", file: "manual-fk-nothing-phone-4a-2026-05-23.json", tokens: ["nothing", "phone", "4a"], exclude: ["pro"] },
   { query: "nothing phone 4a pro", file: "manual-fk-nothing-phone-4a-pro-2026-05-23.json", tokens: ["nothing", "phone", "4a", "pro"] },
-  { query: "nothing phone3", file: "manual-fk-nothing-phone3-2026-05-23.json", tokens: ["nothing", "phone", "3"], exclude: ["3a"] },
+  { query: "nothing phone3", file: "manual-fk-nothing-phone3-2026-05-24.json", tokens: ["nothing", "phone", "3"], exclude: ["3a"], allowUnavailable: true },
   { query: "vivo T5X", file: "manual-fk-vivo-t5x-2026-05-23.json", tokens: ["vivo", "t5x"] },
   { query: "vivo v70", file: "manual-fk-vivo-v70-2026-05-23.json", tokens: ["vivo", "v70"], exclude: ["fe", "elite"] },
-  { query: "vivo v70fe", file: "manual-fk-vivo-v70fe-2026-05-23.json", tokens: ["vivo", "v70", "fe"] },
+  { query: "vivo v70 FE", file: "manual-fk-vivo-v70fe-2026-05-23.json", tokens: ["vivo", "v70", "fe"] },
   { query: "vivo v70 Elite", file: "manual-fk-vivo-v70-elite-2026-05-23.json", tokens: ["vivo", "v70", "elite"] },
   { query: "vivo v60", file: "manual-fk-vivo-v60-2026-05-23.json", tokens: ["vivo", "v60"], exclude: ["v60e"] },
   { query: "vivo v60e", file: "manual-fk-vivo-v60e-2026-05-23.json", tokens: ["vivo", "v60e"] },
@@ -21,13 +21,13 @@ const WATCHLIST = [
   { query: "realme 16 Pro", file: "manual-fk-realme-16-pro-2026-05-23.json", tokens: ["realme", "16", "pro"], exclude: ["plus"] },
   { query: "realme 15", file: "manual-fk-realme-15-2026-05-23.json", tokens: ["realme", "15"], exclude: ["pro", "plus"] },
   { query: "realme 15 Pro", file: "manual-fk-realme-15-pro-2026-05-23.json", tokens: ["realme", "15", "pro"], exclude: ["plus"] },
-  { query: "realme 15 Pro+", file: "manual-fk-realme-15-pro-plus-2026-05-23.json", tokens: ["realme", "15", "pro"], requirePlus: true },
-  { query: "oneplus nord ce6", file: "manual-fk-oneplus-nord-ce6-2026-05-23.json", tokens: ["oneplus", "nord", "ce6"] },
+  { query: "oneplus nord ce6", file: "manual-fk-oneplus-nord-ce6-2026-05-23.json", tokens: ["oneplus", "nord", "ce6"], exclude: ["lite"] },
   { query: "oneplus nord 6", file: "manual-fk-oneplus-nord-6-2026-05-23.json", tokens: ["oneplus", "nord", "6"], exclude: ["ce6"] },
   { query: "oppo reno 15c", file: "manual-fk-oppo-reno-15c-2026-05-23.json", tokens: ["oppo", "reno15c"] },
   { query: "oppo reno 15", file: "manual-fk-oppo-reno-15-2026-05-23.json", tokens: ["oppo", "reno15"], exclude: ["reno15c", "pro"] },
-  { query: "oppo reno 15 pro", file: "manual-fk-oppo-reno-15-pro-2026-05-23.json", tokens: ["oppo", "reno15", "pro"] },
-  { query: "realme P4", file: "manual-fk-realme-p4-2026-05-23.json", tokens: ["realme", "p4"] },
+  { query: "OPPO Reno15 5G selected SKUs", file: "manual-fk-oppo-reno15-selected-skus-2026-05-24.json", tokens: ["oppo", "reno15"] },
+  { query: "OPPO reno15 pro mini", file: "manual-fk-oppo-reno15-pro-mini-2026-05-24.json", tokens: ["oppo", "reno15", "pro", "mini"] },
+  { query: "realme P4", file: "manual-fk-realme-p4-2026-05-23.json", tokens: ["realme", "p4"], exclude: ["pro", "power"] },
   { query: "motorola edge 60 fusion", file: "manual-fk-motorola-edge-60-fusion-2026-05-23.json", tokens: ["motorola", "edge", "60", "fusion"] },
   { query: "motorola edge 70 fusion", file: "manual-fk-motorola-edge-70-fusion-2026-05-23.json", tokens: ["motorola", "edge", "70", "fusion"] },
   { query: "samsung A57", file: "manual-fk-samsung-a57-2026-05-23.json", tokens: ["samsung", "a57"] },
@@ -50,6 +50,9 @@ const PRICEBEFORE_FETCH_LIMIT = Number(process.env.PRICEBEFORE_FETCH_LIMIT || 99
 const RECENT_WINDOW_DAYS = 30;
 const REPORT_NOW = Date.parse(`${DATE_TAG}T23:59:59.000Z`);
 const RECENT_CUTOFF = REPORT_NOW - RECENT_WINDOW_DAYS * 24 * 60 * 60 * 1000;
+const TIMELINE_START = Date.parse("2026-04-01T00:00:00.000Z");
+const SIGNIFICANT_DELTA_INR = 500;
+const MAX_TIMELINE_ROWS = 60;
 
 const BRAND_META = {
   nothing: { label: "Nothing", order: 5 },
@@ -101,12 +104,28 @@ function candidateText(row) {
   return normalizeText(`${row.candidate_name || ""} ${row.raw_line || ""}`);
 }
 
+function hasMissingTitle(row) {
+  return /\b(currently unavailable|coming soon)\b/i.test(String(row.candidate_name || ""));
+}
+
+function displayTitleFromRow(row) {
+  const name = String(row.candidate_name || "").trim();
+  if (!hasMissingTitle(row)) return name;
+  const raw = String(row.raw_line || "").replace(/^Currently unavailable\s+/i, "").trim();
+  const title =
+    raw.match(/(?:Add to Compare\s+)?(.+?)\s+\d(?:\.\d)?[\d,]*\s+Ratings/i)?.[1] ||
+    raw.match(/(?:Add to Compare\s+)?(.+?)\s+\d+\s*GB\s*RAM/i)?.[1] ||
+    name;
+  return title.trim();
+}
+
 function exactMatch(spec, row) {
-  const text = normalizeText(row.candidate_name || "");
+  const name = String(row.candidate_name || "");
+  const text = hasMissingTitle(row) ? candidateText(row) : normalizeText(name);
   if (!spec.tokens.every((token) => hasToken(text, token))) return false;
   if (spec.requirePlus && !/\b(plus|pro plus)\b/.test(text)) return false;
   if ((spec.exclude || []).some((token) => hasToken(text, token))) return false;
-  if (String(row.candidate_name || "").toLowerCase().includes("currently unavailable")) return false;
+  if (!spec.allowUnavailable && name.toLowerCase().includes("currently unavailable")) return false;
   return true;
 }
 
@@ -122,6 +141,26 @@ function extractSku(row) {
 function extractPid(url) {
   const m = String(url || "").match(/[?&]pid=([^&]+)/i);
   return m ? m[1] : "";
+}
+
+function candidateOption(row) {
+  return {
+    title: displayTitleFromRow(row),
+    product_url: row.product_url,
+    store: row.store_name || "Flipkart",
+    price: row.current_store_price_inr,
+    availability: row.availability,
+  };
+}
+
+function mergeCandidateOptions(options) {
+  const seen = new Set();
+  return options.filter((option) => {
+    const key = `${option.product_url || ""}|${option.title || ""}|${option.price || ""}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function familyKeyFromQuery(query) {
@@ -176,6 +215,15 @@ function loadJson(file) {
   return JSON.parse(fs.readFileSync(full, "utf8"));
 }
 
+function modelLabelFromTitle(title, fallback) {
+  const clean = String(title || "")
+    .replace(/\s*\([^)]*\)\s*/g, " ")
+    .replace(/\b\d+\s*GB\s*(RAM|ROM)?\b/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return clean || fallback || "-";
+}
+
 function loadHistoryRows() {
   const rows = [];
   for (const file of HISTORY_FILES) {
@@ -212,11 +260,12 @@ function loadPriceBeforeCache() {
       if (key) byKey.set(String(key), entry.product);
     }
   }
-  return { entries, byKey };
+  return { entries, byKey, dirty: false };
 }
 
 function savePriceBeforeCache(cache) {
   const full = path.join(INBOX, PRICEBEFORE_CACHE_FILE);
+  if (!cache.dirty && fs.existsSync(full)) return;
   const byFirstKey = new Map();
   for (const entry of cache.entries || []) {
     const first = entry?.keys?.[0];
@@ -269,6 +318,7 @@ async function resolvePriceBefore(row, cache, stats) {
     fetched_at: new Date().toISOString(),
   };
   cache.entries.push(entry);
+  cache.dirty = true;
   for (const key of keys) {
     cache.byKey.set(key, product);
   }
@@ -304,28 +354,31 @@ function dedupeVariants(rows) {
   const bySku = new Map();
   for (const row of rows) {
     const sku = extractSku(row);
+    const prepared = { ...row, same_sku_candidates: [candidateOption(row)] };
     const prev = bySku.get(sku);
     if (!prev) {
-      bySku.set(sku, row);
+      bySku.set(sku, prepared);
       continue;
     }
+    const sameSkuCandidates = mergeCandidateOptions([...(prev.same_sku_candidates || [candidateOption(prev)]), candidateOption(row)]);
     const prevListed = prev.availability === "listed" ? 1 : 0;
     const rowListed = row.availability === "listed" ? 1 : 0;
     const prevRank = Number(prev.listing_rank || 999);
     const rowRank = Number(row.listing_rank || 999);
     if (rowListed > prevListed || (rowListed === prevListed && rowRank < prevRank)) {
-      bySku.set(sku, row);
+      bySku.set(sku, { ...prepared, same_sku_candidates: sameSkuCandidates });
+    } else {
+      prev.same_sku_candidates = sameSkuCandidates;
     }
   }
   return [...bySku.values()].sort((a, b) => extractSku(a).localeCompare(extractSku(b)));
 }
 
 function chartSvg(points, width = 720, height = 210) {
-  if (!points || points.length < 2) return "";
   const parsed = points
     .map((p) => ({ t: Date.parse(p.timestamp_iso), y: Number(p.price_inr) }))
     .filter((p) => Number.isFinite(p.t) && Number.isFinite(p.y));
-  if (parsed.length < 2) return "";
+  if (!parsed.length) return "";
   const minT = Math.min(...parsed.map((p) => p.t));
   const maxT = Math.max(...parsed.map((p) => p.t));
   const minY = Math.min(...parsed.map((p) => p.y));
@@ -333,7 +386,17 @@ function chartSvg(points, width = 720, height = 210) {
   const pad = 34;
   const x = (t) => pad + ((t - minT) / Math.max(1, maxT - minT)) * (width - pad * 2);
   const y = (v) => height - pad - ((v - minY) / Math.max(1, maxY - minY)) * (height - pad * 2);
-  const d = parsed.map((p, i) => `${i ? "L" : "M"} ${x(p.t).toFixed(1)} ${y(p.y).toFixed(1)}`).join(" ");
+  const d =
+    parsed.length === 1
+      ? `M ${pad} ${y(parsed[0].y).toFixed(1)} L ${width - pad} ${y(parsed[0].y).toFixed(1)}`
+      : parsed.map((p, i) => `${i ? "L" : "M"} ${x(p.t).toFixed(1)} ${y(p.y).toFixed(1)}`).join(" ");
+  const dot =
+    parsed.length === 1
+      ? `<circle cx="${width / 2}" cy="${y(parsed[0].y).toFixed(1)}" r="5" />`
+      : parsed
+          .filter((point, idx, arr) => idx === 0 || idx === arr.length - 1 || point.y !== arr[idx - 1].y)
+          .map((point) => `<circle cx="${x(point.t).toFixed(1)}" cy="${y(point.y).toFixed(1)}" r="3" />`)
+          .join("");
   return `<svg viewBox="0 0 ${width} ${height}" class="chart" role="img">
     <line x1="${pad}" y1="${pad}" x2="${pad}" y2="${height - pad}" />
     <line x1="${pad}" y1="${height - pad}" x2="${width - pad}" y2="${height - pad}" />
@@ -342,6 +405,7 @@ function chartSvg(points, width = 720, height = 210) {
     <text x="${pad}" y="${height - 42}">${formatDate(new Date(minT).toISOString())}</text>
     <text x="${width - 120}" y="${height - 42}">${formatDate(new Date(maxT).toISOString())}</text>
     <path d="${d}" />
+    ${dot}
   </svg>`;
 }
 
@@ -377,8 +441,8 @@ function priceEventsWithDelta(events) {
 
 function classifyDelta(delta) {
   if (delta == null || Number.isNaN(Number(delta))) return "flat";
-  if (Number(delta) >= 500) return "up";
-  if (Number(delta) <= -500) return "down";
+  if (Number(delta) >= SIGNIFICANT_DELTA_INR) return "up";
+  if (Number(delta) <= -SIGNIFICANT_DELTA_INR) return "down";
   return "flat";
 }
 
@@ -444,6 +508,18 @@ function chooseRepresentativeVariant(variants) {
   return [...variants].sort((a, b) => representativeScore(b) - representativeScore(a))[0] || null;
 }
 
+function modelAttentionScore(model) {
+  const rep = model.representative_variant;
+  if (!rep) return -1;
+  const a = rep.analysis || analyzeVariant(rep);
+  return (
+    Math.abs(Number(a.recent_delta_inr) || 0) / 100 +
+    Math.abs(Number(a.last_event?.delta_inr) || 0) / 100 +
+    a.recent_events_count * 4 +
+    a.price_change_count / 10
+  );
+}
+
 function summarizeModel(item) {
   const variants = item.variants.map((variant) => ({
     ...variant,
@@ -474,6 +550,14 @@ function summarizeBrand(brandKey, models) {
   const biggestIncrease = allEvents.filter((event) => event.delta_inr > 0).sort((a, b) => b.delta_inr - a.delta_inr)[0] || null;
   const biggestDecrease = allEvents.filter((event) => event.delta_inr < 0).sort((a, b) => a.delta_inr - b.delta_inr)[0] || null;
   const marketEventTouches = reps.filter((rep) => rep.analysis.near_market_event).length;
+  const unresolvedModels = models.filter((model) => !model.representative_variant).length;
+  const attentionScore =
+    counts.up * 2 +
+    counts.down * 2 +
+    Math.min(5, Math.abs(netRecentDelta) / 3000) +
+    (biggestIncrease ? Math.min(3, Math.abs(biggestIncrease.delta_inr) / 3000) : 0) +
+    (biggestDecrease ? Math.min(3, Math.abs(biggestDecrease.delta_inr) / 3000) : 0) +
+    unresolvedModels * 0.4;
   let headline = "价格动作分化";
   if (counts.up > counts.down && netRecentDelta > 0) headline = "近30天以提价为主";
   else if (counts.down > counts.up && netRecentDelta < 0) headline = "近30天以降价为主";
@@ -493,6 +577,13 @@ function summarizeBrand(brandKey, models) {
   } else if (counts.down > counts.up) {
     inference = "多个代表 SKU 下调，可能是在做促销拉动、库存消化或价位段防守。";
   }
+  const strategyTags = [];
+  if (counts.up > counts.down && netRecentDelta > 0) strategyTags.push("价格回收/成本传导");
+  if (counts.down > counts.up && netRecentDelta < 0) strategyTags.push("促销/库存防守");
+  if (headline.includes("分化")) strategyTags.push("按机型分层处理");
+  if (marketEventTouches) strategyTags.push("靠近5月电商大促");
+  if (unresolvedModels) strategyTags.push(`${unresolvedModels}个机型待补链接`);
+  if (!strategyTags.length) strategyTags.push("继续观察");
 
   return {
     brand_key: brandKey,
@@ -508,8 +599,68 @@ function summarizeBrand(brandKey, models) {
     biggest_increase: biggestIncrease,
     biggest_decrease: biggestDecrease,
     market_event_touches: marketEventTouches,
+    unresolved_models: unresolvedModels,
+    attention_score: attentionScore,
+    attention_level: attentionScore >= 8 ? "高" : attentionScore >= 4 ? "中" : "低",
+    strategy_tags: strategyTags,
     headline,
     inference,
+  };
+}
+
+function eventModelLabel(event) {
+  return modelLabelFromTitle(event.model_title || event.model, event.model_query || event.model);
+}
+
+function summarizeExecutive(brandGroups, items, timeline) {
+  const matchedModels = items.filter((item) => item.variant_count > 0).length;
+  const unmatchedModels = items.length - matchedModels;
+  const upBrands = brandGroups.filter((brand) => brand.up_models > brand.down_models && brand.net_recent_delta_inr > 0);
+  const downBrands = brandGroups.filter((brand) => brand.down_models > brand.up_models && brand.net_recent_delta_inr < 0);
+  const splitBrands = brandGroups.filter((brand) => brand.headline.includes("分化"));
+  const significantEvents = timeline.filter((event) => Math.abs(Number(event.delta_inr) || 0) >= SIGNIFICANT_DELTA_INR);
+  const biggestIncrease = [...significantEvents].filter((event) => event.delta_inr > 0).sort((a, b) => b.delta_inr - a.delta_inr)[0] || null;
+  const biggestDecrease = [...significantEvents].filter((event) => event.delta_inr < 0).sort((a, b) => a.delta_inr - b.delta_inr)[0] || null;
+  const latest = significantEvents[0] || null;
+  const priorityBrands = [...brandGroups].sort((a, b) => b.attention_score - a.attention_score).slice(0, 3);
+  const coveragePct = items.length ? (matchedModels / items.length) * 100 : 0;
+  const movementText = [
+    upBrands.length ? `${upBrands.map((brand) => brand.brand_label).join("、")} 偏上调` : "",
+    downBrands.length ? `${downBrands.map((brand) => brand.brand_label).join("、")} 偏下调` : "",
+    splitBrands.length ? `${splitBrands.map((brand) => brand.brand_label).join("、")} 分化` : "",
+  ]
+    .filter(Boolean)
+    .join("；");
+  const headline = movementText
+    ? `本轮不是单一方向：${movementText}。`
+    : "本轮多数代表 SKU 近30天变化不大，暂时更像价格观测期。";
+  const takeaways = [
+    biggestIncrease
+      ? `最大上调：${eventModelLabel(biggestIncrease)} ${biggestIncrease.sku}，${formatShortDate(biggestIncrease.timestamp_iso)} ${formatSignedInr(biggestIncrease.delta_inr)}。`
+      : "暂未看到超过阈值的代表 SKU 上调。",
+    biggestDecrease
+      ? `最大下调：${eventModelLabel(biggestDecrease)} ${biggestDecrease.sku}，${formatShortDate(biggestDecrease.timestamp_iso)} ${formatSignedInr(biggestDecrease.delta_inr)}。`
+      : "暂未看到超过阈值的代表 SKU 下调。",
+    `数据覆盖：${matchedModels}/${items.length} 个清单机型有严格商城链接命中，${coveragePct.toFixed(0)}%；${unmatchedModels ? `${unmatchedModels} 个还需要补链接/改关键词。` : "暂无待补机型。"}`,
+  ];
+  return {
+    headline,
+    coverage_pct: coveragePct,
+    matched_models: matchedModels,
+    unmatched_models: unmatchedModels,
+    significant_event_count: significantEvents.length,
+    biggest_increase: biggestIncrease,
+    biggest_decrease: biggestDecrease,
+    latest_significant_event: latest,
+    priority_brands: priorityBrands.map((brand) => ({
+      brand_key: brand.brand_key,
+      brand_label: brand.brand_label,
+      headline: brand.headline,
+      attention_level: brand.attention_level,
+      net_recent_delta_inr: brand.net_recent_delta_inr,
+      tags: brand.strategy_tags,
+    })),
+    takeaways,
   };
 }
 
@@ -524,9 +675,7 @@ function buildAnalysis(items) {
     .map(([brandKey, models]) => ({
       ...summarizeBrand(brandKey, models),
       models: models.sort((a, b) => {
-        const aDate = Date.parse(a.representative_variant?.analysis.latest_price_at || 0);
-        const bDate = Date.parse(b.representative_variant?.analysis.latest_price_at || 0);
-        return bDate - aDate || a.query.localeCompare(b.query);
+        return modelAttentionScore(b) - modelAttentionScore(a) || a.query.localeCompare(b.query);
       }),
     }))
     .sort((a, b) => (BRAND_META[a.brand_key]?.order || 999) - (BRAND_META[b.brand_key]?.order || 999));
@@ -535,10 +684,11 @@ function buildAnalysis(items) {
       brand.models.flatMap((model) => {
         const rep = model.representative_variant;
         return priceEventsWithDelta(rep?.price_change_events)
-          .filter((event) => event.delta_inr && Date.parse(event.timestamp_iso) >= Date.parse("2026-04-01T00:00:00.000Z"))
+          .filter((event) => event.delta_inr && Date.parse(event.timestamp_iso) >= TIMELINE_START)
           .map((event) => ({
             brand_key: brand.brand_key,
             brand_label: brand.brand_label,
+            model_title: rep.title,
             model_query: model.query,
             model_id: model.id,
             sku: rep.sku,
@@ -553,6 +703,7 @@ function buildAnalysis(items) {
     recent_window_days: RECENT_WINDOW_DAYS,
     market_context: MARKET_CONTEXT,
     brand_groups,
+    executive: summarizeExecutive(brand_groups, items, timeline),
     timeline,
   };
 }
@@ -591,12 +742,76 @@ function renderEventTable(variant) {
     </details>`;
 }
 
+function renderTagList(tags) {
+  return (tags || []).map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("");
+}
+
+function renderExecutivePanel(executive) {
+  const biggestIncrease = executive.biggest_increase
+    ? `${eventModelLabel(executive.biggest_increase)} ${executive.biggest_increase.sku} ${formatSignedInr(executive.biggest_increase.delta_inr)}`
+    : "暂无";
+  const biggestDecrease = executive.biggest_decrease
+    ? `${eventModelLabel(executive.biggest_decrease)} ${executive.biggest_decrease.sku} ${formatSignedInr(executive.biggest_decrease.delta_inr)}`
+    : "暂无";
+  const priorityBrands = executive.priority_brands
+    .map(
+      (brand) => `<a class="priority-brand" href="#brand-${escapeHtml(brand.brand_key)}">
+        <span>${escapeHtml(brand.brand_label)} · ${escapeHtml(brand.attention_level)}关注</span>
+        <b>${escapeHtml(brand.headline)}</b>
+        <small>近30天净变化 ${formatSignedInr(brand.net_recent_delta_inr)}</small>
+        <p>${renderTagList(brand.tags)}</p>
+      </a>`
+    )
+    .join("");
+  return `<section class="exec-panel">
+    <div class="exec-copy">
+      <span class="eyebrow">PM 读数</span>
+      <h2>${escapeHtml(executive.headline)}</h2>
+      <ol>${executive.takeaways.map((line) => `<li>${escapeHtml(line)}</li>`).join("")}</ol>
+    </div>
+    <div class="exec-metrics">
+      <div><span>最大上调</span><b>${escapeHtml(biggestIncrease)}</b></div>
+      <div><span>最大下调</span><b>${escapeHtml(biggestDecrease)}</b></div>
+      <div><span>显著调价点</span><b>${executive.significant_event_count}</b></div>
+    </div>
+    <div class="priority-list">${priorityBrands}</div>
+  </section>`;
+}
+
+function renderTimeline(timeline) {
+  const significant = timeline.filter((event) => Math.abs(Number(event.delta_inr) || 0) >= SIGNIFICANT_DELTA_INR);
+  const rows = significant.slice(0, MAX_TIMELINE_ROWS);
+  if (!rows.length) return '<p class="warn">暂无超过阈值的调价节点。</p>';
+  let lastMonth = "";
+  return rows
+    .map((event) => {
+      const month = formatDate(event.timestamp_iso).slice(0, 7);
+      const monthHead = month !== lastMonth ? `<h3>${escapeHtml(month)}</h3>` : "";
+      lastMonth = month;
+      const direction = classifyDelta(event.delta_inr);
+      const market = isNearMarketEvent(event.timestamp_iso) ? '<em>大促附近</em>' : "";
+      return `${monthHead}<a class="timeline-row ${direction}" href="#${escapeHtml(event.model_id)}">
+        <span>${formatShortDate(event.timestamp_iso)}</span>
+        <strong>${escapeHtml(event.brand_label)} · ${escapeHtml(eventModelLabel(event))}<small>${escapeHtml(event.sku)}</small></strong>
+        <b>${formatSignedInr(event.delta_inr)}${market}</b>
+      </a>`;
+    })
+    .join("");
+}
+
 function renderVariant(variant, options = {}) {
   const analysis = variant.analysis || analyzeVariant(variant);
   const direction = analysis.recent_direction;
   const historyLink = variant.history_page_url
     ? `<a href="${escapeHtml(variant.history_page_url)}">历史页</a>`
     : "历史页缺失";
+  const sameSkuLinks = variant.same_sku_candidates || [];
+  const sameSkuMeta =
+    sameSkuLinks.length > 1
+      ? `<details class="submeta sku-links"><summary>同 SKU 颜色/链接（${sameSkuLinks.length}）</summary><div>${sameSkuLinks
+          .map((candidate) => `<a href="${escapeHtml(candidate.product_url)}">${escapeHtml(candidate.title)}</a>`)
+          .join(" / ")}</div></details>`
+      : "";
   return `<section class="variant${options.secondary ? " secondary" : ""}">
     <div class="variant-head">
       <div><strong>${escapeHtml(variant.sku)}</strong> <span>${escapeHtml(variant.title)}</span></div>
@@ -615,7 +830,8 @@ function renderVariant(variant, options = {}) {
     </div>
     <div class="meta">代表判断：${directionLabel(direction)}；调价点：${analysis.price_change_count}；首见：${formatDate(
       analysis.first_price_at
-    )}；来源：${escapeHtml(variant.price_source || "-")} · ${historyLink}</div>
+    )}；来源：${escapeHtml(variant.price_source || "-")} · 商城：${escapeHtml(variant.store || "Flipkart")} · ${historyLink}</div>
+    ${sameSkuMeta}
     ${chartSvg(variant.raw_price_points)}
     ${renderEventTable(variant)}
   </section>`;
@@ -625,7 +841,7 @@ function renderModel(model) {
   const rep = model.representative_variant;
   if (!rep) {
     return `<article class="model-card" id="${escapeHtml(model.id)}">
-      <div class="model-head"><div><h3>${escapeHtml(model.query)}</h3><p>${escapeHtml(model.status)} · 0 SKU</p></div></div>
+      <div class="model-head"><div><h3>${escapeHtml(model.query)}</h3><p>${escapeHtml(model.status)} · 0 SKU · 待人工确认链接</p></div></div>
       <p class="warn">未找到严格匹配。前 5 个可见候选：${escapeHtml(
         model.top_unmatched_candidates.map((c) => `${c.title || "-"} ${formatInr(c.price)}`).join(" / ")
       )}</p>
@@ -633,11 +849,12 @@ function renderModel(model) {
   }
   const analysis = rep.analysis;
   const otherSku = model.hidden_variants || [];
+  const modelLabel = modelLabelFromTitle(rep.title, model.query);
   return `<article class="model-card" id="${escapeHtml(model.id)}">
     <div class="model-head">
       <div>
-        <h3>${escapeHtml(model.query)}</h3>
-        <p>主显 SKU：${escapeHtml(rep.sku)}，因为它的价格变化最多/幅度最大。其余 ${otherSku.length} 个 SKU 已折叠。</p>
+        <h3>${escapeHtml(modelLabel)}</h3>
+        <p>${escapeHtml(model.query)} · 主显 SKU：${escapeHtml(rep.sku)}；其余 ${otherSku.length} 个 SKU 已折叠。</p>
       </div>
       <span class="chip ${escapeHtml(analysis.recent_direction)}">${directionLabel(analysis.recent_direction)} ${formatSignedInr(
         analysis.recent_delta_inr
@@ -664,19 +881,25 @@ function renderBrandGroup(brand) {
   const biggestDecrease = brand.biggest_decrease
     ? `${formatShortDate(brand.biggest_decrease.timestamp_iso)} ${formatSignedInr(brand.biggest_decrease.delta_inr)}`
     : "-";
-  return `<details class="brand-section" id="brand-${escapeHtml(brand.brand_key)}" open>
-    <summary>${escapeHtml(brand.brand_label)} · ${escapeHtml(brand.headline)}</summary>
+  const openAttr = brand.attention_level !== "低" ? " open" : "";
+  return `<details class="brand-section attention-${escapeHtml(brand.attention_level)}" id="brand-${escapeHtml(brand.brand_key)}"${openAttr}>
+    <summary>
+      <span>${escapeHtml(brand.brand_label)} · ${escapeHtml(brand.headline)}</span>
+      <b>${escapeHtml(brand.attention_level)}关注</b>
+    </summary>
     <div class="brand-body">
       <div class="brand-brief">
         <div>
           <p><strong>快速判断：</strong>${escapeHtml(brand.inference)}</p>
+          <p class="tags">${renderTagList(brand.strategy_tags)}</p>
           <p class="meta">这是基于近 ${RECENT_WINDOW_DAYS} 天代表 SKU 的调价方向、幅度和 5 月印度电商活动窗口做的推断，不等同于品牌官方原因。</p>
         </div>
         <ul>
-          <li>机型 ${brand.model_count} 个，SKU ${brand.variant_count} 个；主视图按机型计数。</li>
+          <li>机型 ${brand.model_count} 个，SKU ${brand.variant_count} 个；主视图按机型计数，不让同一机型多个 SKU 重复占位。</li>
           <li>近 ${RECENT_WINDOW_DAYS} 天：上调 ${brand.up_models} / 下调 ${brand.down_models} / 稳定 ${brand.flat_models}。</li>
           <li>品牌净变化：${formatSignedInr(brand.net_recent_delta_inr)}；最新动作：${latest}。</li>
           <li>最大上调：${biggestIncrease}；最大下调：${biggestDecrease}。</li>
+          <li>待补链接/未严格命中：${brand.unresolved_models} 个。</li>
         </ul>
       </div>
       ${brand.models.map(renderModel).join("")}
@@ -717,7 +940,7 @@ async function build() {
             : "missing_history";
       variants.push({
         sku,
-        title: row.candidate_name,
+        title: displayTitleFromRow(row),
         store: row.store_name || "Flipkart",
         store_key: row.store_key || "flipkart",
         product_url: row.product_url,
@@ -725,6 +948,7 @@ async function build() {
         rating_count: row.rating_count,
         availability: row.availability,
         listing_rank: row.listing_rank,
+        same_sku_candidates: row.same_sku_candidates || [candidateOption(row)],
         pricehistory_live_status: live
           ? "live_current_chrome_verified_2026-05-23"
           : priceBefore
@@ -757,7 +981,7 @@ async function build() {
     items.push({
       query: spec.query,
       family_key: familyKeyFromQuery(spec.query),
-      status: variants.length ? "flipkart_exact_match" : "no_exact_flipkart_match",
+      status: variants.length ? "store_exact_match" : "no_exact_store_match",
       variant_count: variants.length,
       variants,
       top_unmatched_candidates: candidates
@@ -807,7 +1031,7 @@ async function build() {
   const htmlPath = path.join(INBOX, `manual-pricehistory-watchlist-${DATE_TAG}-report.html`);
   savePriceBeforeCache(priceBeforeCache);
   fs.writeFileSync(jsonPath, JSON.stringify(payload, null, 2), "utf8");
-  fs.writeFileSync(htmlPath, renderHtml(payload), "utf8");
+  fs.writeFileSync(htmlPath, renderHtml(payload).replace(/[ \t]+$/gm, ""), "utf8");
   console.log(`Saved ${jsonPath}`);
   console.log(`Saved ${htmlPath}`);
 }
@@ -817,23 +1041,12 @@ function renderHtml(payload) {
   const brandCards = analysis.brand_groups
     .map(
       (brand) => `<a class="brand-card" href="#brand-${escapeHtml(brand.brand_key)}">
-        <span>${escapeHtml(brand.brand_label)}</span>
+        <span>${escapeHtml(brand.brand_label)} · ${escapeHtml(brand.attention_level)}关注</span>
         <b>${escapeHtml(brand.headline)}</b>
         <small>${brand.model_count} 个机型 · ${brand.variant_count} 个 SKU · 净变化 ${formatSignedInr(brand.net_recent_delta_inr)}</small>
-        <em>上调 ${brand.up_models} / 下调 ${brand.down_models} / 稳定 ${brand.flat_models}</em>
+        <em>上调 ${brand.up_models} / 下调 ${brand.down_models} / 稳定 ${brand.flat_models} · 待补 ${brand.unresolved_models}</em>
       </a>`
     )
-    .join("");
-  const timelineRows = analysis.timeline
-    .slice(0, 80)
-    .map((event) => {
-      const direction = classifyDelta(event.delta_inr);
-      return `<a class="timeline-row ${direction}" href="#${escapeHtml(event.model_id)}">
-        <span>${formatShortDate(event.timestamp_iso)}</span>
-        <strong>${escapeHtml(event.brand_label)} · ${escapeHtml(event.model_query)}</strong>
-        <b>${formatSignedInr(event.delta_inr)}</b>
-      </a>`;
-    })
     .join("");
   const marketContext = analysis.market_context
     .map(
@@ -853,11 +1066,20 @@ function renderHtml(payload) {
     body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;background:#f7f8fb;color:#0f172a}
     header{padding:28px 34px;background:#fff;border-bottom:1px solid #dbe3ef}
     h1{margin:0 0 12px;font-size:30px}
+    h2,h3,p{letter-spacing:0}
     .summary{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:10px}
     .summary div,.metrics div,.context{border:1px solid #dbe3ef;border-radius:8px;padding:12px;background:#f8fafc}
-    .summary span,.metrics span,.meta,small{display:block;color:#64748b;font-size:13px}
+    .summary span,.metrics span,.meta,.submeta,small{display:block;color:#64748b;font-size:13px}
     .summary b,.metrics b{font-size:22px}
-    .brand-strip{display:grid;grid-template-columns:repeat(6,minmax(140px,1fr));gap:10px;margin-top:18px}
+    .exec-panel{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.7fr);gap:14px;margin-top:18px;align-items:start}
+    .exec-copy,.exec-metrics,.priority-list{border:1px solid #dbe3ef;border-radius:8px;background:#fbfdff;padding:16px}
+    .eyebrow{display:block;color:#2563eb;font-weight:800;font-size:12px;text-transform:uppercase}
+    .exec-copy h2{font-size:26px;line-height:1.2;margin:6px 0 12px}.exec-copy ol{margin:0;padding-left:20px;color:#334155;line-height:1.55}
+    .exec-metrics{display:grid;grid-template-columns:1fr;gap:10px}.exec-metrics div{border-bottom:1px solid #e5eaf2;padding-bottom:8px}
+    .exec-metrics div:last-child{border-bottom:0;padding-bottom:0}.exec-metrics span{display:block;color:#64748b;font-size:12px}.exec-metrics b{font-size:18px}
+    .priority-list{display:grid;gap:8px;grid-column:2}.priority-brand{display:block;color:#0f172a;border:1px solid #e5eaf2;border-radius:8px;padding:10px;background:#fff}
+    .priority-brand span,.priority-brand small{display:block;color:#64748b;font-size:12px}.priority-brand b{display:block;margin:2px 0 4px}
+    .brand-strip{display:grid;grid-template-columns:repeat(7,minmax(140px,1fr));gap:10px;margin-top:18px}
     .brand-card{display:block;border:1px solid #dbe3ef;border-radius:8px;padding:12px;background:#fbfdff;color:#0f172a}
     .brand-card span{display:block;color:#475569;font-weight:700}.brand-card b{display:block;margin:4px 0;font-size:18px}
     .brand-card small,.brand-card em{display:block;color:#64748b;font-size:12px;font-style:normal}
@@ -865,11 +1087,15 @@ function renderHtml(payload) {
     main{min-width:0}
     aside{position:sticky;top:16px;align-self:start;background:#fff;border:1px solid #dbe3ef;border-radius:8px;padding:14px;max-height:calc(100vh - 32px);overflow:auto}
     aside h2{font-size:18px;margin:0 0 10px}
+    aside h3{font-size:13px;color:#64748b;margin:14px 0 6px}
     .timeline-row{display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center;border-left:3px solid #cbd5e1;padding:8px;color:#0f172a}
     .timeline-row.up{border-left-color:#dc2626}.timeline-row.down{border-left-color:#2563eb}.timeline-row.flat{border-left-color:#64748b}
-    .timeline-row span,.timeline-row b{font-size:12px}.timeline-row strong{font-size:12px;font-weight:600}
+    .timeline-row span,.timeline-row b{font-size:12px}.timeline-row strong{font-size:12px;font-weight:600}.timeline-row small{font-size:11px}
+    .timeline-row em{display:block;color:#92400e;font-style:normal;font-size:11px}
     .brand-section{background:#fff;border:1px solid #dbe3ef;border-radius:8px;margin-bottom:18px}
-    .brand-section>summary{cursor:pointer;padding:18px 20px;font-size:24px;font-weight:800;list-style:none}
+    .brand-section>summary{cursor:pointer;padding:18px 20px;font-size:24px;font-weight:800;list-style:none;display:flex;justify-content:space-between;gap:16px;align-items:center}
+    .brand-section>summary b{font-size:13px;border:1px solid #dbe3ef;border-radius:999px;padding:4px 10px;background:#f8fafc;white-space:nowrap}
+    .attention-高>summary b{color:#991b1b;background:#fef2f2;border-color:#fecaca}.attention-中>summary b{color:#92400e;background:#fff7ed;border-color:#fed7aa}
     .brand-section>summary::-webkit-details-marker{display:none}
     .brand-body{border-top:1px solid #e5eaf2;padding:18px 20px 20px}
     .brand-brief{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-bottom:16px}
@@ -879,20 +1105,23 @@ function renderHtml(payload) {
     .model-head h3{margin:0;font-size:22px}.model-head p{margin:4px 0 0;color:#64748b}
     .chip{display:inline-flex;align-items:center;white-space:nowrap;border:1px solid #dbe3ef;border-radius:999px;padding:4px 10px;font-size:13px;background:#f8fafc}
     .chip.up{color:#991b1b;background:#fef2f2;border-color:#fecaca}.chip.down{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+    .tag{display:inline-flex;align-items:center;border:1px solid #dbe3ef;border-radius:999px;padding:3px 8px;margin:0 6px 6px 0;background:#f8fafc;color:#475569;font-size:12px}
     .variant{border:1px solid #dbe3ef;border-radius:8px;padding:14px;background:#fbfdff}
     .variant.secondary{margin-top:10px}
     .variant-head{display:flex;justify-content:space-between;gap:16px}
     .variant-head span{color:#475569}
+    .submeta{margin:-4px 0 10px}
+    .sku-links summary{cursor:pointer;color:#64748b}.sku-links div{margin-top:6px;line-height:1.5}
     .metrics{display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:10px;margin:12px 0}
     a{color:#2563eb;text-decoration:none}
     .chart{width:100%;height:210px;background:#fff;border:1px solid #dbe3ef;border-radius:8px}
-    .chart line{stroke:#cbd5e1}.chart path{fill:none;stroke:#2563eb;stroke-width:3}.chart text{font-size:12px;fill:#64748b}
+    .chart line{stroke:#cbd5e1}.chart path{fill:none;stroke:#2563eb;stroke-width:3}.chart text{font-size:12px;fill:#64748b}.chart circle{fill:#2563eb}
     table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border-bottom:1px solid #e5eaf2;text-align:left;padding:8px}
     .warn{color:#92400e;background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px}
     .context{margin:0 0 18px}.context h2{font-size:18px;margin:0 0 8px}.context ul{margin:0;padding-left:18px;color:#475569}
     .fold{margin-top:10px}.fold summary{cursor:pointer;color:#2563eb;font-weight:700}
-    @media(max-width:1040px){.layout{display:block}aside{position:static;margin-bottom:18px}.brand-strip{grid-template-columns:repeat(2,minmax(140px,1fr))}}
-    @media(max-width:760px){.summary,.metrics,.brand-brief{grid-template-columns:1fr}.variant-head,.model-head{display:block}.brand-strip{grid-template-columns:1fr}}
+    @media(max-width:1040px){.layout{display:block}aside{position:static;margin-bottom:18px}.brand-strip{grid-template-columns:repeat(2,minmax(140px,1fr))}.exec-panel{grid-template-columns:1fr}.priority-list{grid-column:auto}}
+    @media(max-width:760px){.summary,.metrics,.brand-brief{grid-template-columns:1fr}.variant-head,.model-head,.brand-section>summary{display:block}.brand-strip{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -905,6 +1134,7 @@ function renderHtml(payload) {
       <div><span>PriceBefore 历史</span><b>${payload.totals.variants_with_pricebefore_history}</b></div>
       <div><span>其他缓存/摘要</span><b>${payload.totals.variants_with_cached_history + payload.totals.variants_with_live_summary}</b></div>
     </div>
+    ${renderExecutivePanel(analysis.executive)}
     <div class="brand-strip">${brandCards}</div>
   </header>
   <div class="layout">
@@ -917,7 +1147,7 @@ function renderHtml(payload) {
     </main>
     <aside>
       <h2>最近调价时间轴</h2>
-      ${timelineRows || '<p class="warn">暂无调价节点。</p>'}
+      ${renderTimeline(analysis.timeline)}
     </aside>
   </div>
 </body>

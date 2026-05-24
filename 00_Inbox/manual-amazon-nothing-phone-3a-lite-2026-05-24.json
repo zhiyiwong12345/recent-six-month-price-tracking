@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-05-24T02:58:00+08:00",
+  "source": "manual_chrome_amazon_product",
+  "store": "amazon",
+  "query": "nothing phone 3a lite",
+  "url": "https://www.amazon.in/Nothing-Phone-Lite-White-128/dp/B0G47YZJH6/ref=sr_1_1?keywords=nothing+phone+3a+lite",
+  "candidates": [
+    {
+      "source": "manual_chrome_amazon_product",
+      "store_key": "amazon",
+      "store_name": "Amazon India",
+      "candidate_name": "Nothing Phone (3a) Lite (White, 128 GB) (8 GB RAM)",
+      "raw_line": "Nothing Phone (3a) Lite (White, 128 GB) (8 GB RAM) 4.3 out of 5 stars 103 Reviews 500+ bought in past month ₹25,499 M.R.P.: ₹29,999 15% savings Only 1 left in stock.",
+      "product_url": "https://www.amazon.in/Nothing-Phone-Lite-White-128/dp/B0G47YZJH6",
+      "current_store_price_inr": 25499,
+      "rating": 4.3,
+      "rating_count": 103,
+      "availability": "listed",
+      "listing_rank": 1
+    }
+  ]
+}

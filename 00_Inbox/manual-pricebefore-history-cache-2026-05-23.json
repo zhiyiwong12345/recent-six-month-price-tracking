@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-23T03:02:43.593Z",
+  "generated_at": "2026-05-24T03:11:49.292Z",
   "source": "pricebefore",
   "entries": [
     {
@@ -44677,6 +44677,763 @@
         "resolve_strategy": "pricebefore_store_url_search"
       },
       "fetched_at": "2026-05-23T03:02:43.561Z"
+    },
+    {
+      "keys": [
+        "https://www.amazon.in/Nothing-Phone-Lite-White-128/dp/B0G47YZJH6"
+      ],
+      "product": {
+        "title": "Nothing Phone (3a) Lite (White, 128 GB) (8 GB RAM)",
+        "slug": "phone-3a-lite-white-128-gb-p848779",
+        "product_url": "https://www.amazon.in/Nothing-Phone-Lite-White-128/dp/B0G47YZJH6/ref=sr_1_213",
+        "store_name": "Amazon",
+        "store_key": "amazon",
+        "store_product_code": "",
+        "pricebefore_page_url": "https://www.pricebefore.com/phone-3a-lite-white-128-gb-p848779.html",
+        "pricehistory_page_url": "https://www.pricebefore.com/phone-3a-lite-white-128-gb-p848779.html",
+        "price_source": "pricebefore",
+        "current_price_inr": 25499,
+        "current_price_fetched_at": "2026-05-24T00:00:00.000Z",
+        "first_seen_price_at": "2026-03-07T00:00:00.000Z",
+        "first_seen_price_inr": 20792,
+        "lowest_price_inr": 20180,
+        "highest_price_inr": 25499,
+        "average_price_inr": 22148,
+        "price_change_events": [
+          {
+            "timestamp_sec": 1772841600,
+            "timestamp_iso": "2026-03-07T00:00:00.000Z",
+            "price_inr": 20792
+          },
+          {
+            "timestamp_sec": 1772928000,
+            "timestamp_iso": "2026-03-08T00:00:00.000Z",
+            "price_inr": 20788
+          },
+          {
+            "timestamp_sec": 1773014400,
+            "timestamp_iso": "2026-03-09T00:00:00.000Z",
+            "price_inr": 20745
+          },
+          {
+            "timestamp_sec": 1773100800,
+            "timestamp_iso": "2026-03-10T00:00:00.000Z",
+            "price_inr": 20690
+          },
+          {
+            "timestamp_sec": 1773187200,
+            "timestamp_iso": "2026-03-11T00:00:00.000Z",
+            "price_inr": 20477
+          },
+          {
+            "timestamp_sec": 1773360000,
+            "timestamp_iso": "2026-03-13T00:00:00.000Z",
+            "price_inr": 20455
+          },
+          {
+            "timestamp_sec": 1773619200,
+            "timestamp_iso": "2026-03-16T00:00:00.000Z",
+            "price_inr": 20405
+          },
+          {
+            "timestamp_sec": 1773705600,
+            "timestamp_iso": "2026-03-17T00:00:00.000Z",
+            "price_inr": 20407
+          },
+          {
+            "timestamp_sec": 1773792000,
+            "timestamp_iso": "2026-03-18T00:00:00.000Z",
+            "price_inr": 20400
+          },
+          {
+            "timestamp_sec": 1773964800,
+            "timestamp_iso": "2026-03-20T00:00:00.000Z",
+            "price_inr": 20399
+          },
+          {
+            "timestamp_sec": 1774137600,
+            "timestamp_iso": "2026-03-22T00:00:00.000Z",
+            "price_inr": 20990
+          },
+          {
+            "timestamp_sec": 1774224000,
+            "timestamp_iso": "2026-03-23T00:00:00.000Z",
+            "price_inr": 20980
+          },
+          {
+            "timestamp_sec": 1774310400,
+            "timestamp_iso": "2026-03-24T00:00:00.000Z",
+            "price_inr": 20968
+          },
+          {
+            "timestamp_sec": 1774396800,
+            "timestamp_iso": "2026-03-25T00:00:00.000Z",
+            "price_inr": 20850
+          },
+          {
+            "timestamp_sec": 1774483200,
+            "timestamp_iso": "2026-03-26T00:00:00.000Z",
+            "price_inr": 20725
+          },
+          {
+            "timestamp_sec": 1774569600,
+            "timestamp_iso": "2026-03-27T00:00:00.000Z",
+            "price_inr": 20650
+          },
+          {
+            "timestamp_sec": 1774656000,
+            "timestamp_iso": "2026-03-28T00:00:00.000Z",
+            "price_inr": 20508
+          },
+          {
+            "timestamp_sec": 1774828800,
+            "timestamp_iso": "2026-03-30T00:00:00.000Z",
+            "price_inr": 20357
+          },
+          {
+            "timestamp_sec": 1774915200,
+            "timestamp_iso": "2026-03-31T00:00:00.000Z",
+            "price_inr": 20247
+          },
+          {
+            "timestamp_sec": 1775001600,
+            "timestamp_iso": "2026-04-01T00:00:00.000Z",
+            "price_inr": 20280
+          },
+          {
+            "timestamp_sec": 1775088000,
+            "timestamp_iso": "2026-04-02T00:00:00.000Z",
+            "price_inr": 20213
+          },
+          {
+            "timestamp_sec": 1775174400,
+            "timestamp_iso": "2026-04-03T00:00:00.000Z",
+            "price_inr": 20198
+          },
+          {
+            "timestamp_sec": 1775260800,
+            "timestamp_iso": "2026-04-04T00:00:00.000Z",
+            "price_inr": 20180
+          },
+          {
+            "timestamp_sec": 1775347200,
+            "timestamp_iso": "2026-04-05T00:00:00.000Z",
+            "price_inr": 21250
+          },
+          {
+            "timestamp_sec": 1775520000,
+            "timestamp_iso": "2026-04-07T00:00:00.000Z",
+            "price_inr": 21444
+          },
+          {
+            "timestamp_sec": 1775606400,
+            "timestamp_iso": "2026-04-08T00:00:00.000Z",
+            "price_inr": 21986
+          },
+          {
+            "timestamp_sec": 1775692800,
+            "timestamp_iso": "2026-04-09T00:00:00.000Z",
+            "price_inr": 21830
+          },
+          {
+            "timestamp_sec": 1776038400,
+            "timestamp_iso": "2026-04-13T00:00:00.000Z",
+            "price_inr": 21730
+          },
+          {
+            "timestamp_sec": 1776124800,
+            "timestamp_iso": "2026-04-14T00:00:00.000Z",
+            "price_inr": 20990
+          },
+          {
+            "timestamp_sec": 1776211200,
+            "timestamp_iso": "2026-04-15T00:00:00.000Z",
+            "price_inr": 20980
+          },
+          {
+            "timestamp_sec": 1776297600,
+            "timestamp_iso": "2026-04-16T00:00:00.000Z",
+            "price_inr": 21680
+          },
+          {
+            "timestamp_sec": 1776384000,
+            "timestamp_iso": "2026-04-17T00:00:00.000Z",
+            "price_inr": 21790
+          },
+          {
+            "timestamp_sec": 1776470400,
+            "timestamp_iso": "2026-04-18T00:00:00.000Z",
+            "price_inr": 21849
+          },
+          {
+            "timestamp_sec": 1776556800,
+            "timestamp_iso": "2026-04-19T00:00:00.000Z",
+            "price_inr": 21983
+          },
+          {
+            "timestamp_sec": 1776643200,
+            "timestamp_iso": "2026-04-20T00:00:00.000Z",
+            "price_inr": 22280
+          },
+          {
+            "timestamp_sec": 1776729600,
+            "timestamp_iso": "2026-04-21T00:00:00.000Z",
+            "price_inr": 22270
+          },
+          {
+            "timestamp_sec": 1776816000,
+            "timestamp_iso": "2026-04-22T00:00:00.000Z",
+            "price_inr": 21980
+          },
+          {
+            "timestamp_sec": 1776902400,
+            "timestamp_iso": "2026-04-23T00:00:00.000Z",
+            "price_inr": 21920
+          },
+          {
+            "timestamp_sec": 1776988800,
+            "timestamp_iso": "2026-04-24T00:00:00.000Z",
+            "price_inr": 21860
+          },
+          {
+            "timestamp_sec": 1777075200,
+            "timestamp_iso": "2026-04-25T00:00:00.000Z",
+            "price_inr": 21999
+          },
+          {
+            "timestamp_sec": 1777420800,
+            "timestamp_iso": "2026-04-29T00:00:00.000Z",
+            "price_inr": 22500
+          },
+          {
+            "timestamp_sec": 1777507200,
+            "timestamp_iso": "2026-04-30T00:00:00.000Z",
+            "price_inr": 22290
+          },
+          {
+            "timestamp_sec": 1777593600,
+            "timestamp_iso": "2026-05-01T00:00:00.000Z",
+            "price_inr": 22980
+          },
+          {
+            "timestamp_sec": 1777766400,
+            "timestamp_iso": "2026-05-03T00:00:00.000Z",
+            "price_inr": 22989
+          },
+          {
+            "timestamp_sec": 1777939200,
+            "timestamp_iso": "2026-05-05T00:00:00.000Z",
+            "price_inr": 22999
+          },
+          {
+            "timestamp_sec": 1778457600,
+            "timestamp_iso": "2026-05-11T00:00:00.000Z",
+            "price_inr": 25499
+          }
+        ],
+        "raw_price_points": [
+          {
+            "timestamp_sec": 1772841600,
+            "timestamp_iso": "2026-03-07T00:00:00.000Z",
+            "price_inr": 20792
+          },
+          {
+            "timestamp_sec": 1772928000,
+            "timestamp_iso": "2026-03-08T00:00:00.000Z",
+            "price_inr": 20788
+          },
+          {
+            "timestamp_sec": 1773014400,
+            "timestamp_iso": "2026-03-09T00:00:00.000Z",
+            "price_inr": 20745
+          },
+          {
+            "timestamp_sec": 1773100800,
+            "timestamp_iso": "2026-03-10T00:00:00.000Z",
+            "price_inr": 20690
+          },
+          {
+            "timestamp_sec": 1773187200,
+            "timestamp_iso": "2026-03-11T00:00:00.000Z",
+            "price_inr": 20477
+          },
+          {
+            "timestamp_sec": 1773273600,
+            "timestamp_iso": "2026-03-12T00:00:00.000Z",
+            "price_inr": 20477
+          },
+          {
+            "timestamp_sec": 1773360000,
+            "timestamp_iso": "2026-03-13T00:00:00.000Z",
+            "price_inr": 20455
+          },
+          {
+            "timestamp_sec": 1773446400,
+            "timestamp_iso": "2026-03-14T00:00:00.000Z",
+            "price_inr": 20455
+          },
+          {
+            "timestamp_sec": 1773532800,
+            "timestamp_iso": "2026-03-15T00:00:00.000Z",
+            "price_inr": 20455
+          },
+          {
+            "timestamp_sec": 1773619200,
+            "timestamp_iso": "2026-03-16T00:00:00.000Z",
+            "price_inr": 20405
+          },
+          {
+            "timestamp_sec": 1773705600,
+            "timestamp_iso": "2026-03-17T00:00:00.000Z",
+            "price_inr": 20407
+          },
+          {
+            "timestamp_sec": 1773792000,
+            "timestamp_iso": "2026-03-18T00:00:00.000Z",
+            "price_inr": 20400
+          },
+          {
+            "timestamp_sec": 1773878400,
+            "timestamp_iso": "2026-03-19T00:00:00.000Z",
+            "price_inr": 20400
+          },
+          {
+            "timestamp_sec": 1773964800,
+            "timestamp_iso": "2026-03-20T00:00:00.000Z",
+            "price_inr": 20399
+          },
+          {
+            "timestamp_sec": 1774051200,
+            "timestamp_iso": "2026-03-21T00:00:00.000Z",
+            "price_inr": 20399
+          },
+          {
+            "timestamp_sec": 1774137600,
+            "timestamp_iso": "2026-03-22T00:00:00.000Z",
+            "price_inr": 20990
+          },
+          {
+            "timestamp_sec": 1774224000,
+            "timestamp_iso": "2026-03-23T00:00:00.000Z",
+            "price_inr": 20980
+          },
+          {
+            "timestamp_sec": 1774310400,
+            "timestamp_iso": "2026-03-24T00:00:00.000Z",
+            "price_inr": 20968
+          },
+          {
+            "timestamp_sec": 1774396800,
+            "timestamp_iso": "2026-03-25T00:00:00.000Z",
+            "price_inr": 20850
+          },
+          {
+            "timestamp_sec": 1774483200,
+            "timestamp_iso": "2026-03-26T00:00:00.000Z",
+            "price_inr": 20725
+          },
+          {
+            "timestamp_sec": 1774569600,
+            "timestamp_iso": "2026-03-27T00:00:00.000Z",
+            "price_inr": 20650
+          },
+          {
+            "timestamp_sec": 1774656000,
+            "timestamp_iso": "2026-03-28T00:00:00.000Z",
+            "price_inr": 20508
+          },
+          {
+            "timestamp_sec": 1774742400,
+            "timestamp_iso": "2026-03-29T00:00:00.000Z",
+            "price_inr": 20508
+          },
+          {
+            "timestamp_sec": 1774828800,
+            "timestamp_iso": "2026-03-30T00:00:00.000Z",
+            "price_inr": 20357
+          },
+          {
+            "timestamp_sec": 1774915200,
+            "timestamp_iso": "2026-03-31T00:00:00.000Z",
+            "price_inr": 20247
+          },
+          {
+            "timestamp_sec": 1775001600,
+            "timestamp_iso": "2026-04-01T00:00:00.000Z",
+            "price_inr": 20280
+          },
+          {
+            "timestamp_sec": 1775088000,
+            "timestamp_iso": "2026-04-02T00:00:00.000Z",
+            "price_inr": 20213
+          },
+          {
+            "timestamp_sec": 1775174400,
+            "timestamp_iso": "2026-04-03T00:00:00.000Z",
+            "price_inr": 20198
+          },
+          {
+            "timestamp_sec": 1775260800,
+            "timestamp_iso": "2026-04-04T00:00:00.000Z",
+            "price_inr": 20180
+          },
+          {
+            "timestamp_sec": 1775347200,
+            "timestamp_iso": "2026-04-05T00:00:00.000Z",
+            "price_inr": 21250
+          },
+          {
+            "timestamp_sec": 1775433600,
+            "timestamp_iso": "2026-04-06T00:00:00.000Z",
+            "price_inr": 21250
+          },
+          {
+            "timestamp_sec": 1775520000,
+            "timestamp_iso": "2026-04-07T00:00:00.000Z",
+            "price_inr": 21444
+          },
+          {
+            "timestamp_sec": 1775606400,
+            "timestamp_iso": "2026-04-08T00:00:00.000Z",
+            "price_inr": 21986
+          },
+          {
+            "timestamp_sec": 1775692800,
+            "timestamp_iso": "2026-04-09T00:00:00.000Z",
+            "price_inr": 21830
+          },
+          {
+            "timestamp_sec": 1775779200,
+            "timestamp_iso": "2026-04-10T00:00:00.000Z",
+            "price_inr": 21830
+          },
+          {
+            "timestamp_sec": 1775865600,
+            "timestamp_iso": "2026-04-11T00:00:00.000Z",
+            "price_inr": 21830
+          },
+          {
+            "timestamp_sec": 1775952000,
+            "timestamp_iso": "2026-04-12T00:00:00.000Z",
+            "price_inr": 21830
+          },
+          {
+            "timestamp_sec": 1776038400,
+            "timestamp_iso": "2026-04-13T00:00:00.000Z",
+            "price_inr": 21730
+          },
+          {
+            "timestamp_sec": 1776124800,
+            "timestamp_iso": "2026-04-14T00:00:00.000Z",
+            "price_inr": 20990
+          },
+          {
+            "timestamp_sec": 1776211200,
+            "timestamp_iso": "2026-04-15T00:00:00.000Z",
+            "price_inr": 20980
+          },
+          {
+            "timestamp_sec": 1776297600,
+            "timestamp_iso": "2026-04-16T00:00:00.000Z",
+            "price_inr": 21680
+          },
+          {
+            "timestamp_sec": 1776384000,
+            "timestamp_iso": "2026-04-17T00:00:00.000Z",
+            "price_inr": 21790
+          },
+          {
+            "timestamp_sec": 1776470400,
+            "timestamp_iso": "2026-04-18T00:00:00.000Z",
+            "price_inr": 21849
+          },
+          {
+            "timestamp_sec": 1776556800,
+            "timestamp_iso": "2026-04-19T00:00:00.000Z",
+            "price_inr": 21983
+          },
+          {
+            "timestamp_sec": 1776643200,
+            "timestamp_iso": "2026-04-20T00:00:00.000Z",
+            "price_inr": 22280
+          },
+          {
+            "timestamp_sec": 1776729600,
+            "timestamp_iso": "2026-04-21T00:00:00.000Z",
+            "price_inr": 22270
+          },
+          {
+            "timestamp_sec": 1776816000,
+            "timestamp_iso": "2026-04-22T00:00:00.000Z",
+            "price_inr": 21980
+          },
+          {
+            "timestamp_sec": 1776902400,
+            "timestamp_iso": "2026-04-23T00:00:00.000Z",
+            "price_inr": 21920
+          },
+          {
+            "timestamp_sec": 1776988800,
+            "timestamp_iso": "2026-04-24T00:00:00.000Z",
+            "price_inr": 21860
+          },
+          {
+            "timestamp_sec": 1777075200,
+            "timestamp_iso": "2026-04-25T00:00:00.000Z",
+            "price_inr": 21999
+          },
+          {
+            "timestamp_sec": 1777161600,
+            "timestamp_iso": "2026-04-26T00:00:00.000Z",
+            "price_inr": 21999
+          },
+          {
+            "timestamp_sec": 1777248000,
+            "timestamp_iso": "2026-04-27T00:00:00.000Z",
+            "price_inr": 21999
+          },
+          {
+            "timestamp_sec": 1777334400,
+            "timestamp_iso": "2026-04-28T00:00:00.000Z",
+            "price_inr": 21999
+          },
+          {
+            "timestamp_sec": 1777420800,
+            "timestamp_iso": "2026-04-29T00:00:00.000Z",
+            "price_inr": 22500
+          },
+          {
+            "timestamp_sec": 1777507200,
+            "timestamp_iso": "2026-04-30T00:00:00.000Z",
+            "price_inr": 22290
+          },
+          {
+            "timestamp_sec": 1777593600,
+            "timestamp_iso": "2026-05-01T00:00:00.000Z",
+            "price_inr": 22980
+          },
+          {
+            "timestamp_sec": 1777680000,
+            "timestamp_iso": "2026-05-02T00:00:00.000Z",
+            "price_inr": 22980
+          },
+          {
+            "timestamp_sec": 1777766400,
+            "timestamp_iso": "2026-05-03T00:00:00.000Z",
+            "price_inr": 22989
+          },
+          {
+            "timestamp_sec": 1777852800,
+            "timestamp_iso": "2026-05-04T00:00:00.000Z",
+            "price_inr": 22989
+          },
+          {
+            "timestamp_sec": 1777939200,
+            "timestamp_iso": "2026-05-05T00:00:00.000Z",
+            "price_inr": 22999
+          },
+          {
+            "timestamp_sec": 1778025600,
+            "timestamp_iso": "2026-05-06T00:00:00.000Z",
+            "price_inr": 22999
+          },
+          {
+            "timestamp_sec": 1778112000,
+            "timestamp_iso": "2026-05-07T00:00:00.000Z",
+            "price_inr": 22999
+          },
+          {
+            "timestamp_sec": 1778198400,
+            "timestamp_iso": "2026-05-08T00:00:00.000Z",
+            "price_inr": 22999
+          },
+          {
+            "timestamp_sec": 1778284800,
+            "timestamp_iso": "2026-05-09T00:00:00.000Z",
+            "price_inr": 22999
+          },
+          {
+            "timestamp_sec": 1778371200,
+            "timestamp_iso": "2026-05-10T00:00:00.000Z",
+            "price_inr": 22999
+          },
+          {
+            "timestamp_sec": 1778457600,
+            "timestamp_iso": "2026-05-11T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1778544000,
+            "timestamp_iso": "2026-05-12T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1778630400,
+            "timestamp_iso": "2026-05-13T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1778716800,
+            "timestamp_iso": "2026-05-14T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1778803200,
+            "timestamp_iso": "2026-05-15T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1778889600,
+            "timestamp_iso": "2026-05-16T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1778976000,
+            "timestamp_iso": "2026-05-17T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1779062400,
+            "timestamp_iso": "2026-05-18T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1779148800,
+            "timestamp_iso": "2026-05-19T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1779235200,
+            "timestamp_iso": "2026-05-20T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1779321600,
+            "timestamp_iso": "2026-05-21T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1779408000,
+            "timestamp_iso": "2026-05-22T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1779494400,
+            "timestamp_iso": "2026-05-23T00:00:00.000Z",
+            "price_inr": 25499
+          },
+          {
+            "timestamp_sec": 1779580800,
+            "timestamp_iso": "2026-05-24T00:00:00.000Z",
+            "price_inr": 25499
+          }
+        ],
+        "raw_point_count": 79,
+        "resolve_strategy": "pricebefore_store_url_search"
+      },
+      "fetched_at": "2026-05-24T03:11:38.968Z"
+    },
+    {
+      "keys": [
+        "MOBHM2ZUZRZARU6Z",
+        "https://www.flipkart.com/nothing-phone-4a-pink-256-gb/p/itm47712249513d4?pid=MOBHM2ZUZRZARU6Z&lid=LSTMOBHM2ZUZRZARU6Z0ACBE2&marketplace=FLIPKART&q=nothing+phone+4a+mobile&store=tyy%2F4io&srno=s_1_6&otracker=search&fm=organic&iid=eb68984d-1480-4f99-a808-33bef2e4cdf5.MOBHM2ZUZRZARU6Z.SEARCH&ppt=None&ppn=None&ssid=fib1wir1sw0000001779505160757&qH=3fcd19a5e1daa002&ov_redirect=true"
+      ],
+      "product": {
+        "title": "Nothing Phone (4a) (Pink, 256 GB)",
+        "slug": "nothing-phone-4a-pink-256-gb-p992823",
+        "product_url": "https://www.flipkart.com/nothing-phone-4a-pink-256-gb/p/itm47712249513d4?pid=MOBHM2ZUZRZARU6Z",
+        "store_name": "Flipkart",
+        "store_key": "flipkart",
+        "store_product_code": "MOBHM2ZUZRZARU6Z",
+        "pricebefore_page_url": "https://www.pricebefore.com/nothing-phone-4a-pink-256-gb-p992823.html",
+        "pricehistory_page_url": "https://www.pricebefore.com/nothing-phone-4a-pink-256-gb-p992823.html",
+        "price_source": "pricebefore",
+        "current_price_inr": 40999,
+        "current_price_fetched_at": "2026-05-24T00:00:00.000Z",
+        "first_seen_price_at": "2026-05-22T00:00:00.000Z",
+        "first_seen_price_inr": 40999,
+        "lowest_price_inr": 40999,
+        "highest_price_inr": 40999,
+        "average_price_inr": 40999,
+        "price_change_events": [
+          {
+            "timestamp_sec": 1779408000,
+            "timestamp_iso": "2026-05-22T00:00:00.000Z",
+            "price_inr": 40999
+          }
+        ],
+        "raw_price_points": [
+          {
+            "timestamp_sec": 1779408000,
+            "timestamp_iso": "2026-05-22T00:00:00.000Z",
+            "price_inr": 40999
+          },
+          {
+            "timestamp_sec": 1779494400,
+            "timestamp_iso": "2026-05-23T00:00:00.000Z",
+            "price_inr": 40999
+          },
+          {
+            "timestamp_sec": 1779580800,
+            "timestamp_iso": "2026-05-24T00:00:00.000Z",
+            "price_inr": 40999
+          }
+        ],
+        "raw_point_count": 3,
+        "resolve_strategy": "pricebefore_store_url_search"
+      },
+      "fetched_at": "2026-05-24T03:11:42.998Z"
+    },
+    {
+      "keys": [
+        "MOBHCY4CDV4Z6CRT",
+        "https://www.flipkart.com/nothing-phone-3-black-256-gb/p/itm0c32a18b0df8a?pid=MOBHCY4CDV4Z6CRT&lid=LSTMOBHCY4CDV4Z6CRTRACX4Y&marketplace=FLIPKART&q=nothing+phone3+mobile&store=tyy%2F4io&srno=s_1_1"
+      ],
+      "product": {
+        "title": "Nothing Phone (3) (Black, 256 GB)",
+        "slug": "nothing-phone-3-black-256-gb-p992825",
+        "product_url": "https://www.flipkart.com/nothing-phone-3-black-256-gb/p/itm0c32a18b0df8a?pid=MOBHCY4CDV4Z6CRT",
+        "store_name": "Flipkart",
+        "store_key": "flipkart",
+        "store_product_code": "MOBHCY4CDV4Z6CRT",
+        "pricebefore_page_url": "https://www.pricebefore.com/nothing-phone-3-black-256-gb-p992825.html",
+        "pricehistory_page_url": "https://www.pricebefore.com/nothing-phone-3-black-256-gb-p992825.html",
+        "price_source": "pricebefore",
+        "current_price_inr": 49999,
+        "current_price_fetched_at": "2026-05-24T00:00:00.000Z",
+        "first_seen_price_at": "2026-05-22T00:00:00.000Z",
+        "first_seen_price_inr": 49999,
+        "lowest_price_inr": 49999,
+        "highest_price_inr": 49999,
+        "average_price_inr": 49999,
+        "price_change_events": [
+          {
+            "timestamp_sec": 1779408000,
+            "timestamp_iso": "2026-05-22T00:00:00.000Z",
+            "price_inr": 49999
+          }
+        ],
+        "raw_price_points": [
+          {
+            "timestamp_sec": 1779408000,
+            "timestamp_iso": "2026-05-22T00:00:00.000Z",
+            "price_inr": 49999
+          },
+          {
+            "timestamp_sec": 1779494400,
+            "timestamp_iso": "2026-05-23T00:00:00.000Z",
+            "price_inr": 49999
+          },
+          {
+            "timestamp_sec": 1779580800,
+            "timestamp_iso": "2026-05-24T00:00:00.000Z",
+            "price_inr": 49999
+          }
+        ],
+        "raw_point_count": 3,
+        "resolve_strategy": "pricebefore_store_url_search"
+      },
+      "fetched_at": "2026-05-24T03:11:46.141Z"
     }
   ]
 }
