@@ -5,6 +5,7 @@ const { fetchPriceBeforeHistoryByUrl } = require("./pricebefore_history");
 const ROOT = path.resolve(__dirname, "..");
 const INBOX = path.join(ROOT, "00_Inbox");
 const DATE_TAG = "2026-05-23";
+const REPORT_TAG = process.env.REPORT_TAG || DATE_TAG;
 
 const WATCHLIST = [
   { query: "nothing phone 3a lite", file: "manual-amazon-nothing-phone-3a-lite-2026-05-24.json", tokens: ["nothing", "phone", "3a", "lite"] },
@@ -1030,8 +1031,8 @@ async function build() {
     items,
   };
 
-  const jsonPath = path.join(INBOX, `manual-pricehistory-watchlist-${DATE_TAG}-report.json`);
-  const htmlPath = path.join(INBOX, `manual-pricehistory-watchlist-${DATE_TAG}-report.html`);
+  const jsonPath = path.join(INBOX, `manual-pricehistory-watchlist-${REPORT_TAG}-report.json`);
+  const htmlPath = path.join(INBOX, `manual-pricehistory-watchlist-${REPORT_TAG}-report.html`);
   savePriceBeforeCache(priceBeforeCache);
   fs.writeFileSync(jsonPath, JSON.stringify(payload, null, 2), "utf8");
   fs.writeFileSync(htmlPath, renderHtml(payload).replace(/[ \t]+$/gm, ""), "utf8");
@@ -1064,7 +1065,7 @@ function renderHtml(payload) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>手动清单价格监控 ${DATE_TAG}</title>
+  <title>手动清单价格监控 ${REPORT_TAG}</title>
   <style>
     body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;margin:0;background:#f7f8fb;color:#0f172a}
     header{padding:28px 34px;background:#fff;border-bottom:1px solid #dbe3ef}
